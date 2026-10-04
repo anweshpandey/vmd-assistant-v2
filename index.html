@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <link rel="stylesheet" href="assets/theme.css">
+    <script src="assets/gateway.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VMD Assistant AI - Visual Molecular Dynamics Knowledge & AI Helper</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#ecfeff',
+                            100: '#cffaff',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                            700: '#0e7490',
+                            900: '#164e63',
+                        },
+                        darkbg: '#090d16',
+                        panel: '#111827',
+                        card: '#1e293b',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- Highlight.js for Code Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/tcl.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #090d16;
+            color: #f1f5f9;
+        }
+        code, pre {
+            font-family: 'Fira Code', monospace;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+        .glow-cyan {
+            box-shadow: 0 0 20px -3px rgba(6, 182, 212, 0.25);
+        }
+        .glow-emerald {
+            box-shadow: 0 0 20px -3px rgba(16, 185, 129, 0.25);
+        }
+        .markdown-body pre {
+            background-color: #0f172a;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            border: 1px solid #1e293b;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            overflow-x: auto;
+        }
+        .markdown-body code {
+            color: #38bdf8;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.875em;
+        }
+        .markdown-body pre code {
+            color: inherit;
+            background: transparent;
+            padding: 0;
+        }
+        .markdown-body p {
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+        .markdown-body ul {
+            list-style-type: disc;
+            padding-left: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+        .markdown-body ol {
+            list-style-type: decimal;
+            padding-left: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+    </style>
+</head>
+<body data-product-family="Scientific AI Assistants" class="h-screen flex flex-col overflow-hidden text-slate-100">
+
+    <!-- Navigation Header -->
+    <header class="bg-slate-900/90 border-b border-slate-800 backdrop-blur-md px-4 py-3 flex items-center justify-between z-30 shrink-0">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 via-teal-500 to-emerald-400 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                <i class="fa-solid font-bold text-slate-950 text-xl fa-atom animate-spin-slow"></i>
+            </div>
+            <div>
+                <div class="flex items-center gap-2">
+                    <h1 class="font-bold text-lg tracking-tight bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent">
+                        VMD Assistant AI
+                    </h1>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-cyan-950 border border-cyan-700/50 text-cyan-300">
+                        v2.4 Expert
+                    </span>
+                </div>
+                <p class="text-xs text-slate-400 hidden sm:block">Visual Molecular Dynamics Syntax, Tcl & Trajectory Hub</p>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="hidden md:flex items-center space-x-1 bg-slate-950/60 p-1 rounded-xl border border-slate-800/80">
+            <button onclick="switchTab('chat')" id="tab-btn-chat" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-2 bg-cyan-600 text-white shadow-sm">
+                <i class="fa-solid fa-comments"></i> AI Chatbot
+            </button>
+            <button onclick="switchTab('cheatsheet')" id="tab-btn-cheatsheet" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-2">
+                <i class="fa-solid fa-book-bookmark"></i> Command Cheat Sheet
+            </button>
+            <button onclick="switchTab('snippets')" id="tab-btn-snippets" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-2">
+                <i class="fa-solid fa-code"></i> Saved Tcl Snippets
+            </button>
+            <button onclick="switchTab('deploy')" id="tab-btn-deploy" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-2">
+                <i class="fa-brands fa-github"></i> Deploy to Pages
+            </button>
+        </nav>
+
+        <!-- User Controls / Auth & Settings -->
+        <div class="flex items-center space-x-2">
+            <!-- Custom API Key Settings Trigger -->
+            <button onclick="openApiKeyModal()" title="Custom AI Gateway Settings" class="p-2 text-slate-400 hover:text-cyan-400 hover:bg-slate-800 rounded-lg transition-colors text-sm border border-slate-800">
+                <i class="fa-solid fa-key"></i>
+            </button>
+
+            <!-- User Auth Profile Button -->
+            <div id="auth-container">
+                <button onclick="openAuthModal()" id="user-btn" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-medium transition-all">
+                    <i class="fa-solid fa-user-astronaut text-cyan-400"></i>
+                    <span id="user-display-name">Guest Login</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Sub-Navigation -->
+    <div class="md:hidden flex bg-slate-900 border-b border-slate-800 px-2 py-1.5 overflow-x-auto gap-1 text-xs shrink-0">
+        <button onclick="switchTab('chat')" id="mob-tab-chat" class="px-3 py-1 rounded-md whitespace-nowrap bg-cyan-600 text-white">
+            <i class="fa-solid fa-comments mr-1"></i> Chatbot
+        </button>
+        <button onclick="switchTab('cheatsheet')" id="mob-tab-cheatsheet" class="px-3 py-1 rounded-md whitespace-nowrap text-slate-400 hover:bg-slate-800">
+            <i class="fa-solid fa-book-bookmark mr-1"></i> Cheat Sheet
+        </button>
+        <button onclick="switchTab('snippets')" id="mob-tab-snippets" class="px-3 py-1 rounded-md whitespace-nowrap text-slate-400 hover:bg-slate-800">
+            <i class="fa-solid fa-code mr-1"></i> Snippets
+        </button>
+        <button onclick="switchTab('deploy')" id="mob-tab-deploy" class="px-3 py-1 rounded-md whitespace-nowrap text-slate-400 hover:bg-slate-800">
+            <i class="fa-brands fa-github mr-1"></i> Deploy Guide
+        </button>
+    </div>
+
+    <!-- MAIN CONTENT VIEW CONTAINER -->
+    <main class="flex-1 relative overflow-hidden bg-darkbg">
+
+        <!-- TAB 1: AI CHATBOT -->
+        <section id="view-chat" class="h-full flex flex-col md:flex-row overflow-hidden">
+            <!-- Sidebar: Quick Prompts & Saved Quick-Actions -->
+            <aside class="w-full md:w-80 bg-slate-900/60 border-r border-slate-800 flex flex-col h-auto md:h-full shrink-0">
+                <div class="p-3 border-b border-slate-800 flex items-center justify-between">
+                    <span class="text-xs font-semibold tracking-wider text-slate-400 uppercase flex items-center gap-1.5">
+                        <i class="fa-solid fa-bolt text-cyan-400"></i> Common VMD Tasks
+                    </span>
+                    <button onclick="clearChat()" class="text-[11px] text-slate-400 hover:text-rose-400 transition-colors">
+                        <i class="fa-solid fa-trash-can mr-1"></i> Clear Chat
+                    </button>
+                </div>
+
+                <div class="p-3 overflow-y-auto space-y-2 flex-1 max-h-48 md:max-h-full">
+                    <div class="text-[11px] text-slate-500 font-medium px-1">ATOM SELECTIONS</div>
+                    <button onclick="sendQuickPrompt('How do I select residue range 10 to 50 and chain A in VMD? Show examples.')" 
+                        class="w-full text-left p-2 rounded-lg bg-slate-800/60 hover:bg-slate-800 border border-slate-700/50 hover:border-cyan-500/50 transition-all text-xs text-slate-300 hover:text-cyan-300 flex items-start gap-2 group">
+                        <i class="fa-solid fa-vector-square text-cyan-400 mt-0.5 group-hover:scale-110 transition-transform"></i>
+                        <span>Select residue range 10-50 & chain</span>
+                    </button>
+
+                    <button onclick="sendQuickPrompt('How do I select atoms within 5 Angstroms of a ligand named LIG and include whole residues?')" 
+                        class="w-full text-left p-2 rounded-lg bg-slate-800/60 hover:bg-slate-800 border border-slate-700/50 hover:border-cyan-500/50 transition-all text-xs text-slate-300 hover:text-cyan-300 flex items-start gap-2 group">
+                        <i class="fa-solid fa-bullseye text-teal-400 mt-0.5 group-hover:scale-110 transition-transform"></i>
+                        <span>Binding site residues (`within 5 of`)</span>
+                    </button>
+
+                    <button onclick="sendQuickPrompt('What is the difference between resid, residue, index, and serial in VMD selection algebra?')" 
+                        class="w-full text-left p-2 rounded-lg bg-slate-800/60 hover:bg-slate-800 border border-slate-700/50 hover:border-cyan-500/50 transition-all text-xs text-slate-300 hover:text-cyan-300 flex items-start gap-2 group">
+                        <i class="fa-solid fa-circle-question text-purple-400 mt-0.5 group-hover:scale-110 transition-transform"></i>
+                        <span>Difference: `resid` vs `serial` vs `index`</span>
+                    </button>
+
+                    <div class="text-[11px] text-slate-500 font-medium px-1 pt-2">TRAJECTORY & ANALYSIS</div>
+                    <button onclick="sendQuickPrompt('Write a complete VMD Tcl script to calculate backbone RMSD over a trajectory and write results to a text file.')" 
+                        class="w-full text-left p-2 rounded-lg bg-slate-800/60 hover:bg-slate-800 border border-slate-700/50 hover:border-cyan-500/50 transition-all text-xs text-slate-300 hover:text-cyan-300 flex items-start gap-2 group">
+                        <i class="fa-solid fa-chart-line text-emerald-400 mt-0.5 group-hover:scale-110 transition-transform"></i>
+                        <span>Write Tcl script for Trajectory RMSD</span>
+                    </button>
+
+                    <button onclick="sendQuickPrompt('How do I fix broken molecules and periodic boundary wrapping using PBCTools in VMD (`pbc wrap`)?')" 
+                        class="w-full text-left p-2 rounded-lg bg-slate-800/60 hover:bg-slate-800 border border-slate-700/50 hover:border-cyan-500/50 transition-all text-xs text-slate-300 hover:text-cyan-300 flex items-start gap-2 group">
+                        <i class="fa-solid fa-cube text-amber-400 mt-0.5 group-hover:scale-110 transition-transform"></i>
+                        <span>PBC boundary wrapping (`pbc wrap`)</span>
+                    </button>
+
+                    <button onclick="sendQuickPrompt('Show me how to calculate hydrogen bonds over a trajectory using VMD measure hbonds.')" 
+                        class="w-full text-left p-2 rounded-lg bg-slate-800/60 hover:bg-slate-800 border border-slate-700/50 hover:border-cyan-500/50 transition-all text-xs text-slate-300 hover:text-cyan-300 flex items-start gap-2 group">
+                        <i class="fa-solid fa-atom text-sky-400 mt-0.5 group-hover:scale-110 transition-transform"></i>
+                        <span>Hydrogen Bond Analysis Tcl Script</span>
+                    </button>
+
+                    <div class="text-[11px] text-slate-500 font-medium px-1 pt-2">RENDERING & GRAPHICS</div>
+                    <button onclick="sendQuickPrompt('Provide exact Tcl script commands to set up a publication quality Tachyon ray-traced render with ambient occlusion.')" 
+                        class="w-full text-left p-2 rounded-lg bg-slate-800/60 hover:bg-slate-800 border border-slate-700/50 hover:border-cyan-500/50 transition-all text-xs text-slate-300 hover:text-cyan-300 flex items-start gap-2 group">
+                        <i class="fa-solid fa-camera-retro text-rose-400 mt-0.5 group-hover:scale-110 transition-transform"></i>
+                        <span>Publication High-Res Tachyon Render</span>
+                    </button>
+                </div>
+
+                <!-- Pro Tip Footer -->
+                <div class="p-3 bg-slate-950/80 border-t border-slate-800 text-[11px] text-slate-400 flex items-center gap-2">
+                    <i class="fa-solid fa-lightbulb text-amber-400 text-sm shrink-0"></i>
+                    <span>Pro-tip: Click any code block in responses to instantly copy VMD commands.</span>
+                </div>
+            </aside>
+
+            <!-- Main Chat Stream Area -->
+            <div class="flex-1 flex flex-col h-full overflow-hidden bg-slate-950/30">
+                <!-- Message List -->
+                <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4">
+                    <!-- Welcome Initial Message -->
+                    <div class="flex items-start gap-3 max-w-3xl">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-600 to-emerald-500 flex items-center justify-center text-slate-950 font-bold text-sm shrink-0">
+                            <i class="fa-solid fa-atom"></i>
+                        </div>
+                        <div class="bg-slate-900 border border-slate-800 rounded-2xl rounded-tl-none p-4 text-sm text-slate-200 shadow-lg">
+                            <h3 class="font-semibold text-cyan-400 mb-1 flex items-center gap-2">
+                                Welcome to VMD Assistant AI! 🧪
+                            </h3>
+                            <p class="text-slate-300 leading-relaxed mb-3">
+                                I am your specialized AI assistant trained in <strong>Visual Molecular Dynamics (VMD)</strong>, Tcl scripting, selection algebra, trajectory analysis, and structure rendering.
+                            </p>
+                            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs text-slate-400 space-y-1">
+                                <div class="text-slate-300 font-medium">Quick examples you can ask:</div>
+                                <div>• "How do I select atom range 4683 to 5231?"</div>
+                                <div>• "Give me a Tcl loop to align each frame to frame 0 protein backbone."</div>
+                                <div>• "How to draw solvent accessible surface area (SASA) over time?"</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Input Controls -->
+                <div class="p-3 bg-slate-900/90 border-t border-slate-800 shrink-0">
+                    <form id="chat-form" onsubmit="handleChatSubmit(event)" class="relative flex items-center">
+                        <textarea id="chat-input" rows="1" placeholder="Ask anything about VMD commands, Tcl scripts, atom selections..." 
+                            class="w-full bg-slate-950 text-slate-100 placeholder-slate-500 text-sm rounded-xl pl-4 pr-24 py-3 border border-slate-800 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none resize-none min-h-[48px] max-h-32 transition-all"
+                            onkeydown="if(event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); handleChatSubmit(event); }"></textarea>
+                        
+                        <div class="absolute right-2 flex items-center space-x-1">
+                            <button type="submit" id="send-btn" class="bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs transition-all flex items-center gap-1.5 shadow-md shadow-cyan-600/20">
+                                <span>Send</span>
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <div class="flex items-center justify-between text-[11px] text-slate-500 mt-2 px-1">
+                        <span>Powered by Gemini 3 Flash AI • VMD Tcl Knowledge Engine</span>
+                        <span class="flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Ready
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: VMD CHEAT-SHEET EXPLORER -->
+        <section id="view-cheatsheet" class="h-full flex flex-col p-4 md:p-6 overflow-hidden hidden">
+            <div class="max-w-6xl mx-auto w-full flex flex-col h-full space-y-4">
+                
+                <!-- Header & Search Bar -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900 p-4 rounded-2xl border border-slate-800 shrink-0">
+                    <div>
+                        <h2 class="text-lg font-bold text-cyan-400 flex items-center gap-2">
+                            <i class="fa-solid fa-book-bookmark text-teal-400"></i> VMD Command & Syntax Reference
+                        </h2>
+                        <p class="text-xs text-slate-400">Search and filter quick syntax snippets for VMD commands & Tcl scripts.</p>
+                    </div>
+
+                    <div class="relative w-full md:w-80">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+                        <input type="text" id="cheatsheet-search" oninput="filterCheatSheet()" placeholder="Search keywords e.g. resid, rmsd, pbc..." 
+                            class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-200 placeholder-slate-500 focus:border-cyan-500 outline-none">
+                    </div>
+                </div>
+
+                <!-- Category Filters -->
+                <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs shrink-0" id="cheatsheet-categories">
+                    <button onclick="setCheatCategory('all')" class="cat-btn px-3 py-1.5 rounded-lg bg-cyan-600 text-white font-medium transition-all" data-cat="all">All Commands</button>
+                    <button onclick="setCheatCategory('selections')" class="cat-btn px-3 py-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition-all" data-cat="selections">Atom Selections</button>
+                    <button onclick="setCheatCategory('trajectory')" class="cat-btn px-3 py-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition-all" data-cat="trajectory">Trajectory & Analysis</button>
+                    <button onclick="setCheatCategory('pbc')" class="cat-btn px-3 py-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition-all" data-cat="pbc">PBCTools (Box/Wrap)</button>
+                    <button onclick="setCheatCategory('tcl')" class="cat-btn px-3 py-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition-all" data-cat="tcl">Tcl Automation</button>
+                    <button onclick="setCheatCategory('graphics')" class="cat-btn px-3 py-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition-all" data-cat="graphics">Rendering & Reps</button>
+                </div>
+
+                <!-- Grid of Command Reference Cards -->
+                <div id="cheatsheet-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto flex-1 pr-1 pb-6">
+                    <!-- Cards will be populated dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: SAVED TCL SNIPPETS -->
+        <section id="view-snippets" class="h-full flex flex-col p-4 md:p-6 overflow-hidden hidden">
+            <div class="max-w-5xl mx-auto w-full flex flex-col h-full space-y-4">
+                <div class="flex items-center justify-between bg-slate-900 p-4 rounded-2xl border border-slate-800 shrink-0">
+                    <div>
+                        <h2 class="text-lg font-bold text-emerald-400 flex items-center gap-2">
+                            <i class="fa-solid fa-code text-emerald-400"></i> My Saved VMD Tcl Snippets
+                        </h2>
+                        <p class="text-xs text-slate-400">Cloud-synced custom VMD scripts and useful command snippets.</p>
+                    </div>
+
+                    <button onclick="openNewSnippetModal()" class="bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold px-3.5 py-2 rounded-xl text-xs transition-all flex items-center gap-2 shadow-lg shadow-emerald-600/20">
+                        <i class="fa-solid fa-plus"></i> New Snippet
+                    </button>
+                </div>
+
+                <div id="snippets-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto flex-1 pb-6">
+                    <!-- Dynamic snippet cards -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: GITHUB PAGES DEPLOYMENT GUIDE -->
+        <section id="view-deploy" class="h-full flex flex-col p-4 md:p-6 overflow-y-auto hidden">
+            <div class="max-w-4xl mx-auto w-full space-y-6 pb-12">
+                <div class="bg-gradient-to-r from-slate-900 via-slate-900 to-cyan-950 p-6 rounded-2xl border border-slate-800">
+                    <div class="flex items-center gap-3 mb-2">
+                        <i class="fa-brands fa-github text-3xl text-cyan-400"></i>
+                        <div>
+                            <h2 class="text-xl font-bold text-white">How to Host VMD Assistant on GitHub Pages</h2>
+                            <p class="text-xs text-slate-400">Follow these steps to deploy your custom VMD AI Assistant freely on `username.github.io`</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 1 -->
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl space-y-3">
+                    <div class="flex items-center gap-2 text-cyan-400 font-bold text-sm">
+                        <span class="w-6 h-6 rounded-full bg-cyan-950 border border-cyan-700 flex items-center justify-center text-xs">1</span>
+                        Create a GitHub Repository
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Create a new repository on GitHub named <code>vmd-assistant</code> or <code>vmd-assistant.github.io</code>. Make sure it is set to <strong>Public</strong>.
+                    </p>
+                    <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 font-mono text-xs text-slate-300">
+                        git init<br>
+                        git add index.html<br>
+                        git commit -m "Deploy VMD Assistant AI"<br>
+                        git branch -M main<br>
+                        git remote add origin https://github.com/YOUR-USERNAME/vmd-assistant.git<br>
+                        git push -u origin main
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl space-y-3">
+                    <div class="flex items-center gap-2 text-teal-400 font-bold text-sm">
+                        <span class="w-6 h-6 rounded-full bg-teal-950 border border-teal-700 flex items-center justify-center text-xs">2</span>
+                        Enable GitHub Pages in Repository Settings
+                    </div>
+                    <ol class="list-disc list-inside text-xs text-slate-300 space-y-1">
+                        <li>Navigate to your GitHub repository -> <strong>Settings</strong> tab.</li>
+                        <li>Scroll down to the <strong>Pages</strong> section on the left sidebar.</li>
+                        <li>Under <strong>Build and deployment</strong>, set Source to <strong>Deploy from a branch</strong>.</li>
+                        <li>Select <code>main</code> branch and <code>/ (root)</code> directory, then click <strong>Save</strong>.</li>
+                        <li>Your site will be live at <code>https://YOUR-USERNAME.github.io/vmd-assistant/</code> within 1-2 minutes!</li>
+                    </ol>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl space-y-3">
+                    <div class="flex items-center gap-2 text-emerald-400 font-bold text-sm">
+                        <span class="w-6 h-6 rounded-full bg-emerald-950 border border-emerald-700 flex items-center justify-center text-xs">3</span>
+                        Firebase Auth Domain Authorization (Optional for Google Login)
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        To enable Google or Email Authentication on your hosted GitHub Pages domain:
+                    </p>
+                    <ul class="list-disc list-inside text-xs text-slate-300 space-y-1">
+                        <li>Go to <a href="https://console.firebase.google.com" target="_blank" class="text-cyan-400 underline">Firebase Console</a> -> Authentication -> Settings.</li>
+                        <li>Under <strong>Authorized domains</strong>, click <strong>Add domain</strong>.</li>
+                        <li>Enter <code>YOUR-USERNAME.github.io</code> and save.</li>
+                    </ul>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl space-y-3">
+                    <div class="flex items-center gap-2 text-purple-400 font-bold text-sm">
+                        <span class="w-6 h-6 rounded-full bg-purple-950 border border-purple-700 flex items-center justify-center text-xs">4</span>
+                        Gemini AI API Key Configuration
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Users visiting your website can either click the key icon <i class="fa-solid fa-key text-cyan-400"></i> in the top right to store their own free Google Gemini API key safely in their browser's local storage, or you can hardcode a fallback key in the script settings.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL 1: AUTHENTICATION -->
+    <div id="modal-auth" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl p-6 shadow-2xl relative space-y-4">
+            <button onclick="closeAuthModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white text-sm">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center space-y-1">
+                <div class="w-12 h-12 rounded-xl bg-cyan-950 border border-cyan-800 text-cyan-400 flex items-center justify-center mx-auto text-xl">
+                    <i class="fa-solid fa-user-astronaut"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white">VMD Assistant Account</h3>
+                <p class="text-xs text-slate-400">Sign in to save custom Tcl scripts & chat logs across devices</p>
+            </div>
+
+            <div class="space-y-3 pt-2">
+                <button onclick="handleGoogleSignIn()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-medium py-2.5 rounded-xl text-xs border border-slate-700 flex items-center justify-center gap-2 transition-all">
+                    <i class="fa-brands fa-google text-red-400 text-sm"></i> Continue with Google
+                </button>
+                
+                <div class="flex items-center my-2">
+                    <div class="flex-1 border-t border-slate-800"></div>
+                    <span class="px-3 text-[11px] text-slate-500">OR EMAIL</span>
+                    <div class="flex-1 border-t border-slate-800"></div>
+                </div>
+
+                <div class="space-y-2">
+                    <input type="email" id="auth-email" placeholder="Email Address" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-200 outline-none focus:border-cyan-500">
+                    <input type="password" id="auth-password" placeholder="Password" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-200 outline-none focus:border-cyan-500">
+                </div>
+
+                <div class="flex gap-2 pt-1">
+                    <button onclick="handleEmailAuth('login')" class="flex-1 bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold py-2 rounded-xl text-xs transition-all">
+                        Sign In
+                    </button>
+                    <button onclick="handleEmailAuth('signup')" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium py-2 rounded-xl text-xs transition-all border border-slate-700">
+                        Sign Up
+                    </button>
+                </div>
+
+                <button onclick="handleAnonymousSignIn()" class="w-full text-center text-xs text-slate-400 hover:text-cyan-400 py-1 transition-colors">
+                    Continue as Guest
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: GEMINI API KEY SETTINGS -->
+    <div id="modal-apikey" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl p-6 shadow-2xl relative space-y-4">
+            <button onclick="closeApiKeyModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white text-sm">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-cyan-950 border border-cyan-800 text-cyan-400 flex items-center justify-center text-lg shrink-0">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-white">AI Gateway Settings</h3>
+                    <p class="text-xs text-slate-400">Configure AI generation key for GitHub Pages deployment</p>
+                </div>
+            </div>
+
+            <p class="text-xs text-slate-300 leading-relaxed">
+                If you are running this app locally or on your own GitHub Pages site, enter your free Google AI Gateway below.
+            </p>
+
+            <div>
+                <label class="block text-[11px] text-slate-400 font-medium mb-1">YOUR GEMINI API KEY</label>
+                <input type="password" id="custom-api-key" placeholder="Managed by secure AI gateway" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-200 outline-none focus:border-cyan-500 font-mono">
+            </div>
+
+            <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1">
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-cyan-400 hover:underline flex items-center gap-1">
+                    Get Free AI Gateway <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+            </div>
+
+            <div class="flex gap-2 pt-2">
+                <button onclick="saveCustomApiKey()" class="w-full bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold py-2.5 rounded-xl text-xs transition-all">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: NEW SNIPPET MODAL -->
+    <div id="modal-snippet" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-2xl p-6 shadow-2xl relative space-y-4">
+            <button onclick="closeSnippetModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white text-sm">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 class="text-base font-bold text-emerald-400 flex items-center gap-2">
+                <i class="fa-solid fa-code"></i> Save VMD Tcl Snippet
+            </h3>
+
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-[11px] text-slate-400 mb-1">SNIPPET TITLE</label>
+                    <input type="text" id="snippet-title" placeholder="e.g. Backbone Trajectory Alignment Script" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-200 outline-none focus:border-emerald-500">
+                </div>
+
+                <div>
+                    <label class="block text-[11px] text-slate-400 mb-1">CATEGORY / TAG</label>
+                    <select id="snippet-tag" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-200 outline-none focus:border-emerald-500">
+                        <option value="Atom Selection">Atom Selection</option>
+                        <option value="Trajectory RMSD/RMSF">Trajectory Analysis</option>
+                        <option value="PBC Wrap">PBCTools</option>
+                        <option value="Rendering">Graphics & Rendering</option>
+                        <option value="Tcl Loop">Tcl Scripting</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] text-slate-400 mb-1">TCL SCRIPT CODE</label>
+                    <textarea id="snippet-code" rows="6" placeholder="set sel [atomselect top 'protein and name CA']..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs font-mono text-cyan-300 outline-none focus:border-emerald-500 resize-none"></textarea>
+                </div>
+            </div>
+
+            <button onclick="saveNewSnippet()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold py-2.5 rounded-xl text-xs transition-all">
+                Save to Library
+            </button>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 border border-cyan-500/50 text-slate-100 text-xs px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-cyan-400 text-base"></i>
+        <span id="toast-message">Notification message</span>
+    </div>
+
+    <!-- Firebase Module Setup & Application Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            signInAnonymously, 
+            signInWithCustomToken, 
+            signInWithPopup, 
+            GoogleAuthProvider, 
+            signInWithEmailAndPassword, 
+            createUserWithEmailAndPassword, 
+            signOut, 
+            onAuthStateChanged 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            collection, 
+            setDoc, 
+            addDoc, 
+            deleteDoc, 
+            getDocs, 
+            onSnapshot 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global Firebase Config Initialization
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'vmd-assistant-app';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            apiKey: "REPLACE_WITH_FIREBASE_WEB_API_KEY",
+            authDomain: "vmd-assistant.firebaseapp.com",
+            projectId: "vmd-assistant",
+            storageBucket: "vmd-assistant.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef123456"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Global State Variables
+        window.currentUser = null;
+        window.db = db;
+        window.appId = appId;
+        window.auth = auth;
+
+        // Auto Authenticate on Load according to Rule 3
+        async function initAuth() {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else if (!auth.currentUser) {
+                    await signInAnonymously(auth);
+                }
+            } catch (err) {
+                console.warn("Auth initialization fallback:", err);
+            }
+        }
+
+        initAuth();
+
+        // Auth Listener
+        onAuthStateChanged(auth, (user) => {
+            window.currentUser = user;
+            const userBtnText = document.getElementById('user-display-name');
+            if (user && !user.isAnonymous) {
+                userBtnText.textContent = user.displayName || user.email || 'User Account';
+            } else {
+                userBtnText.textContent = 'Guest User';
+            }
+            if (user) {
+                loadUserSnippets();
+            }
+        });
+
+        // Global Handlers attached to window
+        window.handleGoogleSignIn = async () => {
+            try {
+                const provider = new GoogleAuthProvider();
+                await signInWithPopup(auth, provider);
+                closeAuthModal();
+                showToast("Signed in with Google!");
+            } catch (err) {
+                showToast("Auth failed: " + err.message, true);
+            }
+        };
+
+        window.handleEmailAuth = async (type) => {
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            if (!email || !password) {
+                showToast("Please enter email & password", true);
+                return;
+            }
+            try {
+                if (type === 'signup') {
+                    await createUserWithEmailAndPassword(auth, email, password);
+                    showToast("Account created successfully!");
+                } else {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    showToast("Signed in successfully!");
+                }
+                closeAuthModal();
+            } catch (err) {
+                showToast(err.message, true);
+            }
+        };
+
+        window.handleAnonymousSignIn = async () => {
+            try {
+                await signInAnonymously(auth);
+                closeAuthModal();
+                showToast("Continuing as Guest");
+            } catch (err) {
+                showToast("Guest login failed", true);
+            }
+        };
+
+        // Real-time Snippets loading using mandatory Firestore paths
+        window.loadUserSnippets = () => {
+            if (!window.currentUser) return;
+            const uid = window.currentUser.uid;
+            
+            // STRICT PATH: /artifacts/{appId}/users/{userId}/saved_snippets
+            const snippetsRef = collection(db, 'artifacts', appId, 'users', uid, 'saved_snippets');
+            
+            onSnapshot(snippetsRef, (snapshot) => {
+                const snippetsArr = [];
+                snapshot.forEach(docSnap => {
+                    snippetsArr.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                renderSnippets(snippetsArr);
+            }, (error) => {
+                console.error("Firestore snippets listener error:", error);
+            });
+        };
+    </script>
+
+    <script>
+        /* ==================== VMD CHEAT SHEET DATABASE ==================== */
+        const VMD_COMMANDS = [
+            {
+                id: 'resid-range',
+                category: 'selections',
+                title: 'Residue Sequence Range',
+                syntax: 'resid <start> to <end>',
+                example: 'set sel [atomselect top "resid 10 to 50"]',
+                description: 'Selects atoms matching PDB sequence numbers 10 through 50.',
+                tags: ['resid', 'range', 'pdb']
+            },
+            {
+                id: 'serial-range',
+                category: 'selections',
+                title: 'Atom Serial Number Range',
+                syntax: 'serial <start> to <end>',
+                example: 'set sel [atomselect top "serial 4683 to 5231"]',
+                description: 'Selects exact atom IDs matching columns 7-11 in the original PDB file.',
+                tags: ['serial', 'atom id', 'pdb']
+            },
+            {
+                id: 'index-range',
+                category: 'selections',
+                title: 'VMD Zero-Based Atom Index',
+                syntax: 'index <start> to <end>',
+                example: 'set sel [atomselect top "index 0 to 500"]',
+                description: 'Selects atoms based on VMD zero-indexed array order (0 to N-1).',
+                tags: ['index', 'zero-indexed']
+            },
+            {
+                id: 'within-distance',
+                category: 'selections',
+                title: 'Distance Neighborhood',
+                syntax: 'within <distance> of <selection>',
+                example: 'set sel [atomselect top "resname LIG and within 5 of protein"]',
+                description: 'Finds atoms within specified Angstrom radius of target molecule.',
+                tags: ['within', 'distance', 'binding site']
+            },
+            {
+                id: 'same-residue',
+                category: 'selections',
+                title: 'Complete Residues in Pocket',
+                syntax: 'same residue as (<selection>)',
+                example: 'set pocket [atomselect top "same residue as (within 5 of resname LIG)"]',
+                description: 'Selects ALL atoms of residues that have at least one atom within 5Å.',
+                tags: ['same residue as', 'pocket', 'binding site']
+            },
+            {
+                id: 'rmsd-calc',
+                category: 'trajectory',
+                title: 'Calculate Structure RMSD',
+                syntax: 'measure rmsd <sel1> <sel2>',
+                example: 'set rmsd [measure rmsd $sel_frame $sel_ref]',
+                description: 'Calculates Root Mean Square Deviation between two atom selections.',
+                tags: ['rmsd', 'trajectory', 'measure']
+            },
+            {
+                id: 'hbonds-calc',
+                category: 'trajectory',
+                title: 'Measure Hydrogen Bonds',
+                syntax: 'measure hbonds <cutoff_dist> <cutoff_angle> <sel1> [<sel2>]',
+                example: 'set hbonds [measure hbonds 3.0 20 $prot $wat]',
+                description: 'Calculates hydrogen bonds with distance (<3.0Å) and angle (<20°) thresholds.',
+                tags: ['hbonds', 'hydrogen bonds', 'measure']
+            },
+            {
+                id: 'pbc-wrap',
+                category: 'pbc',
+                title: 'Periodic Boundary Wrapping',
+                syntax: 'pbc wrap -all -compound fragment -center com -centersel "protein"',
+                example: 'pbc wrap -all -compound fragment -center com -centersel "protein"',
+                description: 'Re-wraps water/ions across periodic simulation box boundaries relative to protein COM.',
+                tags: ['pbc', 'wrap', 'pbctools', 'boundary']
+            },
+            {
+                id: 'pbc-box',
+                category: 'pbc',
+                title: 'Display Simulation Unit Cell Box',
+                syntax: 'pbc box -color white -width 1.5',
+                example: 'pbc box -color cyan -width 2.0',
+                description: 'Draws a 3D bounding box indicating periodic boundary parameters.',
+                tags: ['pbc', 'box', 'dimensions']
+            },
+            {
+                id: 'tcl-frame-loop',
+                category: 'tcl',
+                title: 'Trajectory Frame Iteration Loop',
+                syntax: 'for {set i 0} {$i < $num_frames} {incr i} { ... }',
+                example: 'set num [molinfo top get numframes]\nfor {set i 0} {$i < $num} {incr i} {\n  $sel frame $i\n  $sel update\n}',
+                description: 'Standard Tcl control loop for analyzing trajectory frame-by-frame.',
+                tags: ['tcl', 'loop', 'trajectory', 'frames']
+            },
+            {
+                id: 'tachyon-render',
+                category: 'graphics',
+                title: 'High-Resolution Tachyon Render',
+                syntax: 'render Tachyon <filename> "<path_to_tachyon>" -res <width> <height>',
+                example: 'render Tachyon render.dat "/usr/local/lib/vmd/tachyon_LINUXAMD64" -res 1920 1080 -format TARGA %s -o %s.tga',
+                description: 'Executes high-quality Tachyon ray-tracer render engine with realistic shadows.',
+                tags: ['render', 'tachyon', 'raytracing', 'hd']
+            }
+        ];
+
+        // Custom API Key storage
+        let customGeminiKey = "";
+
+        /* ==================== SYSTEM PROMPT FOR GEMINI AI ==================== */
+        const VMD_SYSTEM_PROMPT = `
+You are VMD Assistant AI, a world-class computational chemist and expert developer in Visual Molecular Dynamics (VMD) software, Tcl scripting, atom selection algebra, trajectory analysis, and structure visualization.
+
+Your core expertise includes:
+1. Atom Selection Syntax:
+   - 'resid': Sequence residue numbers from source PDB. (e.g. resid 10 to 50)
+   - 'serial': Exact atom numbers matching PDB atom IDs (e.g. serial 4683 to 5231).
+   - 'index': Zero-based VMD internal atom index.
+   - 'chain', 'resname', 'name', 'within X of', 'same residue as'.
+2. Trajectory Analysis in Tcl:
+   - Calculating RMSD, RMSF, hydrogen bonds ('measure hbonds'), SASA ('measure sasa'), center of mass ('measure center weight mass'), salt bridges.
+   - Writing automated Tcl scripts to loop through frames and export data to text files.
+3. PBCTools:
+   - Fixing broken molecules, wrapping water/ions using 'pbc wrap', setting box parameters using 'pbc box'.
+4. Graphics & Rendering:
+   - Creating representations programmatically using 'mol representation', rendering high-resolution images via Tachyon, OSPRay, or PovRay.
+
+Instructions for formatting:
+- Provide clear, concise explanations.
+- ALWAYS place VMD Tcl code inside clean markdown codeblocks (\`\`\`tcl ... \`\`\`).
+- Explicitly highlight key selection keywords like 'resid', 'serial', 'index' when relevant.
+`;
+
+        /* ==================== UI TAB SWITCHING ==================== */
+        function switchTab(tab) {
+            const views = ['chat', 'cheatsheet', 'snippets', 'deploy'];
+            views.forEach(v => {
+                const el = document.getElementById(`view-${v}`);
+                const btn = document.getElementById(`tab-btn-${v}`);
+                const mobBtn = document.getElementById(`mob-tab-${v}`);
+
+                if (v === tab) {
+                    el.classList.remove('hidden');
+                    if (btn) {
+                        btn.className = "px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-2 bg-cyan-600 text-white shadow-sm";
+                    }
+                    if (mobBtn) {
+                        mobBtn.className = "px-3 py-1 rounded-md whitespace-nowrap bg-cyan-600 text-white";
+                    }
+                } else {
+                    el.classList.add('hidden');
+                    if (btn) {
+                        btn.className = "px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-2";
+                    }
+                    if (mobBtn) {
+                        mobBtn.className = "px-3 py-1 rounded-md whitespace-nowrap text-slate-400 hover:bg-slate-800";
+                    }
+                }
+            });
+
+            if (tab === 'cheatsheet') renderCheatSheetGrid(VMD_COMMANDS);
+        }
+
+        /* ==================== AI CHATBOT LOGIC ==================== */
+        const chatMessages = document.getElementById('chat-messages');
+
+        function appendMessage(role, content) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `flex items-start gap-3 max-w-3xl ${role === 'user' ? 'ml-auto flex-row-reverse' : ''}`;
+
+            const avatar = document.createElement('div');
+            avatar.className = `w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 ${
+                role === 'user' 
+                    ? 'bg-slate-800 border border-slate-700 text-cyan-400' 
+                    : 'bg-gradient-to-tr from-cyan-600 to-emerald-500 text-slate-950'
+            }`;
+            avatar.innerHTML = role === 'user' ? '<i class="fa-solid fa-user"></i>' : '<i class="fa-solid fa-atom"></i>';
+
+            const bubble = document.createElement('div');
+            bubble.className = `p-4 text-sm rounded-2xl shadow-lg border ${
+                role === 'user'
+                    ? 'bg-cyan-950/80 border-cyan-800 text-cyan-100 rounded-tr-none'
+                    : 'bg-slate-900 border-slate-800 text-slate-200 rounded-tl-none markdown-body'
+            }`;
+
+            if (role === 'user') {
+                bubble.textContent = content;
+            } else {
+                bubble.innerHTML = marked.parse(content);
+                // Attach copy buttons to code blocks
+                setTimeout(() => {
+                    bubble.querySelectorAll('pre').forEach(pre => {
+                        if (!pre.querySelector('.copy-btn')) {
+                            const copyBtn = document.createElement('button');
+                            copyBtn.className = "copy-btn absolute top-2 right-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] px-2 py-1 rounded border border-slate-700 flex items-center gap-1 transition-all";
+                            copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy';
+                            copyBtn.onclick = () => {
+                                const code = pre.querySelector('code')?.innerText || pre.innerText;
+                                copyToClipboard(code);
+                            };
+                            pre.appendChild(copyBtn);
+                        }
+                    });
+                    hljs.highlightAll();
+                }, 50);
+            }
+
+            msgDiv.appendChild(avatar);
+            msgDiv.appendChild(bubble);
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return bubble;
+        }
+
+        async function handleChatSubmit(e) {
+            if (e) e.preventDefault();
+            const input = document.getElementById('chat-input');
+            const query = input.value.trim();
+            if (!query) return;
+
+            input.value = '';
+            appendMessage('user', query);
+
+            // Show Loading Bubble
+            const loadingBubble = appendMessage('assistant', '<i class="fa-solid fa-spinner animate-spin text-cyan-400 mr-2"></i> Thinking & drafting VMD response...');
+
+            try {
+                const responseText = await callGeminiAPI(query);
+                loadingBubble.innerHTML = marked.parse(responseText);
+                
+                // Add code block copy buttons
+                loadingBubble.querySelectorAll('pre').forEach(pre => {
+                    const copyBtn = document.createElement('button');
+                    copyBtn.className = "copy-btn absolute top-2 right-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] px-2 py-1 rounded border border-slate-700 flex items-center gap-1 transition-all";
+                    copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy';
+                    copyBtn.onclick = () => {
+                        const code = pre.querySelector('code')?.innerText || pre.innerText;
+                        copyToClipboard(code);
+                    };
+                    pre.appendChild(copyBtn);
+                });
+                hljs.highlightAll();
+            } catch (err) {
+                loadingBubble.innerHTML = `<span class="text-rose-400"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Error generating response: ${err.message}</span>`;
+            }
+        }
+
+        async function callGeminiAPI(userQuery) {
+            const apiKey = customGeminiKey || "";
+            const apiUrl = window.SCI_AI_GATEWAY;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: VMD_SYSTEM_PROMPT }] }
+            };
+
+            // Implement exponential backoff retry logic
+            let attempts = 0;
+            const maxAttempts = 3;
+            let delay = 1000;
+
+            while (attempts < maxAttempts) {
+                try {
+                    const res = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!res.ok) {
+                        const errData = await res.json();
+                        throw new Error(errData.error?.message || `HTTP ${res.status}`);
+                    }
+
+                    const data = await res.json();
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response received.";
+                } catch (err) {
+                    attempts++;
+                    if (attempts >= maxAttempts) throw err;
+                    await new Promise(r => setTimeout(r, delay));
+                    delay *= 2;
+                }
+            }
+        }
+
+        function sendQuickPrompt(text) {
+            switchTab('chat');
+            document.getElementById('chat-input').value = text;
+            handleChatSubmit();
+        }
+
+        function clearChat() {
+            chatMessages.innerHTML = `
+                <div class="flex items-start gap-3 max-w-3xl">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-600 to-emerald-500 flex items-center justify-center text-slate-950 font-bold text-sm shrink-0">
+                        <i class="fa-solid fa-atom"></i>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl rounded-tl-none p-4 text-sm text-slate-200 shadow-lg">
+                        <p class="text-slate-300">Chat history cleared. How can I help you with VMD today?</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        /* ==================== CHEAT SHEET LOGIC ==================== */
+        let activeCheatCategory = 'all';
+
+        function renderCheatSheetGrid(items) {
+            const grid = document.getElementById('cheatsheet-grid');
+            grid.innerHTML = '';
+
+            if (items.length === 0) {
+                grid.innerHTML = '<div class="col-span-full text-center text-slate-500 py-12">No matching VMD syntax found.</div>';
+                return;
+            }
+
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-900 border border-slate-800 hover:border-cyan-500/50 p-4 rounded-2xl transition-all flex flex-col justify-between group";
+                card.innerHTML = `
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-slate-800 text-cyan-400 border border-slate-700">
+                                ${item.category}
+                            </span>
+                            <button onclick="askAIAboutCommand('${item.title}', '${item.syntax}')" title="Ask AI to explain or generate script" class="text-xs text-slate-400 hover:text-cyan-300">
+                                <i class="fa-solid fa-sparkles mr-1"></i> Ask AI
+                            </button>
+                        </div>
+                        <h3 class="font-bold text-slate-100 text-sm group-hover:text-cyan-300 transition-colors">${item.title}</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">${item.description}</p>
+                        <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800/80 font-mono text-xs text-cyan-300 overflow-x-auto relative">
+                            <code>${item.example}</code>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between pt-3 mt-2 border-t border-slate-800/60 text-xs">
+                        <div class="flex gap-1">
+                            ${item.tags.map(t => `<span class="text-[10px] text-slate-500">#${t}</span>`).join(' ')}
+                        </div>
+                        <button onclick="copyToClipboard('${item.example}')" class="text-slate-400 hover:text-white transition-colors">
+                            <i class="fa-regular fa-copy"></i> Copy
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function setCheatCategory(cat) {
+            activeCheatCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if (btn.dataset.cat === cat) {
+                    btn.className = "cat-btn px-3 py-1.5 rounded-lg bg-cyan-600 text-white font-medium transition-all";
+                } else {
+                    btn.className = "cat-btn px-3 py-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition-all";
+                }
+            });
+            filterCheatSheet();
+        }
+
+        function filterCheatSheet() {
+            const query = document.getElementById('cheatsheet-search').value.toLowerCase();
+            const filtered = VMD_COMMANDS.filter(item => {
+                const matchCat = activeCheatCategory === 'all' || item.category === activeCheatCategory;
+                const matchQuery = item.title.toLowerCase().includes(query) ||
+                                   item.syntax.toLowerCase().includes(query) ||
+                                   item.description.toLowerCase().includes(query) ||
+                                   item.tags.some(t => t.toLowerCase().includes(query));
+                return matchCat && matchQuery;
+            });
+            renderCheatSheetGrid(filtered);
+        }
+
+        function askAIAboutCommand(title, syntax) {
+            sendQuickPrompt(`Explain how to use the VMD command '${title}' (syntax: \`${syntax}\`) with step-by-step examples and a Tcl script sample.`);
+        }
+
+        /* ==================== SAVED SNIPPETS LOGIC ==================== */
+        function renderSnippets(snippets) {
+            const container = document.getElementById('snippets-container');
+            container.innerHTML = '';
+
+            if (snippets.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 bg-slate-900 border border-slate-800 rounded-2xl">
+                        <i class="fa-solid fa-code text-3xl text-slate-600 mb-2"></i>
+                        <p class="text-sm text-slate-400">No saved snippets yet.</p>
+                        <p class="text-xs text-slate-500 mt-1">Click "New Snippet" above to add your favorite Tcl scripts.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            snippets.forEach(s => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-900 border border-slate-800 p-4 rounded-2xl flex flex-col justify-between space-y-3";
+                card.innerHTML = `
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800/50">${s.tag || 'Tcl'}</span>
+                            <button onclick="deleteSnippet('${s.id}')" class="text-slate-500 hover:text-rose-400 text-xs">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                        <h4 class="font-bold text-slate-100 text-sm">${s.title}</h4>
+                        <pre class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs font-mono text-cyan-300 overflow-x-auto max-h-40"><code>${escapeHtml(s.code)}</code></pre>
+                    </div>
+                    <div class="flex justify-end gap-2 pt-2 border-t border-slate-800">
+                        <button onclick="copyToClipboard(\`${escapeJsQuotes(s.code)}\`)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs rounded-lg flex items-center gap-1 transition-all">
+                            <i class="fa-regular fa-copy"></i> Copy Script
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        async function saveNewSnippet() {
+            if (!window.currentUser) {
+                showToast("Please sign in to save snippets", true);
+                openAuthModal();
+                return;
+            }
+
+            const title = document.getElementById('snippet-title').value.trim();
+            const tag = document.getElementById('snippet-tag').value;
+            const code = document.getElementById('snippet-code').value.trim();
+
+            if (!title || !code) {
+                showToast("Please provide both title and script code", true);
+                return;
+            }
+
+            try {
+                // STRICT PATH: /artifacts/{appId}/users/{userId}/saved_snippets
+                const uid = window.currentUser.uid;
+                const colRef = collection(window.db, 'artifacts', window.appId, 'users', uid, 'saved_snippets');
+                await addDoc(colRef, {
+                    title,
+                    tag,
+                    code,
+                    createdAt: new Date().toISOString()
+                });
+
+                closeSnippetModal();
+                showToast("Snippet saved to library!");
+                document.getElementById('snippet-title').value = '';
+                document.getElementById('snippet-code').value = '';
+            } catch (err) {
+                showToast("Failed to save snippet: " + err.message, true);
+            }
+        }
+
+        async function deleteSnippet(id) {
+            if (!window.currentUser) return;
+            try {
+                const uid = window.currentUser.uid;
+                const docRef = doc(window.db, 'artifacts', window.appId, 'users', uid, 'saved_snippets', id);
+                await deleteDoc(docRef);
+                showToast("Snippet deleted");
+            } catch (err) {
+                showToast("Error deleting: " + err.message, true);
+            }
+        }
+
+        /* ==================== UTILITY FUNCTIONS ==================== */
+        function copyToClipboard(text) {
+            // Fallback copy implementation as per system guidelines
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast("Copied to clipboard!");
+            } catch (err) {
+                showToast("Failed to copy text", true);
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastMsg.textContent = message;
+            if (isError) {
+                toast.className = toast.className.replace('border-cyan-500/50', 'border-rose-500/50');
+                toastIcon.className = 'fa-solid fa-triangle-exclamation text-rose-400 text-base';
+            } else {
+                toast.className = toast.className.replace('border-rose-500/50', 'border-cyan-500/50');
+                toastIcon.className = 'fa-solid fa-circle-check text-cyan-400 text-base';
+            }
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        function openAuthModal() { document.getElementById('modal-auth').classList.remove('hidden'); }
+        function closeAuthModal() { document.getElementById('modal-auth').classList.add('hidden'); }
+        
+        function openApiKeyModal() { 
+            document.getElementById('custom-api-key').value = customGeminiKey;
+            document.getElementById('modal-apikey').classList.remove('hidden'); 
+        }
+        function closeApiKeyModal() { document.getElementById('modal-apikey').classList.add('hidden'); }
+        
+        function openNewSnippetModal() { document.getElementById('modal-snippet').classList.remove('hidden'); }
+        function closeSnippetModal() { document.getElementById('modal-snippet').classList.add('hidden'); }
+
+        function saveCustomApiKey() {
+            const val = document.getElementById('custom-api-key').value.trim();
+            customGeminiKey = val;
+            closeApiKeyModal();
+            showToast(val ? "Gemini API key updated!" : "Using default API key");
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        function escapeJsQuotes(str) {
+            return str.replace(/`/g, '\\`').replace(/\$/g, '\\$');
+        }
+
+        // Initialize default view
+        window.addEventListener('DOMContentLoaded', () => {
+            renderCheatSheetGrid(VMD_COMMANDS);
+        });
+    </script>
+
+<script>
+// Public deployment: provider API keys are never collected or stored in this browser.
+function openApiKeyModal(){
+  const modal=document.getElementById('modal-apikey') || document.getElementById('api-modal');
+  if(modal){
+    const input=modal.querySelector('input[type="password"]');
+    const heading=modal.querySelector('h3');
+    if(input){input.value=''; input.placeholder='Managed by the secure AI gateway'; input.disabled=true;}
+    if(heading) heading.textContent='AI Gateway';
+    modal.classList.remove('hidden');
+  }
+}
+function saveCustomApiKey(){
+  const modal=document.getElementById('modal-apikey') || document.getElementById('api-modal');
+  if(modal) modal.classList.add('hidden');
+}
+</script>
+</body>
+</html>

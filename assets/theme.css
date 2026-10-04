@@ -1,0 +1,9 @@
+/* Scientific AI Assistants — shared visual layer */
+:root{--sci-bg:#070b12;--sci-panel:#0c1320;--sci-panel2:#101a2a;--sci-border:#1d2a3a;--sci-text:#e5edf6;--sci-muted:#8fa2b8;--sci-accent:#38bdf8;--sci-accent-soft:rgba(56,189,248,.12)}
+html{scroll-behavior:smooth}body{background:var(--sci-bg)!important;color:var(--sci-text);}
+button,input,textarea{transition:border-color .18s,background-color .18s,box-shadow .18s,transform .18s}
+button:hover{transform:translateY(-1px)}
+pre{scrollbar-width:thin}.sci-shell{background:linear-gradient(180deg,rgba(255,255,255,.025),transparent 30%)}
+.sci-badge{letter-spacing:.08em;text-transform:uppercase;font-size:10px;font-weight:700}
+.sci-brand-dot{box-shadow:0 0 24px var(--sci-accent-soft)}
+@media(max-width:767px){header{position:sticky;top:0}.prose{font-size:.92rem}}
