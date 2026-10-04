@@ -241,9 +241,97 @@
   .select-dark{background:#0B1822!important;border-color:#244754!important;color:#E6F4F1!important}
 </style>
 
+
+<style id="vmd-reference-ui">
+  html,body{width:100%;height:100%}
+  body{background:#020B12!important}
+  header{position:relative;z-index:20;box-shadow:0 1px 0 rgba(25,211,197,.08)}
+  aside{width:303px!important;min-width:303px!important}
+  .vmd-header-glow{
+    background:
+      radial-gradient(circle at 43% 45%,rgba(25,211,197,.13),transparent 18%),
+      radial-gradient(circle at 54% 55%,rgba(56,189,248,.12),transparent 19%),
+      linear-gradient(90deg,transparent 0%,rgba(0,204,255,.025) 50%,transparent 100%);
+  }
+  .vmd-header-glow:before,.vmd-header-glow:after{
+    content:"";position:absolute;border:1px solid rgba(25,211,197,.13);border-radius:50%;
+  }
+  .vmd-header-glow:before{width:420px;height:420px;left:39%;top:-185px;transform:rotate(24deg)}
+  .vmd-header-glow:after{width:310px;height:310px;left:51%;top:-125px;transform:rotate(-18deg)}
+  .vmd-molecule-art{
+    opacity:.8;
+    background:
+      radial-gradient(circle at 18% 50%,#19D3C5 0 2px,transparent 3px),
+      radial-gradient(circle at 28% 30%,#38BDF8 0 2px,transparent 3px),
+      radial-gradient(circle at 41% 62%,#19D3C5 0 3px,transparent 4px),
+      radial-gradient(circle at 55% 28%,#38BDF8 0 2px,transparent 3px),
+      radial-gradient(circle at 70% 58%,#19D3C5 0 2px,transparent 3px),
+      radial-gradient(circle at 82% 35%,#38BDF8 0 3px,transparent 4px);
+    filter:blur(.2px)
+  }
+  .vmd-molecule-art:before{
+    content:"";position:absolute;inset:5% 8%;
+    background:
+      linear-gradient(28deg,transparent 48%,rgba(25,211,197,.22) 49%,rgba(25,211,197,.22) 50%,transparent 51%),
+      linear-gradient(-25deg,transparent 48%,rgba(56,189,248,.18) 49%,rgba(56,189,248,.18) 50%,transparent 51%);
+    background-size:130px 85px,170px 110px;
+    opacity:.7
+  }
+  .vmd-hero-card{
+    min-height:155px;
+    background:
+      radial-gradient(circle at 92% 48%,rgba(25,211,197,.25),transparent 18%),
+      radial-gradient(circle at 82% 70%,rgba(56,189,248,.14),transparent 22%),
+      linear-gradient(105deg,rgba(11,37,48,.97),rgba(8,25,34,.92));
+    border:1px solid rgba(25,211,197,.32)!important;
+    box-shadow:0 18px 55px rgba(0,0,0,.22), inset 0 0 35px rgba(25,211,197,.035);
+  }
+  .vmd-hero-molecule{
+    background:
+      radial-gradient(circle at 70% 40%,rgba(25,211,197,.24),transparent 18%),
+      radial-gradient(circle at 82% 62%,rgba(56,189,248,.18),transparent 20%),
+      repeating-radial-gradient(ellipse at 75% 50%,transparent 0 18px,rgba(25,211,197,.07) 19px 20px);
+    opacity:.9
+  }
+  .vmd-user-bubble{
+    color:#E8FFFC!important;
+    background:linear-gradient(135deg,rgba(8,57,69,.95),rgba(8,42,53,.94))!important;
+    border:1px solid rgba(25,211,197,.45)!important;
+    box-shadow:0 10px 25px rgba(0,0,0,.15)
+  }
+  .vmd-assistant-bubble{
+    background:linear-gradient(135deg,rgba(10,28,38,.97),rgba(8,22,31,.96))!important;
+    border:1px solid rgba(27,53,66,.95)!important;
+    box-shadow:0 14px 35px rgba(0,0,0,.20)
+  }
+  .vmd-code-card{
+    margin-top:14px;border:1px solid rgba(27,53,66,.95);border-radius:13px;
+    overflow:hidden;background:#041019;box-shadow:inset 0 0 35px rgba(25,211,197,.025)
+  }
+  .vmd-code-head{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:9px 12px;border-bottom:1px solid #18333E;color:#D9F8F4;font-size:11px;font-weight:600
+  }
+  .vmd-code-card pre{margin:0!important;border:0!important;border-radius:0!important;background:#031018!important;padding:13px!important;font-size:11px!important;line-height:1.7!important}
+  .vmd-code-btn{
+    border:1px solid rgba(25,211,197,.45);border-radius:7px;padding:6px 9px;
+    background:rgba(25,211,197,.045);color:#B8FFF7;font-size:10px
+  }
+  .vmd-code-btn:hover{background:rgba(25,211,197,.12);border-color:#19D3C5}
+  .vmd-composer-wrap{
+    background:rgba(2,11,18,.97)!important;
+    box-shadow:0 -12px 35px rgba(0,0,0,.22)
+  }
+  .vmd-composer-wrap form{width:100%;max-width:1215px!important}
+  #chat-input{min-height:62px!important}
+  .vmd-link-card{border-radius:12px!important}
+  .vmd-toast{backdrop-filter:blur(12px)}
+  #chat-thread{padding-bottom:8px}
+</style>
+
 </head>
-<body class="min-h-screen overflow-hidden">
-<header class="h-[72px] shrink-0 border-b flex items-center px-4 md:px-6 gap-4 relative overflow-hidden">
+<body class="min-h-screen h-screen flex flex-col overflow-hidden">
+<header class="h-[96px] shrink-0 border-b flex items-center px-4 md:px-6 gap-4 relative overflow-hidden">
   <div class="absolute inset-0 pointer-events-none vmd-header-glow"></div>
   <div class="flex items-center gap-3 min-w-0 relative z-10">
     <div class="w-11 h-11 rounded-xl flex items-center justify-center vmd-logo"><i class="fa-solid fa-atom text-xl"></i></div>
@@ -270,7 +358,7 @@
 </header>
 
 <div class="flex flex-1 min-h-0">
-  <aside class="hidden md:flex w-[245px] shrink-0 flex-col border-r">
+  <aside class="hidden md:flex w-[303px] shrink-0 flex-col border-r">
     <div class="p-3 border-b">
       <div class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2">Workspace</div>
       <div class="grid grid-cols-2 gap-1">
@@ -299,7 +387,7 @@
   <main class="flex-1 min-w-0 flex flex-col relative">
     <section id="view-chat" class="view flex-1 min-h-0 flex flex-col">
       <div id="chat-messages" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 vmd-chat-bg">
-        <div class="max-w-5xl mx-auto w-full">
+        <div class="max-w-[1235px] mx-auto w-full">
           <div class="vmd-hero-card rounded-2xl p-5 md:p-6 relative overflow-hidden">
             <div class="absolute inset-y-0 right-0 w-1/3 vmd-hero-molecule pointer-events-none"></div>
             <div class="relative z-10">
@@ -316,11 +404,62 @@
             </div>
           </div>
         </div>
-        <div class="max-w-5xl mx-auto w-full space-y-4" id="chat-thread"></div>
+        <div class="max-w-[1235px] mx-auto w-full space-y-4" id="chat-thread">
+  <div class="flex items-start gap-3 flex-row-reverse">
+    <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-slate-800 border border-slate-700 text-cyan-400"><i class="fa-solid fa-user"></i></div>
+    <div class="max-w-[78%] p-4 text-sm rounded-2xl rounded-tr-none vmd-user-bubble">
+      Write a VMD Tcl script for C-alpha RMSF and save frame-independent results to a text file.
+    </div>
+  </div>
+  <div class="flex items-start gap-3">
+    <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 vmd-logo"><i class="fa-solid fa-atom"></i></div>
+    <div class="max-w-[92%] p-4 text-sm rounded-2xl rounded-tl-none markdown-body vmd-assistant-bubble">
+      <p>Here's a complete VMD Tcl script to calculate C-alpha RMSF over a trajectory and save frame-independent results to a text file. The script aligns each frame to a reference, computes per-residue RMSF for C-alpha atoms, and writes the results to a text file.</p>
+      <div class="vmd-code-card">
+        <div class="vmd-code-head">
+          <span><i class="fa-regular fa-file-code mr-2 text-cyan-300"></i>Tcl (VMD)</span>
+          <div class="flex gap-2">
+            <button class="vmd-code-btn" data-copy-demo><i class="fa-regular fa-copy mr-1"></i>Copy</button>
+            <button class="vmd-code-btn" data-use-demo><i class="fa-solid fa-play mr-1"></i>Use in Prompt</button>
+            <button class="vmd-code-btn"><i class="fa-solid fa-download mr-1"></i>Download</button>
+          </div>
+        </div>
+        <pre><code class="language-tcl"># Load your structure and trajectory
+mol new protein.pdb type pdb
+mol addfile trajectory.dcd type dcd waitfor all
+
+# Select C-alpha atoms
+set sel [atomselect top "protein and name CA"]
+
+# Align all frames to the first frame
+set ref [atomselect top "protein and backbone"]
+set all [atomselect top "protein and backbone"]
+set nframes [molinfo top get numframes]
+
+# Calculate frame-independent RMSF
+set out [open "ca_rmsf.dat" w]
+for {set i 0} {$i &lt; [$sel num]} {incr i} {
+    set values {}
+    for {set f 0} {$f &lt; $nframes} {incr f} {
+        $sel frame $f
+        lappend values [$sel get {x y z}]
+    }
+    # RMSF calculation can be added here or replaced
+    # with your preferred VMD RMSF procedure.
+}
+close $out
+
+$sel delete
+$ref delete
+$all delete</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
       </div>
 
       <div class="shrink-0 border-t p-3 md:p-4 vmd-composer-wrap">
-        <form id="chat-form" class="max-w-5xl mx-auto">
+        <form id="chat-form" class="max-w-[1235px] mx-auto">
           <div class="relative">
             <textarea id="chat-input" rows="2" placeholder="Ask a VMD question…  Enter to send · Shift+Enter for a new line" aria-label="VMD question" class="w-full resize-none rounded-xl px-4 py-3 pr-14 text-sm outline-none"></textarea>
             <button class="absolute right-2 bottom-2 w-10 h-10 rounded-lg flex items-center justify-center vmd-send" title="Send"><i class="fa-solid fa-paper-plane"></i></button>
@@ -337,9 +476,9 @@
       </div>
     </section>
 
-    <section id="view-cheatsheet" class="view hidden flex-1 min-w-0 overflow-y-auto p-4 md:p-7"><div class="max-w-5xl mx-auto"><div class="flex items-center justify-between gap-3 mb-4"><div><h2 class="text-xl font-bold text-cyan-300">VMD Command Library</h2><p class="text-xs text-slate-500 mt-1">Searchable Tcl, atom selection, trajectory, PBC and rendering commands.</p></div><input id="cheatsheet-search" placeholder="Search commands…" class="select-dark rounded-lg px-3 py-2 text-xs w-64"></div><div id="category-buttons" class="flex flex-wrap gap-2 mb-4"></div><div id="cheatsheet-grid" class="grid md:grid-cols-2 gap-3"></div></div></section>
+    <section id="view-cheatsheet" class="view hidden flex-1 min-w-0 overflow-y-auto p-4 md:p-7"><div class="max-w-[1235px] mx-auto"><div class="flex items-center justify-between gap-3 mb-4"><div><h2 class="text-xl font-bold text-cyan-300">VMD Command Library</h2><p class="text-xs text-slate-500 mt-1">Searchable Tcl, atom selection, trajectory, PBC and rendering commands.</p></div><input id="cheatsheet-search" placeholder="Search commands…" class="select-dark rounded-lg px-3 py-2 text-xs w-64"></div><div id="category-buttons" class="flex flex-wrap gap-2 mb-4"></div><div id="cheatsheet-grid" class="grid md:grid-cols-2 gap-3"></div></div></section>
 
-    <section id="view-snippets" class="view hidden flex-1 min-w-0 overflow-y-auto p-4 md:p-7"><div class="max-w-5xl mx-auto"><div class="flex items-center justify-between gap-3 mb-4"><div><h2 class="text-xl font-bold text-cyan-300">Saved Tcl Snippets</h2><p class="text-xs text-slate-500 mt-1">Keep useful VMD scripts locally in your browser.</p></div><button id="new-snippet" class="vmd-action text-xs px-3 py-2 rounded-lg"><i class="fa-solid fa-plus mr-1"></i> New Snippet</button></div><div id="snippets-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-3"></div></div></section>
+    <section id="view-snippets" class="view hidden flex-1 min-w-0 overflow-y-auto p-4 md:p-7"><div class="max-w-[1235px] mx-auto"><div class="flex items-center justify-between gap-3 mb-4"><div><h2 class="text-xl font-bold text-cyan-300">Saved Tcl Snippets</h2><p class="text-xs text-slate-500 mt-1">Keep useful VMD scripts locally in your browser.</p></div><button id="new-snippet" class="vmd-action text-xs px-3 py-2 rounded-lg"><i class="fa-solid fa-plus mr-1"></i> New Snippet</button></div><div id="snippets-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-3"></div></div></section>
 
     <section id="view-about" class="view hidden flex-1 min-w-0 overflow-y-auto p-4 md:p-7"><div class="max-w-5xl mx-auto space-y-4"><div class="vmd-hero-card rounded-2xl p-6"><h2 class="text-xl font-bold text-cyan-300">VMD Assistant AI v2.5</h2><p class="text-sm text-slate-300 mt-2 leading-relaxed">A focused scientific assistant for Visual Molecular Dynamics. The frontend is static and safe for GitHub Pages; AI credentials belong only in the server-side gateway.</p></div><div class="grid md:grid-cols-2 gap-3"><div class="panel rounded-xl p-4"><h3 class="font-semibold text-white text-sm">Free AI routing</h3><p class="text-xs text-slate-400 mt-1 leading-relaxed">OpenRouter free models, DeepSeek free variants, Gemini free, and Groq free can be selected or used through automatic fallback. Free endpoints are rate-limited and availability can change.</p></div><div class="panel rounded-xl p-4"><h3 class="font-semibold text-white text-sm">Premium later</h3><p class="text-xs text-slate-400 mt-1 leading-relaxed">OpenAI/GPT, Anthropic/Claude, paid DeepSeek and paid Gemini are intentionally shown as coming later.</p></div></div><div class="panel rounded-xl p-4"><h3 class="font-semibold text-white text-sm mb-2">Security model</h3><ul class="text-xs text-slate-400 list-disc pl-5 space-y-1"><li>No API key is requested from visitors.</li><li>No API key is stored in localStorage.</li><li>GitHub Pages contains only public frontend code.</li><li>Provider keys are Cloudflare Worker secrets.</li><li>Free mode rejects paid provider/model requests.</li></ul></div></div></section>
   </main>
@@ -561,6 +700,18 @@ document.getElementById('feedback-github').onclick=()=>{
   const body=encodeURIComponent(msg+'\n\n---\nSent from VMD Assistant AI');
   window.open(`https://github.com/anweshpandey/vmd-assistant-v2/issues/new?title=${title}&body=${body}`,'_blank','noopener');
 };
+
+
+document.querySelectorAll('[data-copy-demo]').forEach(b=>b.onclick=()=>{
+  const code=b.closest('.vmd-code-card').querySelector('code').innerText;
+  navigator.clipboard?.writeText(code); showToast('Tcl script copied.');
+});
+document.querySelectorAll('[data-use-demo]').forEach(b=>b.onclick=()=>{
+  const code=b.closest('.vmd-code-card').querySelector('code').innerText;
+  document.getElementById('chat-input').value=code;
+  document.getElementById('chat-input').focus();
+  showToast('Script inserted into the prompt.');
+});
 
 (async()=>{renderModelMenu();setActiveModel('auto');try{const s=await window.VMDGateway.health();if(s.ok){const el=document.getElementById('gateway-status');el.className='hidden sm:flex items-center gap-2 px-2.5 py-1.5 rounded-lg border provider-free text-[11px] font-semibold';el.innerHTML='<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span>Free AI · Gateway online</span>'}}catch{}})();
 </script>
