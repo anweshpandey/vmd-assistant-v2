@@ -1,4 +1,5 @@
 # VMD Assistant AI v2
+available at: https://anweshpandey.github.io/vmd-assistant-v2
 
 A clean GitHub Pages + Cloudflare Worker architecture for a scientific VMD assistant.
 
