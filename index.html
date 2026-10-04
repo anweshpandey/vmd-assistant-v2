@@ -24,43 +24,341 @@
     .provider-free{color:#67e8f9;background:rgba(8,47,73,.7);border-color:rgba(14,116,144,.7)} .provider-warn{color:#fbbf24;background:rgba(69,39,8,.5);border-color:rgba(180,83,9,.5)}
     .select-dark{background:#020617;border:1px solid #334155;color:#e2e8f0}.select-dark:focus{outline:none;border-color:#06b6d4;box-shadow:0 0 0 2px rgba(6,182,212,.12)}
   </style>
+
+<style id="molecular-teal-theme">
+  :root {
+    --mt-bg: #07111A;
+    --mt-sidebar: #0A151F;
+    --mt-panel: #0D1923;
+    --mt-panel-2: #10232D;
+    --mt-input: #101F2A;
+    --mt-border: #1B3542;
+    --mt-accent: #19D3C5;
+    --mt-accent-2: #38BDF8;
+    --mt-success: #55E878;
+    --mt-text: #E6F4F1;
+    --mt-muted: #8FA5AF;
+  }
+
+  body {
+    background: var(--mt-bg) !important;
+    color: var(--mt-text) !important;
+  }
+
+  header {
+    background: var(--mt-sidebar) !important;
+    border-color: var(--mt-border) !important;
+  }
+
+  aside {
+    background: var(--mt-sidebar) !important;
+    border-color: var(--mt-border) !important;
+  }
+
+  main {
+    background: var(--mt-bg) !important;
+  }
+
+  #chat-messages {
+    background: var(--mt-bg) !important;
+  }
+
+  #chat-form,
+  #chat-form > div {
+    background: var(--mt-panel) !important;
+  }
+
+  #chat-input {
+    background: var(--mt-input) !important;
+    border-color: var(--mt-border) !important;
+    color: var(--mt-text) !important;
+  }
+
+  #chat-input:focus {
+    border-color: var(--mt-accent) !important;
+    box-shadow: 0 0 0 1px rgba(25,211,197,.18) !important;
+  }
+
+  #chat-input::placeholder {
+    color: #607782 !important;
+  }
+
+  button {
+    border-color: var(--mt-border);
+  }
+
+  #model-menu-btn {
+    background: var(--mt-panel) !important;
+    border-color: var(--mt-border) !important;
+  }
+
+  #model-menu {
+    background: var(--mt-panel-2) !important;
+    border-color: var(--mt-border) !important;
+  }
+
+  #model-menu button:hover,
+  #quick-prompts button:hover {
+    background: rgba(25,211,197,.10) !important;
+    border-color: rgba(25,211,197,.35) !important;
+  }
+
+  #quick-prompts button {
+    background: var(--mt-panel) !important;
+    border-color: var(--mt-border) !important;
+  }
+
+  #quick-prompts button .text-cyan-300,
+  #quick-prompts button .text-cyan-400,
+  .text-cyan-300,
+  .text-cyan-400,
+  .text-cyan-500 {
+    color: var(--mt-accent) !important;
+  }
+
+  .bg-cyan-600 {
+    background: var(--mt-accent) !important;
+    color: #06201E !important;
+  }
+
+  .hover\:bg-cyan-500:hover {
+    background: #27E0D1 !important;
+  }
+
+  .border-cyan-500,
+  .focus\:border-cyan-500:focus {
+    border-color: var(--mt-accent) !important;
+  }
+
+  .bg-slate-900 {
+    background: var(--mt-panel) !important;
+  }
+
+  .bg-slate-950,
+  .bg-slate-950\/80 {
+    background: rgba(7,17,26,.94) !important;
+  }
+
+  .border-slate-800,
+  .border-slate-700 {
+    border-color: var(--mt-border) !important;
+  }
+
+  .text-slate-100,
+  .text-slate-200,
+  .text-slate-300 {
+    color: var(--mt-text) !important;
+  }
+
+  .text-slate-400,
+  .text-slate-500,
+  .text-slate-600 {
+    color: var(--mt-muted) !important;
+  }
+
+  .text-emerald-400 {
+    color: var(--mt-success) !important;
+  }
+
+  /* AI/user message bubbles */
+  .bg-cyan-950,
+  .bg-cyan-950\/40 {
+    background: rgba(25,211,197,.10) !important;
+  }
+
+  .border-cyan-800,
+  .border-cyan-700 {
+    border-color: rgba(25,211,197,.38) !important;
+  }
+
+  /* Scrollbars */
+  * {
+    scrollbar-color: #244754 #08141D;
+    scrollbar-width: thin;
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #08141D;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: #244754;
+    border-radius: 8px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: #2F6473;
+  }
+</style>
+
+
+<style id="vmd-final-ui">
+  body{background:#07111A!important;color:#E6F4F1!important}
+  header{background:#07111A!important;border-color:#1B3542!important}
+  aside{background:rgba(7,17,26,.94)!important;border-color:#1B3542!important}
+  main{background:#07111A!important}
+  .vmd-header-glow{background:radial-gradient(circle at 48% 15%,rgba(25,211,197,.13),transparent 30%),radial-gradient(circle at 72% 20%,rgba(56,189,248,.09),transparent 28%)}
+  .vmd-logo{background:linear-gradient(135deg,#19D3C5,#38BDF8);color:#04151A;box-shadow:0 8px 24px rgba(25,211,197,.22)}
+  .vmd-version{color:#9AF7ED;background:rgba(25,211,197,.12);border:1px solid rgba(25,211,197,.4)}
+  .vmd-molecule-art{opacity:.8;background:
+    radial-gradient(circle at 35% 50%,rgba(25,211,197,.25) 0 2px,transparent 3px),
+    radial-gradient(circle at 48% 35%,rgba(56,189,248,.2) 0 3px,transparent 4px),
+    radial-gradient(circle at 62% 60%,rgba(25,211,197,.18) 0 3px,transparent 4px),
+    radial-gradient(circle at 75% 40%,rgba(56,189,248,.18) 0 2px,transparent 3px);
+    background-size:80px 80px,120px 120px,150px 150px,100px 100px}
+  .vmd-molecule-art:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#07111A,transparent 30%,transparent 75%,#07111A)}
+  .panel{background:rgba(13,25,35,.78)!important;border-color:rgba(27,53,66,.9)!important}
+  .active-nav{background:linear-gradient(90deg,#0B8F9A,#19D3C5)!important;color:#031719!important;box-shadow:0 7px 22px rgba(25,211,197,.18)!important}
+  .nav-btn:not(.active-nav):hover{background:rgba(25,211,197,.08)!important}
+  .vmd-chat-bg{background:
+    radial-gradient(circle at 15% 55%,rgba(25,211,197,.07),transparent 22%),
+    radial-gradient(circle at 88% 20%,rgba(56,189,248,.05),transparent 22%),
+    #07111A!important}
+  .vmd-hero-card{background:linear-gradient(110deg,rgba(13,38,49,.94),rgba(13,25,35,.88));border:1px solid rgba(25,211,197,.3);box-shadow:0 15px 45px rgba(0,0,0,.22)}
+  .vmd-hero-molecule{background:radial-gradient(circle at 70% 50%,rgba(25,211,197,.24),transparent 38%),radial-gradient(circle at 82% 35%,rgba(56,189,248,.18),transparent 28%)}
+  .vmd-chip{font-size:11px;padding:6px 11px;border-radius:999px;border:1px solid rgba(25,211,197,.32);background:rgba(25,211,197,.06);color:#D8FFFA}
+  .vmd-composer-wrap{background:rgba(7,17,26,.94)!important;border-color:#1B3542!important}
+  #chat-input{background:#101F2A!important;border:1px solid #2A4C59!important;color:#E6F4F1!important;box-shadow:inset 0 0 25px rgba(25,211,197,.025)}
+  #chat-input:focus{border-color:#19D3C5!important;box-shadow:0 0 0 2px rgba(25,211,197,.10)!important}
+  .vmd-send{background:linear-gradient(135deg,#19D3C5,#38BDF8)!important;color:#04151A!important;box-shadow:0 8px 20px rgba(25,211,197,.2)}
+  .vmd-action{background:rgba(25,211,197,.1);border:1px solid rgba(25,211,197,.35);color:#9AF7ED}
+  .vmd-link-card{background:rgba(13,25,35,.8);border:1px solid #1B3542;transition:.2s}
+  .vmd-link-card:hover{border-color:rgba(25,211,197,.55);background:rgba(25,211,197,.08);transform:translateY(-1px)}
+  .vmd-toast,.vmd-modal{background:#0D1923;border:1px solid #1B3542}
+  #model-menu{background:#10232D!important;border-color:#1B3542!important}
+  .provider-free{color:#9AF7ED!important;background:rgba(25,211,197,.08)!important;border-color:rgba(25,211,197,.35)!important}
+  .markdown-body pre{background:#06121A!important;border-color:#1B3542!important;box-shadow:inset 0 0 35px rgba(25,211,197,.025)}
+  .markdown-body code{color:#8FF5E9;background:#0D222B}
+  .markdown-body h1,.markdown-body h2,.markdown-body h3{color:#9AF7ED}
+  .text-cyan-300,.text-cyan-400,.text-cyan-500{color:#19D3C5!important}
+  .bg-cyan-600{background:#19D3C5!important;color:#04151A!important}
+  .border-cyan-500{border-color:#19D3C5!important}
+  .select-dark{background:#0B1822!important;border-color:#244754!important;color:#E6F4F1!important}
+</style>
+
 </head>
-<body class="h-screen overflow-hidden flex flex-col">
-<header class="shrink-0 h-[68px] border-b border-slate-800 bg-slate-950/90 backdrop-blur flex items-center justify-between px-3 md:px-5 z-20">
-  <div class="flex items-center gap-3 min-w-0">
-    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 via-teal-500 to-emerald-400 flex items-center justify-center text-slate-950 shadow-lg"><i class="fa-solid fa-atom text-xl"></i></div>
-    <div class="min-w-0"><div class="flex items-center gap-2"><h1 class="font-bold text-lg bg-gradient-to-r from-cyan-300 to-emerald-300 bg-clip-text text-transparent truncate">VMD Assistant AI</h1><span class="text-[9px] px-2 py-0.5 rounded-full border border-cyan-800 bg-cyan-950 text-cyan-300 uppercase tracking-wider font-bold">v2.5</span></div><p class="text-[11px] text-slate-500 hidden sm:block">Visual Molecular Dynamics • Tcl • selections • trajectories • graphics</p></div>
+<body class="min-h-screen overflow-hidden">
+<header class="h-[72px] shrink-0 border-b flex items-center px-4 md:px-6 gap-4 relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none vmd-header-glow"></div>
+  <div class="flex items-center gap-3 min-w-0 relative z-10">
+    <div class="w-11 h-11 rounded-xl flex items-center justify-center vmd-logo"><i class="fa-solid fa-atom text-xl"></i></div>
+    <div class="min-w-0">
+      <div class="flex items-center gap-2">
+        <h1 class="font-bold text-xl md:text-2xl tracking-tight whitespace-nowrap"><span class="text-cyan-300">VMD</span> Assistant <span class="text-cyan-300">AI</span></h1>
+        <span class="text-[9px] font-bold px-2 py-0.5 rounded-full vmd-version">v2.5</span>
+      </div>
+      <p class="text-[10px] md:text-xs text-slate-400 truncate">Visual Molecular Dynamics • Tcl • selections • trajectories • analysis • graphics</p>
+    </div>
   </div>
-  <div class="flex items-center gap-2">
-    <div id="gateway-status" class="hidden sm:flex items-center gap-2 px-2.5 py-1.5 rounded-lg border provider-warn text-[11px] font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span><span id="gateway-status-text">Free AI · Gateway offline</span></div>
-    <div class="relative"><button id="model-menu-btn" class="flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-700 bg-slate-900 hover:bg-slate-800 text-xs font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span id="model-label">Auto · Free</span><i class="fa-solid fa-chevron-down text-[9px] text-slate-500"></i></button><div id="model-menu" class="hidden absolute right-0 mt-2 w-[360px] max-w-[calc(100vw-20px)] panel bg-slate-950 rounded-xl p-2 shadow-2xl z-50"></div></div>
+  <div class="hidden lg:block flex-1 h-full relative overflow-hidden mx-4">
+    <div class="vmd-molecule-art absolute inset-0"></div>
+  </div>
+  <div class="ml-auto flex items-center gap-2 relative z-10">
+    <div id="gateway-status" class="hidden sm:flex items-center gap-2 px-2.5 py-1.5 rounded-lg border provider-free text-[11px] font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span>Free AI · Gateway offline</span></div>
+    <div class="relative">
+      <button id="model-menu-btn" class="flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-semibold">
+        <i class="fa-solid fa-microchip text-cyan-300"></i><span id="model-label">Auto · Free</span><i class="fa-solid fa-chevron-down text-[9px] ml-1"></i>
+      </button>
+      <div id="model-menu" class="hidden absolute right-0 top-11 w-80 rounded-xl border shadow-2xl p-2 z-50"></div>
+    </div>
   </div>
 </header>
 
-<div class="md:hidden shrink-0 border-b border-slate-800 bg-slate-900 p-1.5 flex gap-1 overflow-x-auto"><button data-tab="chat" class="nav-btn active-nav px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Chat</button><button data-tab="cheatsheet" class="nav-btn px-3 py-1.5 rounded-lg text-xs whitespace-nowrap text-slate-400">Cheat Sheet</button><button data-tab="snippets" class="nav-btn px-3 py-1.5 rounded-lg text-xs whitespace-nowrap text-slate-400">Snippets</button><button data-tab="about" class="nav-btn px-3 py-1.5 rounded-lg text-xs whitespace-nowrap text-slate-400">About</button></div>
-
-<main class="flex-1 min-h-0 flex">
-  <aside class="hidden md:flex w-[245px] shrink-0 border-r border-slate-800 bg-slate-950/60 flex-col">
-    <div class="p-3 border-b border-slate-800"><div class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2">Workspace</div><div class="grid grid-cols-2 gap-1"><button data-tab="chat" class="nav-btn active-nav rounded-lg px-2 py-2 text-xs"><i class="fa-solid fa-comments mr-1"></i> AI Chat</button><button data-tab="cheatsheet" class="nav-btn rounded-lg px-2 py-2 text-xs text-slate-400"><i class="fa-solid fa-book mr-1"></i> Cheat Sheet</button><button data-tab="snippets" class="nav-btn rounded-lg px-2 py-2 text-xs text-slate-400"><i class="fa-solid fa-code mr-1"></i> Snippets</button><button data-tab="about" class="nav-btn rounded-lg px-2 py-2 text-xs text-slate-400"><i class="fa-solid fa-circle-info mr-1"></i> About</button></div></div>
-    <div class="p-3 overflow-y-auto flex-1"><div class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2">Quick Analysis</div><div id="quick-prompts" class="space-y-1.5"></div></div>
-    <div class="p-3 border-t border-slate-800 text-[10px] text-slate-500 leading-relaxed"><i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> Free mode never sends a browser API key. Requests go through the secure gateway.</div>
+<div class="flex flex-1 min-h-0">
+  <aside class="hidden md:flex w-[245px] shrink-0 flex-col border-r">
+    <div class="p-3 border-b">
+      <div class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2">Workspace</div>
+      <div class="grid grid-cols-2 gap-1">
+        <button class="nav-btn active-nav rounded-lg px-2.5 py-2 text-xs font-semibold text-left" data-tab="chat"><i class="fa-solid fa-comments mr-2"></i>AI Chat</button>
+        <button class="nav-btn rounded-lg px-2.5 py-2 text-xs font-semibold text-left text-slate-400 hover:text-white" data-tab="cheatsheet"><i class="fa-solid fa-book mr-2"></i>Cheat Sheet</button>
+        <button class="nav-btn rounded-lg px-2.5 py-2 text-xs font-semibold text-left text-slate-400 hover:text-white" data-tab="snippets"><i class="fa-solid fa-code mr-2"></i>Snippets</button>
+        <button class="nav-btn rounded-lg px-2.5 py-2 text-xs font-semibold text-left text-slate-400 hover:text-white" data-tab="about"><i class="fa-solid fa-circle-info mr-2"></i>About</button>
+      </div>
+    </div>
+    <div class="p-3 overflow-y-auto flex-1">
+      <div class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2">Analysis Tasks</div>
+      <div id="quick-prompts" class="space-y-1.5"></div>
+    </div>
+    <div class="p-3 border-t space-y-2">
+      <a href="https://github.com/anweshpandey" target="_blank" rel="noopener" class="vmd-link-card flex items-center gap-3 rounded-xl px-3 py-2.5">
+        <i class="fa-brands fa-github text-2xl"></i>
+        <div><div class="text-xs font-bold text-cyan-300">github.com/anweshpandey</div><div class="text-[9px] text-slate-400 mt-0.5">Open Source • Free AI • Learn • Share</div></div>
+      </a>
+      <button id="feedback-btn" class="w-full vmd-link-card flex items-center gap-3 rounded-xl px-3 py-2.5 text-left">
+        <i class="fa-regular fa-message text-xl text-cyan-300"></i>
+        <div><div class="text-xs font-bold text-cyan-300">Feedback</div><div class="text-[9px] text-slate-400 mt-0.5">Send comments via GitHub</div></div>
+      </button>
+    </div>
   </aside>
 
-  <section id="view-chat" class="view flex-1 min-w-0 flex flex-col">
-    <div class="flex-1 min-h-0 overflow-y-auto p-4 md:p-7" id="chat-messages"><div class="max-w-4xl mx-auto"><div class="flex items-start gap-3"><div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-600 to-emerald-400 flex items-center justify-center text-slate-950 shrink-0"><i class="fa-solid fa-atom"></i></div><div class="bg-slate-900 border border-slate-800 rounded-2xl rounded-tl-none p-4 text-sm leading-relaxed"><div class="font-semibold text-cyan-300 mb-1">VMD Assistant</div><p class="text-slate-300">Ask me about VMD atom selections, Tcl scripts, PBCTools, trajectory analysis, representations, rendering, or debugging.</p><p class="text-xs text-slate-500 mt-2">Auto · Free is the default. Use the AI menu only when you want to choose a specific free route. Paid providers are reserved for later.</p></div></div></div></div>
-    <div class="shrink-0 border-t border-slate-800 bg-slate-950/80 p-3 md:p-4"><form id="chat-form" class="max-w-4xl mx-auto"><div class="relative"><textarea id="chat-input" rows="2" placeholder="Ask a VMD question…  Enter to send · Shift+Enter for a new line" aria-label="VMD question" class="w-full resize-none bg-slate-900 border border-slate-700 focus:border-cyan-500 rounded-xl px-4 py-3 pr-14 text-sm outline-none placeholder:text-slate-600"></textarea><button class="absolute right-2 bottom-2 w-9 h-9 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-slate-950 flex items-center justify-center" title="Send"><i class="fa-solid fa-arrow-up"></i></button></div><div class="flex items-center justify-between mt-2 text-[10px] text-slate-500"><span><i class="fa-solid fa-circle text-[6px] text-emerald-400 mr-1"></i><span id="active-model-note">Auto · Free</span></span><span>Enter ↵ send · Shift+Enter ↵ newline</span></div></form></div>
-  </section>
+  <main class="flex-1 min-w-0 flex flex-col relative">
+    <section id="view-chat" class="view flex-1 min-h-0 flex flex-col">
+      <div id="chat-messages" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 vmd-chat-bg">
+        <div class="max-w-5xl mx-auto w-full">
+          <div class="vmd-hero-card rounded-2xl p-5 md:p-6 relative overflow-hidden">
+            <div class="absolute inset-y-0 right-0 w-1/3 vmd-hero-molecule pointer-events-none"></div>
+            <div class="relative z-10">
+              <div class="flex items-start gap-3">
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center vmd-logo shrink-0"><i class="fa-solid fa-atom"></i></div>
+                <div>
+                  <h2 class="font-bold text-lg text-cyan-300">VMD Assistant</h2>
+                  <p class="text-sm text-slate-300 mt-1">Ask me about VMD atom selections, Tcl scripts, PBCTools, trajectory analysis, representations, rendering, or debugging.</p>
+                </div>
+              </div>
+              <div class="flex flex-wrap gap-2 mt-4">
+                <span class="vmd-chip">VMD Tcl</span><span class="vmd-chip">Atom selections</span><span class="vmd-chip">Trajectories</span><span class="vmd-chip">RMSD/RMSF</span><span class="vmd-chip">PBC</span><span class="vmd-chip">PBCTools</span><span class="vmd-chip">Rendering</span><span class="vmd-chip">Analysis</span><span class="vmd-chip">Debugging</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="max-w-5xl mx-auto w-full space-y-4" id="chat-thread"></div>
+      </div>
 
-  <section id="view-cheatsheet" class="view hidden flex-1 min-w-0 overflow-y-auto p-4 md:p-7"><div class="max-w-6xl mx-auto w-full"><div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4"><div><h2 class="text-xl font-bold text-cyan-300">VMD Command Cheat Sheet</h2><p class="text-xs text-slate-500">Common selections, trajectory, PBCTools, Tcl and graphics commands.</p></div><input id="cheatsheet-search" placeholder="Search commands…" class="select-dark rounded-lg px-3 py-2 text-xs w-full md:w-72"></div><div id="category-buttons" class="flex gap-1.5 flex-wrap mb-4"></div><div id="cheatsheet-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-3"></div></div></section>
+      <div class="shrink-0 border-t p-3 md:p-4 vmd-composer-wrap">
+        <form id="chat-form" class="max-w-5xl mx-auto">
+          <div class="relative">
+            <textarea id="chat-input" rows="2" placeholder="Ask a VMD question…  Enter to send · Shift+Enter for a new line" aria-label="VMD question" class="w-full resize-none rounded-xl px-4 py-3 pr-14 text-sm outline-none"></textarea>
+            <button class="absolute right-2 bottom-2 w-10 h-10 rounded-lg flex items-center justify-center vmd-send" title="Send"><i class="fa-solid fa-paper-plane"></i></button>
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-2 mt-2 text-[10px] text-slate-500">
+            <div class="flex items-center gap-4">
+              <span><i class="fa-solid fa-circle text-[6px] text-emerald-400 mr-1"></i><span id="active-model-note">Auto · Free</span></span>
+              <span class="hidden sm:inline"><i class="fa-solid fa-atom mr-1 text-cyan-400"></i>VMD Tcl Knowledge Engine</span>
+              <span class="hidden md:inline"><i class="fa-regular fa-bookmark mr-1 text-cyan-400"></i>Examples</span>
+            </div>
+            <span>Enter ↵ send · Shift+Enter ↵ newline · Ctrl+Enter ↵ send</span>
+          </div>
+        </form>
+      </div>
+    </section>
 
-  <section id="view-snippets" class="view hidden flex-1 min-w-0 overflow-y-auto p-4 md:p-7"><div class="max-w-5xl mx-auto w-full"><div class="flex items-center justify-between mb-4"><div><h2 class="text-xl font-bold text-emerald-300">Saved Tcl Snippets</h2><p class="text-xs text-slate-500">Saved locally in this browser. No account required.</p></div><button id="new-snippet" class="bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs px-3 py-2 rounded-lg"><i class="fa-solid fa-plus mr-1"></i> New Snippet</button></div><div id="snippets-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-3"></div></div></section>
+    <section id="view-cheatsheet" class="view hidden flex-1 min-w-0 overflow-y-auto p-4 md:p-7"><div class="max-w-5xl mx-auto"><div class="flex items-center justify-between gap-3 mb-4"><div><h2 class="text-xl font-bold text-cyan-300">VMD Command Library</h2><p class="text-xs text-slate-500 mt-1">Searchable Tcl, atom selection, trajectory, PBC and rendering commands.</p></div><input id="cheatsheet-search" placeholder="Search commands…" class="select-dark rounded-lg px-3 py-2 text-xs w-64"></div><div id="category-buttons" class="flex flex-wrap gap-2 mb-4"></div><div id="cheatsheet-grid" class="grid md:grid-cols-2 gap-3"></div></div></section>
 
-  <section id="view-about" class="view hidden flex-1 min-w-0 overflow-y-auto p-4 md:p-7"><div class="max-w-4xl mx-auto space-y-4"><div class="panel rounded-2xl p-6"><h2 class="text-xl font-bold text-cyan-300">VMD Assistant AI v2.5</h2><p class="text-sm text-slate-300 mt-2 leading-relaxed">A focused scientific assistant for Visual Molecular Dynamics. The frontend is static and safe for GitHub Pages; AI credentials belong only in the server-side gateway.</p></div><div class="grid md:grid-cols-2 gap-3"><div class="panel rounded-xl p-4"><h3 class="font-semibold text-white text-sm">Free AI routing</h3><p class="text-xs text-slate-400 mt-1 leading-relaxed">OpenRouter free models, DeepSeek free variants, Gemini free, and Groq free can be selected or used through automatic fallback. Free endpoints are rate-limited and their availability can change.</p></div><div class="panel rounded-xl p-4"><h3 class="font-semibold text-white text-sm">Premium later</h3><p class="text-xs text-slate-400 mt-1 leading-relaxed">OpenAI/GPT, Anthropic/Claude, paid DeepSeek and paid Gemini are intentionally shown as coming later. A ChatGPT subscription is not an API key.</p></div></div><div class="panel rounded-xl p-4"><h3 class="font-semibold text-white text-sm mb-2">Security model</h3><ul class="text-xs text-slate-400 list-disc pl-5 space-y-1"><li>No API key is requested from visitors.</li><li>No API key is stored in localStorage.</li><li>GitHub Pages contains only public frontend code.</li><li>Provider keys are Cloudflare Worker secrets.</li><li>Free mode rejects paid provider/model requests.</li></ul></div></div></section>
-</main>
+    <section id="view-snippets" class="view hidden flex-1 min-w-0 overflow-y-auto p-4 md:p-7"><div class="max-w-5xl mx-auto"><div class="flex items-center justify-between gap-3 mb-4"><div><h2 class="text-xl font-bold text-cyan-300">Saved Tcl Snippets</h2><p class="text-xs text-slate-500 mt-1">Keep useful VMD scripts locally in your browser.</p></div><button id="new-snippet" class="vmd-action text-xs px-3 py-2 rounded-lg"><i class="fa-solid fa-plus mr-1"></i> New Snippet</button></div><div id="snippets-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-3"></div></div></section>
 
-<div id="toast" class="fixed right-4 bottom-4 translate-y-20 opacity-0 transition-all duration-300 z-[100] max-w-sm"><div class="bg-slate-900 border border-cyan-700/60 rounded-xl shadow-2xl px-4 py-3 text-xs flex items-start gap-2"><i id="toast-icon" class="fa-solid fa-circle-info text-cyan-400 mt-0.5"></i><span id="toast-text"></span></div></div>
+    <section id="view-about" class="view hidden flex-1 min-w-0 overflow-y-auto p-4 md:p-7"><div class="max-w-5xl mx-auto space-y-4"><div class="vmd-hero-card rounded-2xl p-6"><h2 class="text-xl font-bold text-cyan-300">VMD Assistant AI v2.5</h2><p class="text-sm text-slate-300 mt-2 leading-relaxed">A focused scientific assistant for Visual Molecular Dynamics. The frontend is static and safe for GitHub Pages; AI credentials belong only in the server-side gateway.</p></div><div class="grid md:grid-cols-2 gap-3"><div class="panel rounded-xl p-4"><h3 class="font-semibold text-white text-sm">Free AI routing</h3><p class="text-xs text-slate-400 mt-1 leading-relaxed">OpenRouter free models, DeepSeek free variants, Gemini free, and Groq free can be selected or used through automatic fallback. Free endpoints are rate-limited and availability can change.</p></div><div class="panel rounded-xl p-4"><h3 class="font-semibold text-white text-sm">Premium later</h3><p class="text-xs text-slate-400 mt-1 leading-relaxed">OpenAI/GPT, Anthropic/Claude, paid DeepSeek and paid Gemini are intentionally shown as coming later.</p></div></div><div class="panel rounded-xl p-4"><h3 class="font-semibold text-white text-sm mb-2">Security model</h3><ul class="text-xs text-slate-400 list-disc pl-5 space-y-1"><li>No API key is requested from visitors.</li><li>No API key is stored in localStorage.</li><li>GitHub Pages contains only public frontend code.</li><li>Provider keys are Cloudflare Worker secrets.</li><li>Free mode rejects paid provider/model requests.</li></ul></div></div></section>
+  </main>
+</div>
 
-<div id="snippet-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur z-[90] items-center justify-center p-4"><div class="w-full max-w-lg bg-slate-900 border border-slate-700 rounded-2xl p-5"><div class="flex justify-between items-center mb-4"><h3 class="font-bold text-emerald-300">New Tcl Snippet</h3><button id="close-snippet" class="text-slate-500 hover:text-white"><i class="fa-solid fa-xmark"></i></button></div><div class="space-y-3"><input id="snippet-title" placeholder="Title" class="w-full select-dark rounded-lg px-3 py-2 text-xs"><input id="snippet-tag" placeholder="Tag (e.g. RMSD, PBC, rendering)" class="w-full select-dark rounded-lg px-3 py-2 text-xs"><textarea id="snippet-code" rows="10" placeholder="Paste Tcl script here…" class="w-full select-dark rounded-lg px-3 py-2 text-xs font-mono"></textarea><button id="save-snippet" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold py-2.5 rounded-lg text-xs">Save Snippet</button></div></div></div>
+<div id="toast" class="fixed right-4 bottom-4 translate-y-20 opacity-0 transition-all duration-300 z-[100] max-w-sm"><div class="vmd-toast rounded-xl shadow-2xl px-4 py-3 text-xs flex items-start gap-2"><i id="toast-icon" class="fa-solid fa-circle-info text-cyan-400 mt-0.5"></i><span id="toast-text"></span></div></div>
+
+<div id="snippet-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur z-[90] items-center justify-center p-4"><div class="w-full max-w-lg vmd-modal rounded-2xl p-5"><div class="flex justify-between items-center mb-4"><h3 class="font-bold text-cyan-300">New Tcl Snippet</h3><button id="close-snippet" class="text-slate-500 hover:text-white"><i class="fa-solid fa-xmark"></i></button></div><div class="space-y-3"><input id="snippet-title" placeholder="Title" class="w-full select-dark rounded-lg px-3 py-2 text-xs"><input id="snippet-tag" placeholder="Tag (e.g. RMSD, PBC, rendering)" class="w-full select-dark rounded-lg px-3 py-2 text-xs"><textarea id="snippet-code" rows="10" placeholder="Paste Tcl script here…" class="w-full select-dark rounded-lg px-3 py-2 text-xs font-mono"></textarea><button id="save-snippet" class="w-full vmd-send font-bold py-2.5 rounded-lg text-xs">Save Snippet</button></div></div></div>
+
+<div id="feedback-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur z-[95] items-center justify-center p-4">
+  <div class="w-full max-w-lg vmd-modal rounded-2xl p-5">
+    <div class="flex items-center justify-between mb-3"><div><h3 class="font-bold text-cyan-300">Feedback</h3><p class="text-[10px] text-slate-500 mt-1">Your comments help improve VMD Assistant AI.</p></div><button id="close-feedback" class="text-slate-500 hover:text-white"><i class="fa-solid fa-xmark"></i></button></div>
+    <textarea id="feedback-text" rows="7" placeholder="What should be improved? What worked well?" class="w-full select-dark rounded-xl px-3 py-3 text-xs"></textarea>
+    <div class="flex flex-wrap justify-end gap-2 mt-3">
+      <button id="feedback-github" class="vmd-action px-3 py-2 rounded-lg text-xs"><i class="fa-brands fa-github mr-1"></i>Open GitHub Issue</button>
+      <button id="feedback-close-2" class="px-3 py-2 rounded-lg text-xs text-slate-400 hover:text-white">Cancel</button>
+    </div>
+  </div>
+</div>
 
 <script src="assets/gateway.js"></script>
 <script>
@@ -194,7 +492,7 @@ function enhanceCode(container){container.querySelectorAll('pre').forEach(pre=>{
   const insert=document.createElement('button'); insert.className='insert-btn bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] px-2 py-1 rounded border border-slate-700'; insert.textContent='Use'; insert.onclick=()=>{chatInput.value=code;chatInput.focus();showToast('Code inserted into the prompt')};
   actions.append(copy,insert); pre.appendChild(actions);
 });container.querySelectorAll('pre code').forEach(c=>hljs.highlightElement(c));}
-function appendMessage(role,text){const wrap=document.createElement('div');wrap.className=`max-w-4xl mx-auto flex items-start gap-3 ${role==='user'?'flex-row-reverse':''}`;const av=document.createElement('div');av.className=`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${role==='user'?'bg-slate-800 border border-slate-700 text-cyan-400':'bg-gradient-to-tr from-cyan-600 to-emerald-400 text-slate-950'}`;av.innerHTML=role==='user'?'<i class="fa-solid fa-user"></i>':'<i class="fa-solid fa-atom"></i>';const b=document.createElement('div');b.className=`max-w-[85%] p-4 text-sm rounded-2xl border shadow-lg ${role==='user'?'bg-cyan-950/70 border-cyan-800 text-cyan-100 rounded-tr-none':'bg-slate-900 border-slate-800 text-slate-200 rounded-tl-none markdown-body'}`;if(role==='user')b.textContent=text;else{b.innerHTML=marked.parse(text);enhanceCode(b)}wrap.append(av,b);document.getElementById('chat-messages').appendChild(wrap);document.getElementById('chat-messages').scrollTop=999999;return b}
+function appendMessage(role,text){const wrap=document.createElement('div');wrap.className=`max-w-4xl mx-auto flex items-start gap-3 ${role==='user'?'flex-row-reverse':''}`;const av=document.createElement('div');av.className=`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${role==='user'?'bg-slate-800 border border-slate-700 text-cyan-400':'bg-gradient-to-tr from-cyan-600 to-emerald-400 text-slate-950'}`;av.innerHTML=role==='user'?'<i class="fa-solid fa-user"></i>':'<i class="fa-solid fa-atom"></i>';const b=document.createElement('div');b.className=`max-w-[85%] p-4 text-sm rounded-2xl border shadow-lg ${role==='user'?'bg-cyan-950/70 border-cyan-800 text-cyan-100 rounded-tr-none':'bg-slate-900 border-slate-800 text-slate-200 rounded-tl-none markdown-body'}`;if(role==='user')b.textContent=text;else{b.innerHTML=marked.parse(text);enhanceCode(b)}wrap.append(av,b);document.getElementById('chat-thread').appendChild(wrap);document.getElementById('chat-messages').scrollTop=document.getElementById('chat-messages').scrollHeight;return b}
 async function ask(query){if(!query.trim())return;appendMessage('user',query);const loading=appendMessage('assistant','<i class="fa-solid fa-spinner fa-spin text-cyan-400"></i> Thinking…');try{const result=await window.VMDGateway.chat({query,model:selectedModel,provider:selectedProvider,system:VMD_SYSTEM_PROMPT});loading.innerHTML=marked.parse(result.text);enhanceCode(loading);setActiveModel(result.model||selectedModel);if(result.fallback)showToast(`Free AI fallback: ${result.fallback}`)}catch(e){loading.innerHTML=`<span class="text-rose-400"><i class="fa-solid fa-triangle-exclamation mr-1"></i>${escapeHtml(e.message)}</span>`;showToast(e.message,true)}}
 const chatInput=document.getElementById('chat-input');
 document.getElementById('chat-form').addEventListener('submit',e=>{e.preventDefault();const i=chatInput;const q=i.value.trim();if(!q)return;i.value='';ask(q)});
@@ -251,6 +549,18 @@ document.getElementById('cheatsheet-search').addEventListener('input',renderChea
 
 const SNIP_KEY='vmd_assistant_v2_snippets';function getSnips(){try{return JSON.parse(localStorage.getItem(SNIP_KEY)||'[]')}catch{return[]}}function saveSnips(a){localStorage.setItem(SNIP_KEY,JSON.stringify(a));renderSnippets()}function renderSnippets(){const g=document.getElementById('snippets-grid'),a=getSnips();g.innerHTML='';if(!a.length){g.innerHTML='<div class="panel rounded-xl p-8 text-center text-xs text-slate-500 col-span-full">No saved snippets yet. Add your first Tcl script.</div>';return}a.forEach((s,i)=>{const c=document.createElement('div');c.className='panel rounded-xl p-4';c.innerHTML=`<div class="flex justify-between"><div><div class="text-[9px] uppercase text-emerald-400">${escapeHtml(s.tag||'Tcl')}</div><h3 class="font-semibold text-sm mt-1">${escapeHtml(s.title)}</h3></div><button class="del text-slate-500 hover:text-rose-400"><i class="fa-solid fa-trash"></i></button></div><pre class="mt-3 text-xs"><code>${escapeHtml(s.code)}</code></pre><button class="copy-s text-xs text-slate-400 hover:text-white">Copy Script</button>`;c.querySelector('.del').onclick=()=>{a.splice(i,1);saveSnips(a)};c.querySelector('.copy-s').onclick=()=>copyText(s.code);g.appendChild(c)});enhanceCode(g)}renderSnippets();
 document.getElementById('new-snippet').onclick=()=>document.getElementById('snippet-modal').classList.replace('hidden','flex');document.getElementById('close-snippet').onclick=()=>document.getElementById('snippet-modal').classList.replace('flex','hidden');document.getElementById('save-snippet').onclick=()=>{const title=document.getElementById('snippet-title').value.trim(),tag=document.getElementById('snippet-tag').value.trim(),code=document.getElementById('snippet-code').value.trim();if(!title||!code)return showToast('Title and script are required',true);const a=getSnips();a.unshift({title,tag,code});saveSnips(a);['snippet-title','snippet-tag','snippet-code'].forEach(id=>document.getElementById(id).value='');document.getElementById('snippet-modal').classList.replace('flex','hidden');showToast('Snippet saved locally')};
+
+
+document.getElementById('feedback-btn').onclick=()=>{document.getElementById('feedback-modal').classList.replace('hidden','flex');document.getElementById('feedback-text').focus()};
+document.getElementById('close-feedback').onclick=()=>document.getElementById('feedback-modal').classList.replace('flex','hidden');
+document.getElementById('feedback-close-2').onclick=()=>document.getElementById('feedback-modal').classList.replace('flex','hidden');
+document.getElementById('feedback-github').onclick=()=>{
+  const msg=document.getElementById('feedback-text').value.trim();
+  if(!msg){showToast('Please enter your feedback first.',true);return}
+  const title=encodeURIComponent('VMD Assistant AI feedback');
+  const body=encodeURIComponent(msg+'\n\n---\nSent from VMD Assistant AI');
+  window.open(`https://github.com/anweshpandey/vmd-assistant-v2/issues/new?title=${title}&body=${body}`,'_blank','noopener');
+};
 
 (async()=>{renderModelMenu();setActiveModel('auto');try{const s=await window.VMDGateway.health();if(s.ok){const el=document.getElementById('gateway-status');el.className='hidden sm:flex items-center gap-2 px-2.5 py-1.5 rounded-lg border provider-free text-[11px] font-semibold';el.innerHTML='<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span>Free AI · Gateway online</span>'}}catch{}})();
 </script>
