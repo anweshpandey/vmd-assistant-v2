@@ -33,22 +33,22 @@
   </div>
   <div class="flex items-center gap-2">
     <div id="gateway-status" class="hidden sm:flex items-center gap-2 px-2.5 py-1.5 rounded-lg border provider-warn text-[11px] font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span><span id="gateway-status-text">Free AI · Gateway offline</span></div>
-    <div class="relative"><button id="model-menu-btn" class="flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-700 bg-slate-900 hover:bg-slate-800 text-xs font-semibold"><i class="fa-solid fa-microchip text-cyan-400"></i><span id="model-label">AI: Auto · Free</span><i class="fa-solid fa-chevron-down text-[9px] text-slate-500"></i></button><div id="model-menu" class="hidden absolute right-0 mt-2 w-[420px] max-w-[calc(100vw-20px)] panel bg-slate-950 rounded-xl p-2 shadow-2xl z-50"></div></div>
+    <div class="relative"><button id="model-menu-btn" class="flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-700 bg-slate-900 hover:bg-slate-800 text-xs font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span id="model-label">Auto · Free</span><i class="fa-solid fa-chevron-down text-[9px] text-slate-500"></i></button><div id="model-menu" class="hidden absolute right-0 mt-2 w-[360px] max-w-[calc(100vw-20px)] panel bg-slate-950 rounded-xl p-2 shadow-2xl z-50"></div></div>
   </div>
 </header>
 
 <div class="md:hidden shrink-0 border-b border-slate-800 bg-slate-900 p-1.5 flex gap-1 overflow-x-auto"><button data-tab="chat" class="nav-btn active-nav px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">Chat</button><button data-tab="cheatsheet" class="nav-btn px-3 py-1.5 rounded-lg text-xs whitespace-nowrap text-slate-400">Cheat Sheet</button><button data-tab="snippets" class="nav-btn px-3 py-1.5 rounded-lg text-xs whitespace-nowrap text-slate-400">Snippets</button><button data-tab="about" class="nav-btn px-3 py-1.5 rounded-lg text-xs whitespace-nowrap text-slate-400">About</button></div>
 
 <main class="flex-1 min-h-0 flex">
-  <aside class="hidden md:flex w-[275px] shrink-0 border-r border-slate-800 bg-slate-950/60 flex-col">
+  <aside class="hidden md:flex w-[245px] shrink-0 border-r border-slate-800 bg-slate-950/60 flex-col">
     <div class="p-3 border-b border-slate-800"><div class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2">Workspace</div><div class="grid grid-cols-2 gap-1"><button data-tab="chat" class="nav-btn active-nav rounded-lg px-2 py-2 text-xs"><i class="fa-solid fa-comments mr-1"></i> AI Chat</button><button data-tab="cheatsheet" class="nav-btn rounded-lg px-2 py-2 text-xs text-slate-400"><i class="fa-solid fa-book mr-1"></i> Cheat Sheet</button><button data-tab="snippets" class="nav-btn rounded-lg px-2 py-2 text-xs text-slate-400"><i class="fa-solid fa-code mr-1"></i> Snippets</button><button data-tab="about" class="nav-btn rounded-lg px-2 py-2 text-xs text-slate-400"><i class="fa-solid fa-circle-info mr-1"></i> About</button></div></div>
-    <div class="p-3 overflow-y-auto flex-1"><div class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2">Quick Tasks</div><div id="quick-prompts" class="space-y-1.5"></div></div>
+    <div class="p-3 overflow-y-auto flex-1"><div class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2">Quick Analysis</div><div id="quick-prompts" class="space-y-1.5"></div></div>
     <div class="p-3 border-t border-slate-800 text-[10px] text-slate-500 leading-relaxed"><i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> Free mode never sends a browser API key. Requests go through the secure gateway.</div>
   </aside>
 
   <section id="view-chat" class="view flex-1 min-w-0 flex flex-col">
-    <div class="flex-1 min-h-0 overflow-y-auto p-4 md:p-7" id="chat-messages"><div class="max-w-4xl mx-auto"><div class="flex items-start gap-3"><div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-600 to-emerald-400 flex items-center justify-center text-slate-950 shrink-0"><i class="fa-solid fa-atom"></i></div><div class="bg-slate-900 border border-slate-800 rounded-2xl rounded-tl-none p-4 text-sm leading-relaxed"><div class="font-semibold text-cyan-300 mb-1">VMD Assistant</div><p class="text-slate-300">Ask me about VMD atom selections, Tcl scripts, PBCTools, trajectory analysis, representations, rendering, or debugging.</p><p class="text-xs text-slate-500 mt-2">Auto · Free is the default. Choose OpenRouter, DeepSeek, Gemini, or Groq routes from the AI menu. Paid GPT/Claude/DeepSeek/Gemini routes are reserved for later.</p></div></div></div></div>
-    <div class="shrink-0 border-t border-slate-800 bg-slate-950/80 p-3 md:p-4"><form id="chat-form" class="max-w-4xl mx-auto"><div class="relative"><textarea id="chat-input" rows="2" placeholder="Ask a VMD question… e.g. ‘write a Tcl script for backbone RMSD over all frames’" class="w-full resize-none bg-slate-900 border border-slate-700 focus:border-cyan-500 rounded-xl px-4 py-3 pr-14 text-sm outline-none placeholder:text-slate-600"></textarea><button class="absolute right-2 bottom-2 w-9 h-9 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-slate-950 flex items-center justify-center" title="Send"><i class="fa-solid fa-arrow-up"></i></button></div><div class="flex items-center justify-between mt-2 text-[10px] text-slate-500"><span><i class="fa-solid fa-circle text-[6px] text-emerald-400 mr-1"></i><span id="active-model-note">AI: Auto · Free</span></span><span>VMD Tcl Knowledge Engine</span></div></form></div>
+    <div class="flex-1 min-h-0 overflow-y-auto p-4 md:p-7" id="chat-messages"><div class="max-w-4xl mx-auto"><div class="flex items-start gap-3"><div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-600 to-emerald-400 flex items-center justify-center text-slate-950 shrink-0"><i class="fa-solid fa-atom"></i></div><div class="bg-slate-900 border border-slate-800 rounded-2xl rounded-tl-none p-4 text-sm leading-relaxed"><div class="font-semibold text-cyan-300 mb-1">VMD Assistant</div><p class="text-slate-300">Ask me about VMD atom selections, Tcl scripts, PBCTools, trajectory analysis, representations, rendering, or debugging.</p><p class="text-xs text-slate-500 mt-2">Auto · Free is the default. Use the AI menu only when you want to choose a specific free route. Paid providers are reserved for later.</p></div></div></div></div>
+    <div class="shrink-0 border-t border-slate-800 bg-slate-950/80 p-3 md:p-4"><form id="chat-form" class="max-w-4xl mx-auto"><div class="relative"><textarea id="chat-input" rows="2" placeholder="Ask a VMD question…  Enter to send · Shift+Enter for a new line" aria-label="VMD question" class="w-full resize-none bg-slate-900 border border-slate-700 focus:border-cyan-500 rounded-xl px-4 py-3 pr-14 text-sm outline-none placeholder:text-slate-600"></textarea><button class="absolute right-2 bottom-2 w-9 h-9 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-slate-950 flex items-center justify-center" title="Send"><i class="fa-solid fa-arrow-up"></i></button></div><div class="flex items-center justify-between mt-2 text-[10px] text-slate-500"><span><i class="fa-solid fa-circle text-[6px] text-emerald-400 mr-1"></i><span id="active-model-note">Auto · Free</span></span><span>Enter ↵ send · Shift+Enter ↵ newline</span></div></form></div>
   </section>
 
   <section id="view-cheatsheet" class="view hidden flex-1 min-w-0 overflow-y-auto p-4 md:p-7"><div class="max-w-6xl mx-auto w-full"><div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4"><div><h2 class="text-xl font-bold text-cyan-300">VMD Command Cheat Sheet</h2><p class="text-xs text-slate-500">Common selections, trajectory, PBCTools, Tcl and graphics commands.</p></div><input id="cheatsheet-search" placeholder="Search commands…" class="select-dark rounded-lg px-3 py-2 text-xs w-full md:w-72"></div><div id="category-buttons" class="flex gap-1.5 flex-wrap mb-4"></div><div id="cheatsheet-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-3"></div></div></section>
@@ -186,42 +186,61 @@ let selectedModel='auto'; let selectedProvider='auto';
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function showToast(msg,error=false){const t=document.getElementById('toast'),i=document.getElementById('toast-icon');document.getElementById('toast-text').textContent=msg;i.className=error?'fa-solid fa-triangle-exclamation text-rose-400 mt-0.5':'fa-solid fa-circle-info text-cyan-400 mt-0.5';t.classList.remove('translate-y-20','opacity-0');clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.add('translate-y-20','opacity-0'),3500)}
 function copyText(s){navigator.clipboard?.writeText(s).then(()=>showToast('Copied to clipboard')).catch(()=>showToast('Clipboard access failed',true));}
-function enhanceCode(container){container.querySelectorAll('pre').forEach(pre=>{if(pre.querySelector('.copy-btn'))return;const b=document.createElement('button');b.className='copy-btn absolute top-2 right-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] px-2 py-1 rounded border border-slate-700';b.textContent='Copy';b.onclick=()=>copyText(pre.querySelector('code')?.innerText||pre.innerText);pre.appendChild(b)});container.querySelectorAll('pre code').forEach(c=>hljs.highlightElement(c));}
+function enhanceCode(container){container.querySelectorAll('pre').forEach(pre=>{
+  if(pre.querySelector('.code-actions'))return;
+  const code=pre.querySelector('code')?.innerText||pre.innerText;
+  const actions=document.createElement('div'); actions.className='code-actions absolute top-2 right-2 flex gap-1';
+  const copy=document.createElement('button'); copy.className='copy-btn bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] px-2 py-1 rounded border border-slate-700'; copy.textContent='Copy'; copy.onclick=()=>copyText(code);
+  const insert=document.createElement('button'); insert.className='insert-btn bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] px-2 py-1 rounded border border-slate-700'; insert.textContent='Use'; insert.onclick=()=>{chatInput.value=code;chatInput.focus();showToast('Code inserted into the prompt')};
+  actions.append(copy,insert); pre.appendChild(actions);
+});container.querySelectorAll('pre code').forEach(c=>hljs.highlightElement(c));}
 function appendMessage(role,text){const wrap=document.createElement('div');wrap.className=`max-w-4xl mx-auto flex items-start gap-3 ${role==='user'?'flex-row-reverse':''}`;const av=document.createElement('div');av.className=`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${role==='user'?'bg-slate-800 border border-slate-700 text-cyan-400':'bg-gradient-to-tr from-cyan-600 to-emerald-400 text-slate-950'}`;av.innerHTML=role==='user'?'<i class="fa-solid fa-user"></i>':'<i class="fa-solid fa-atom"></i>';const b=document.createElement('div');b.className=`max-w-[85%] p-4 text-sm rounded-2xl border shadow-lg ${role==='user'?'bg-cyan-950/70 border-cyan-800 text-cyan-100 rounded-tr-none':'bg-slate-900 border-slate-800 text-slate-200 rounded-tl-none markdown-body'}`;if(role==='user')b.textContent=text;else{b.innerHTML=marked.parse(text);enhanceCode(b)}wrap.append(av,b);document.getElementById('chat-messages').appendChild(wrap);document.getElementById('chat-messages').scrollTop=999999;return b}
 async function ask(query){if(!query.trim())return;appendMessage('user',query);const loading=appendMessage('assistant','<i class="fa-solid fa-spinner fa-spin text-cyan-400"></i> Thinking…');try{const result=await window.VMDGateway.chat({query,model:selectedModel,provider:selectedProvider,system:VMD_SYSTEM_PROMPT});loading.innerHTML=marked.parse(result.text);enhanceCode(loading);setActiveModel(result.model||selectedModel);if(result.fallback)showToast(`Free AI fallback: ${result.fallback}`)}catch(e){loading.innerHTML=`<span class="text-rose-400"><i class="fa-solid fa-triangle-exclamation mr-1"></i>${escapeHtml(e.message)}</span>`;showToast(e.message,true)}}
-document.getElementById('chat-form').addEventListener('submit',e=>{e.preventDefault();const i=document.getElementById('chat-input');const q=i.value.trim();i.value='';ask(q)});
+const chatInput=document.getElementById('chat-input');
+document.getElementById('chat-form').addEventListener('submit',e=>{e.preventDefault();const i=chatInput;const q=i.value.trim();if(!q)return;i.value='';ask(q)});
+chatInput.addEventListener('keydown',e=>{
+  if(e.key==='Enter' && !e.shiftKey){
+    e.preventDefault();
+    document.getElementById('chat-form').requestSubmit();
+  }
+  if((e.ctrlKey||e.metaKey) && e.key==='Enter'){
+    e.preventDefault();
+    document.getElementById('chat-form').requestSubmit();
+  }
+});
 function sendQuickPrompt(q){switchTab('chat');document.getElementById('chat-input').value=q;ask(q)}
 function switchTab(tab){document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));document.getElementById('view-'+tab).classList.remove('hidden');document.querySelectorAll('.nav-btn').forEach(b=>{const on=b.dataset.tab===tab;b.classList.toggle('active-nav',on);b.classList.toggle('text-slate-400',!on)});if(tab==='cheatsheet')renderCheatSheet()}
 
 document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
-quickPrompts.forEach(([title,q])=>{const b=document.createElement('button');b.className='w-full text-left rounded-lg border border-slate-800 bg-slate-900/70 hover:border-cyan-700/70 hover:bg-slate-800 px-3 py-2 text-xs text-slate-300';b.innerHTML=`<span class="text-cyan-400 font-semibold">${escapeHtml(title)}</span><span class="block text-slate-500 mt-0.5">${escapeHtml(q)}</span>`;b.onclick=()=>sendQuickPrompt(q);document.getElementById('quick-prompts').appendChild(b)});
+quickPrompts.forEach(([title,q],idx)=>{const icons=['fa-crosshairs','fa-bullseye','fa-chart-line','fa-wave-square','fa-arrows-rotate','fa-link','fa-camera'];const b=document.createElement('button');b.className='w-full text-left rounded-lg border border-slate-800 bg-slate-900/70 hover:border-cyan-700/70 hover:bg-slate-800 px-3 py-2.5 text-xs text-slate-300 transition';b.innerHTML=`<span class="flex items-center gap-2"><i class="fa-solid ${icons[idx]||'fa-flask'} text-cyan-400 w-4"></i><span class="text-cyan-300 font-semibold">${escapeHtml(title)}</span></span><span class="block text-slate-500 mt-1 pl-6 leading-relaxed">${escapeHtml(q)}</span>`;b.onclick=()=>sendQuickPrompt(q);document.getElementById('quick-prompts').appendChild(b)});
 
 function renderModelMenu(){
   const m=document.getElementById('model-menu'); m.innerHTML='';
-  const groups=[
-    {title:'FREE — automatic',items:[['auto','Auto · Free','Automatic free routing. Never switches to a paid model.']]},
-    {title:'FREE — OpenRouter',items:FREE_MODELS.filter(x=>x.provider==='openrouter').map(x=>[x.id,x.name,x.description])},
-    {title:'FREE — direct API tiers',items:FREE_MODELS.filter(x=>['gemini','groq'].includes(x.provider)).map(x=>[x.id,x.name,x.description])},
-    {title:'PAID / API — coming later',items:[
-      ['paid-openai','OpenAI / GPT · Coming later','Paid API account required.'],
-      ['paid-claude','Anthropic / Claude · Coming later','Paid API account required.'],
-      ['paid-deepseek','DeepSeek API · Coming later','Paid DeepSeek API account required.'],
-      ['paid-gemini','Gemini paid API · Coming later','Paid Gemini API account required.']
-    ]}
-  ];
-  groups.forEach(g=>{
-    const h=document.createElement('div'); h.className='px-2 py-2 text-[9px] uppercase tracking-widest text-slate-500 font-bold border-b border-slate-800/70'; h.textContent=g.title; m.appendChild(h);
-    g.items.forEach(([id,name,desc])=>{
-      const b=document.createElement('button'); const paid=id.startsWith('paid-'); b.disabled=paid;
-      b.className=`w-full text-left rounded-lg px-3 py-2.5 ${paid?'opacity-40 cursor-not-allowed':'hover:bg-slate-800'}`;
-      b.innerHTML=`<div class="flex items-center justify-between gap-2"><span class="text-xs font-semibold ${paid?'text-slate-500':'text-slate-200'}">${escapeHtml(name)}</span>${id===selectedModel?'<i class="fa-solid fa-check text-cyan-400 text-[10px]"></i>':''}</div><div class="text-[10px] text-slate-500 mt-0.5 leading-relaxed">${escapeHtml(desc)}</div>`;
-      if(!paid)b.onclick=()=>{selectedModel=id;selectedProvider=FREE_MODELS.find(x=>x.id===id)?.provider||'auto';m.classList.add('hidden');setActiveModel(id);renderModelMenu();showToast(`Selected ${modelDisplay(id)}.`,false)};
+  const available=FREE_MODELS;
+  const addSection=(title,items)=>{
+    const h=document.createElement('div'); h.className='px-2 pt-2 pb-1 text-[9px] uppercase tracking-widest text-slate-500 font-bold'; h.textContent=title; m.appendChild(h);
+    items.forEach(([id,name,desc,enabled=true])=>{
+      const b=document.createElement('button'); const disabled=!enabled; b.disabled=disabled;
+      b.className=`w-full text-left rounded-lg px-3 py-2.5 ${disabled?'opacity-40 cursor-not-allowed':'hover:bg-slate-800'}`;
+      b.innerHTML=`<div class="flex items-center justify-between gap-2"><span class="text-xs font-semibold ${disabled?'text-slate-500':'text-slate-200'}">${escapeHtml(name)}</span>${id===selectedModel?'<i class="fa-solid fa-check text-cyan-400 text-[10px]"></i>':''}</div><div class="text-[10px] text-slate-500 mt-0.5 leading-relaxed">${escapeHtml(desc)}</div>`;
+      if(!disabled)b.onclick=()=>{selectedModel=id;selectedProvider=available.find(x=>x.id===id)?.provider||'auto';m.classList.add('hidden');setActiveModel(id);renderModelMenu();showToast(`Selected ${modelDisplay(id)}.`)};
       m.appendChild(b);
     });
-  });
-  const note=document.createElement('div'); note.className='px-3 py-2.5 text-[10px] text-slate-500 bg-slate-900/60 rounded-lg mt-2'; note.innerHTML='<strong class="text-slate-300">Free-only safety:</strong> paid providers are displayed for future expansion but cannot be selected or called in Phase 1.'; m.appendChild(note);
+  };
+  addSection('FREE AI',[
+    ['auto','Auto · Free','Automatic free routing. Never switches to a paid model.'],
+    ...available.filter(x=>x.provider==='openrouter').map(x=>[x.id,x.name,x.description]),
+    ...available.filter(x=>['gemini','groq'].includes(x.provider)).map(x=>[x.id,x.name,x.description])
+  ]);
+  addSection('COMING LATER',[
+    ['paid-openai','OpenAI / GPT','Paid API account required.',false],
+    ['paid-claude','Anthropic / Claude','Paid API account required.',false],
+    ['paid-deepseek','DeepSeek API','Paid DeepSeek API account required.',false],
+    ['paid-gemini','Gemini paid API','Paid Gemini API account required.',false]
+  ]);
+  const note=document.createElement('div'); note.className='px-3 py-2.5 text-[10px] text-slate-500 bg-slate-900/60 rounded-lg mt-2'; note.innerHTML='<strong class="text-slate-300">Free-only:</strong> Auto never falls back to paid providers.'; m.appendChild(note);
 }
-function modelDisplay(id){if(id==='auto')return'AI: Auto · Free';return FREE_MODELS.find(x=>x.id===id)?.name||id}
+function modelDisplay(id){if(id==='auto')return'Auto · Free';return FREE_MODELS.find(x=>x.id===id)?.name||id}
 function setActiveModel(id){document.getElementById('model-label').textContent=modelDisplay(id);document.getElementById('active-model-note').textContent=modelDisplay(id)}
 document.getElementById('model-menu-btn').onclick=()=>document.getElementById('model-menu').classList.toggle('hidden');document.addEventListener('click',e=>{if(!e.target.closest('#model-menu-btn')&&!e.target.closest('#model-menu'))document.getElementById('model-menu').classList.add('hidden')});
 
