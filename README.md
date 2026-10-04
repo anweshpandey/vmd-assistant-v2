@@ -1,4 +1,4 @@
-<img width="1914" height="882" alt="image" src="https://github.com/user-attachments/assets/087b9306-9d0d-4e99-bea9-f68a4c46ca68" /># VMD Assistant AI
+# VMD Assistant AI
 available at: https://anweshpandey.github.io/vmd-assistant
 
 Standalone scientific AI assistant for **Molecular dynamics visualization**.
