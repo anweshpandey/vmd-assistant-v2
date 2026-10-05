@@ -865,22 +865,66 @@ document.getElementById('feedback-github').onclick=()=>{
 
 
 
-// Workflow cards: use capture-phase delegation so clicks are handled even when
-// an inner icon/SVG or another component stops bubbling.
-document.addEventListener('click',e=>{
-  const b=e.target.closest ? e.target.closest('[data-workflow]') : null;
-  if(!b)return;
-  e.preventDefault();
-  e.stopPropagation();
-  const q=b.getAttribute('data-workflow') || '';
-  if(q) sendQuickPrompt(q);
-}, true);
+// ---------------------------------------------------------------------------
+// WORKFLOW ACTIONS — single robust click path
+// ---------------------------------------------------------------------------
+function runVMDWorkflow(prompt){
+  const q=String(prompt||'').trim();
+  if(!q) return false;
 
-// Also expose a direct DOM handler for maximum compatibility.
-document.querySelectorAll('[data-workflow]').forEach(b=>{
-  b.type='button';
-  b.onclick=()=>sendQuickPrompt(b.getAttribute('data-workflow') || '');
-});
+  try{
+    const input=document.getElementById('chat-input');
+    const chatView=document.getElementById('view-chat');
+    if(!input || !chatView){
+      console.error('VMD workflow: chat UI not found');
+      showToast('Chat interface is not ready.', true);
+      return false;
+    }
+
+    // Switch to AI Chat first.
+    switchTab('chat');
+
+    // Put the exact workflow prompt into the composer.
+    input.value=q;
+    input.dispatchEvent(new Event('input',{bubbles:true}));
+    input.focus();
+
+    // Immediately send through the SAME ask() path as normal chat.
+    // Do this on the next event-loop turn so the tab/input state is committed.
+    window.setTimeout(()=>{
+      try{
+        input.value='';
+        ask(q);
+      }catch(err){
+        console.error('VMD workflow send failed:',err);
+        // At minimum leave the prompt visible if the AI pipeline itself fails.
+        input.value=q;
+        input.focus();
+        showToast('Prompt loaded, but the AI request failed.', true);
+      }
+    },0);
+    return true;
+  }catch(err){
+    console.error('VMD workflow error:',err);
+    showToast('Could not start workflow: '+(err?.message||err), true);
+    return false;
+  }
+}
+window.runVMDWorkflow=runVMDWorkflow;
+window.sendQuickPrompt=runVMDWorkflow;
+
+// One delegated handler covers both the large workflow cards and the sidebar
+// Analysis Tasks. It also works when the user clicks an SVG/icon inside a card.
+if(!window.__vmdWorkflowClickBound){
+  document.addEventListener('click',function(e){
+    const el=e.target && e.target.closest ? e.target.closest('[data-workflow]') : null;
+    if(!el) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    runVMDWorkflow(el.getAttribute('data-workflow')||'');
+  },true);
+  window.__vmdWorkflowClickBound=true;
+}
 
 document.querySelectorAll('[data-copy-demo]').forEach(b=>b.onclick=()=>{
   const code=b.closest('.vmd-code-card').querySelector('code').innerText;
