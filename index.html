@@ -9,624 +9,903 @@
   <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{darkbg:'#090d16'}}}}</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/tcl.min.js"></script>
   <script src="assets/gateway-config.js"></script>
   <script src="assets/free-mode.js"></script>
+  
   <style>
-    :root{color-scheme:dark} body{font-family:Inter,sans-serif;background:#090d16;color:#e2e8f0} code,pre{font-family:'Fira Code',monospace}
-    ::-webkit-scrollbar{width:7px;height:7px}::-webkit-scrollbar-track{background:#0f172a}::-webkit-scrollbar-thumb{background:#334155;border-radius:4px}::-webkit-scrollbar-thumb:hover{background:#06b6d4}
-    .markdown-body pre{position:relative;background:#020617;border:1px solid #1e293b;border-radius:12px;padding:14px;margin:10px 0;overflow:auto}.markdown-body code{color:#67e8f9;background:#0f172a;padding:2px 5px;border-radius:5px}.markdown-body pre code{background:transparent;padding:0;color:inherit}.markdown-body p{margin:0 0 10px;line-height:1.65}.markdown-body ul{list-style:disc;padding-left:22px;margin:8px 0}.markdown-body ol{list-style:decimal;padding-left:22px;margin:8px 0}.markdown-body h1,.markdown-body h2,.markdown-body h3{font-weight:700;margin:12px 0 8px;color:#a5f3fc}.markdown-body table{width:100%;border-collapse:collapse;margin:10px 0}.markdown-body th,.markdown-body td{border:1px solid #334155;padding:7px;text-align:left}
-    .panel{background:rgba(15,23,42,.72);border:1px solid rgba(51,65,85,.7)} .active-nav{background:#0891b2;color:#fff;box-shadow:0 5px 18px rgba(8,145,178,.22)}
-    .provider-free{color:#67e8f9;background:rgba(8,47,73,.7);border-color:rgba(14,116,144,.7)} .provider-warn{color:#fbbf24;background:rgba(69,39,8,.5);border-color:rgba(180,83,9,.5)}
-    .select-dark{background:#020617;border:1px solid #334155;color:#e2e8f0}.select-dark:focus{outline:none;border-color:#06b6d4;box-shadow:0 0 0 2px rgba(6,182,212,.12)}
+    /* =========================================
+       BASE & RESET
+       ========================================= */
+    :root {
+      --bg-main: #031018;
+      --bg-panel: #071923;
+      --bg-panel-2: #0A222D;
+      --border-color: #163744;
+      --accent-teal: #19D3C5;
+      --accent-blue: #38BDF8;
+      --accent-green: #55E878;
+      --text-main: #E6F4F1;
+      --text-muted: #8FA5AF;
+      --font-sans: 'Inter', sans-serif;
+      --font-mono: 'Fira Code', monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #04131c; }
+    ::-webkit-scrollbar-thumb { background: #1b3e4d; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent-teal); }
+
+    /* Typography */
+    code, pre { font-family: var(--font-mono); }
+    
+    /* Utility Classes */
+    .text-teal { color: var(--accent-teal) !important; }
+    .text-blue { color: var(--accent-blue) !important; }
+    .text-green { color: var(--accent-green) !important; }
+    .bg-teal { background-color: var(--accent-teal) !important; }
+    .border-teal { border-color: var(--accent-teal) !important; }
+    .border-dark { border-color: var(--border-color) !important; }
+
+    /* =========================================
+       HEADER
+       ========================================= */
+    header.showcase-header {
+      height: 96px;
+      background: linear-gradient(90deg, #04131c 0%, #06202a 48%, #04131c 100%);
+      border-bottom: 1px solid var(--border-color);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      flex-shrink: 0;
+      z-index: 20;
+    }
+
+    /* Header Background Effects */
+    .showcase-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      opacity: 0.9;
+    }
+    .showcase-bg:before, .showcase-bg:after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(25, 211, 197, 0.1);
+      filter: blur(0.2px);
+    }
+    .showcase-bg:before {
+      width: 560px; height: 560px; right: 8%; top: -360px;
+      box-shadow: 0 0 0 55px rgba(25, 211, 197, 0.018), 0 0 0 110px rgba(56, 189, 248, 0.014);
+    }
+    .showcase-bg:after {
+      width: 760px; height: 760px; left: -380px; bottom: -480px;
+      box-shadow: 0 0 0 70px rgba(56, 189, 248, 0.018), 0 0 0 145px rgba(25, 211, 197, 0.012);
+    }
+    .showcase-dots {
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(56, 189, 248, 0.3) 1px, transparent 1.5px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(90deg, transparent, black 30%, black 70%, transparent);
+      opacity: 0.22;
+    }
+
+    /* Header Branding */
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 10;
+    }
+    .vmd-logo {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, var(--accent-teal), var(--accent-blue));
+      color: #04151A;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 24px rgba(25, 211, 197, 0.22);
+      font-size: 24px;
+    }
+    .showcase-brand-title {
+      font-size: 26px; font-weight: 800; letter-spacing: -0.04em;
+      color: #eaffff; margin: 0; line-height: 1;
+    }
+    .showcase-brand-title .accent { color: var(--accent-teal); }
+    .vmd-version {
+      font-size: 10px; font-weight: 700; padding: 2px 8px;
+      border-radius: 99px; color: #9AF7ED;
+      background: rgba(25, 211, 197, 0.12);
+      border: 1px solid rgba(25, 211, 197, 0.4);
+      margin-left: 8px;
+    }
+    .showcase-subtitle {
+      font-size: 11px; color: #8fb6c2; letter-spacing: 0.02em;
+      margin-top: 6px; display: block;
+    }
+
+    /* Header Center Graphic */
+    .header-molecule-wrap {
+      position: relative; width: min(520px, 42vw); height: 76px;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0.95; z-index: 10; margin: 0 auto;
+    }
+    .header-molecule { width: 100%; height: 100%; filter: drop-shadow(0 0 12px rgba(25, 211, 197, 0.12)); }
+
+    /* Header Right Actions */
+    .header-actions {
+      display: flex; align-items: center; gap: 12px; z-index: 10; margin-left: auto;
+    }
+    .showcase-status {
+      background: rgba(3, 28, 31, 0.72) !important;
+      border: 1px solid rgba(85, 232, 120, 0.38) !important;
+      color: #b8ffd0 !important;
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 8px; font-size: 11px; font-weight: 600;
+    }
+    .showcase-status .dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--accent-green);
+      box-shadow: 0 0 10px var(--accent-green);
+    }
+    .showcase-model {
+      background: rgba(5, 29, 39, 0.86) !important;
+      border: 1px solid rgba(56, 189, 248, 0.38) !important;
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 600;
+      color: var(--text-main); cursor: pointer; transition: 0.2s;
+    }
+    .showcase-model:hover { border-color: var(--accent-teal) !important; }
+
+    /* =========================================
+       SIDEBAR
+       ========================================= */
+    aside.showcase-sidebar {
+      width: 303px !important; min-width: 303px !important;
+      background: linear-gradient(180deg, rgba(4, 19, 28, 0.98), rgba(3, 14, 22, 0.98)) !important;
+      border-right: 1px solid var(--border-color);
+      display: flex; flex-direction: column;
+      position: relative; z-index: 10;
+    }
+    aside.showcase-sidebar:after {
+      content: ""; position: absolute; right: -1px; top: 0; bottom: 0; width: 1px;
+      background: linear-gradient(180deg, transparent, var(--accent-teal) 35%, var(--accent-blue) 65%, transparent);
+      opacity: 0.35;
+    }
+    .showcase-section-label {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.16em;
+      font-weight: 700; color: #5e8b98 !important; margin-bottom: 8px;
+    }
+    .showcase-nav-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5px;
+    }
+    .showcase-nav-grid .nav-btn {
+      padding: 9px 10px !important; font-size: 11px !important;
+      border: 1px solid transparent; min-height: 38px;
+      border-radius: 9px; text-align: left; font-weight: 600;
+      color: #94a3b8; background: transparent; transition: 0.2s;
+      display: flex; align-items: center;
+    }
+    .showcase-nav-grid .nav-btn i { width: 18px; text-align: center; color: #59dfe0; margin-right: 6px; }
+    .showcase-nav-grid .nav-btn:hover { background: rgba(25, 211, 197, 0.08) !important; color: #fff; }
+    .showcase-nav-grid .nav-btn.active-nav {
+      background: linear-gradient(90deg, #0B8F9A, #19D3C5) !important;
+      color: #031719 !important;
+      box-shadow: 0 8px 24px rgba(25, 211, 197, 0.18) !important;
+    }
+    .showcase-nav-grid .nav-btn.active-nav i { color: #031719; }
+
+    /* Sidebar Tasks */
+    .showcase-task {
+      background: linear-gradient(135deg, rgba(8, 31, 42, 0.88), rgba(5, 23, 32, 0.92));
+      border: 1px solid #183b49; border-radius: 12px;
+      padding: 11px 12px; transition: 0.18s; cursor: pointer;
+      width: 100%; text-align: left; position: relative; overflow: hidden;
+    }
+    .showcase-task:hover {
+      transform: translateY(-1px); border-color: rgba(25, 211, 197, 0.48);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+      background: linear-gradient(135deg, rgba(10, 44, 55, 0.92), rgba(5, 25, 34, 0.96));
+    }
+    .showcase-task .task-title { color: #b9fff6; font-weight: 700; font-size: 12px; }
+    .showcase-task .task-desc { color: #7897a2; font-size: 10px; line-height: 1.45; margin-top: 4px; }
+    .showcase-task i { color: var(--accent-teal); }
+
+    /* Sidebar Bottom */
+    .vmd-link-card {
+      background: linear-gradient(135deg, rgba(8, 31, 42, 0.95), rgba(5, 20, 29, 0.95));
+      border: 1px solid #173c4b !important; border-radius: 12px; transition: 0.2s;
+    }
+    .vmd-link-card:hover { border-color: rgba(56, 189, 248, 0.5) !important; }
+    .sidebar-signature {
+      border-top: 1px solid rgba(25, 211, 197, 0.07);
+      position: relative;
+    }
+    .sidebar-signature:before {
+      content: ""; display: block; height: 1px; margin: 0 25px 9px;
+      background: linear-gradient(90deg, transparent, rgba(25, 211, 197, 0.28), transparent);
+    }
+    .signature-name { font-family: cursive; font-size: 18px; color: #7debe0; letter-spacing: 0.01em; }
+
+    /* =========================================
+       MAIN CONTENT AREA
+       ========================================= */
+    main.showcase-main {
+      background: radial-gradient(circle at 60% 10%, rgba(25, 211, 197, 0.055), transparent 25%), var(--bg-main) !important;
+      display: flex; flex-direction: column; position: relative; overflow: hidden;
+    }
+    main.showcase-main:before {
+      content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.42;
+      background: linear-gradient(30deg, transparent 48%, rgba(25, 211, 197, 0.035) 49%, transparent 50%) 0 0/150px 150px,
+                  linear-gradient(150deg, transparent 48%, rgba(56, 189, 248, 0.028) 49%, transparent 50%) 0 0/180px 180px;
+    }
+
+    #chat-messages {
+      flex: 1; overflow-y: auto; padding: 24px 32px;
+      position: relative; z-index: 1;
+    }
+
+    /* Hero Section */
+    .showcase-hero {
+      background: linear-gradient(105deg, rgba(8, 35, 46, 0.96), rgba(5, 23, 32, 0.91));
+      border: 1px solid rgba(25, 211, 197, 0.32);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.28), inset 0 0 50px rgba(25, 211, 197, 0.025);
+      min-height: 178px; border-radius: 20px; padding: 24px;
+      position: relative; overflow: hidden; isolation: isolate;
+    }
+    .showcase-hero:before {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(25, 211, 197, 0.06) 1px, transparent 1px) 0 0/58px 100%,
+                  linear-gradient(rgba(25, 211, 197, 0.035) 1px, transparent 1px) 0 0/100% 42px;
+      mask-image: linear-gradient(90deg, black, transparent 72%); opacity: 0.45; pointer-events: none;
+    }
+    .showcase-hero:after {
+      content: "VMD"; position: absolute; right: 34px; bottom: -22px;
+      font-size: 112px; font-weight: 900; letter-spacing: -0.08em;
+      color: rgba(25, 211, 197, 0.035); pointer-events: none;
+    }
+    .hero-kicker { color: #61e9df; font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em; font-weight: 800; }
+    .hero-title { font-size: 24px; font-weight: 800; letter-spacing: -0.025em; color: #e9fffc; margin: 8px 0 0; }
+    .hero-title span { color: var(--accent-teal); }
+    .hero-copy { max-width: 720px; color: #b7d0d8; font-size: 13px; line-height: 1.65; margin-top: 8px; }
+    .hero-pills { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 15px; }
+    .hero-pill {
+      font-size: 10px; padding: 5px 10px; border-radius: 999px;
+      border: 1px solid rgba(25, 211, 197, 0.28); background: rgba(25, 211, 197, 0.055);
+      color: #baf8f2;
+    }
+    .hero-data-rail { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 11px; position: relative; }
+    .hero-data-rail:after {
+      content: ""; position: absolute; right: 4px; top: -4px; width: 120px; height: 24px;
+      background: repeating-linear-gradient(90deg, rgba(25, 211, 197, 0.16) 0 1px, transparent 1px 14px);
+      opacity: 0.55; mask-image: linear-gradient(90deg, transparent, black);
+    }
+    .hero-data {
+      display: flex; align-items: center; gap: 6px; padding: 5px 8px; border-radius: 8px;
+      background: rgba(2, 15, 22, 0.46); border: 1px solid rgba(56, 189, 248, 0.13);
+      color: #7da8b3; font-size: 9px;
+    }
+    .hero-data b { color: #c8fff8; font-weight: 700; }
+
+    /* Hero Graphic */
+    .molecule-orb {
+      position: absolute; right: 20px; top: 5px; width: 320px; height: 175px;
+      opacity: 1; filter: drop-shadow(0 0 18px rgba(25, 211, 197, 0.16));
+      pointer-events: none;
+    }
+    .molecule-orb svg { width: 100%; height: 100%; overflow: visible; }
+    .molecule-orb:after {
+      content: ""; position: absolute; inset: 25px 5px;
+      background: repeating-radial-gradient(ellipse at 72% 48%, transparent 0 15px, rgba(56, 189, 248, 0.055) 16px 17px);
+      border-radius: 50%; transform: rotate(-10deg); pointer-events: none;
+    }
+
+    /* Workflow Section */
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 12px; margin: 22px 0 11px; }
+    .section-heading h3 { font-size: 13px; font-weight: 800; color: #dffcf8; margin: 0; }
+    .section-heading p { font-size: 10px; color: #668793; margin: 3px 0 0; }
+
+    .workflow-grid {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
+      margin-bottom: 2px;
+    }
+    .workflow-card {
+      position: relative; min-height: 104px; padding: 13px 145px 13px 13px;
+      overflow: hidden; isolation: isolate;
+      background: linear-gradient(135deg, rgba(6, 29, 39, 0.88), rgba(3, 19, 27, 0.9));
+      border: 1px solid #173c4b; border-radius: 14px; cursor: pointer; transition: 0.2s;
+      text-align: left; display: flex; flex-direction: column; justify-content: center;
+    }
+    .workflow-card:before {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(circle at 82% 48%, rgba(25, 211, 197, 0.11), transparent 22%),
+                  linear-gradient(90deg, rgba(25, 211, 197, 0.025), transparent 70%);
+      z-index: -2;
+    }
+    .workflow-card:after {
+      content: ""; position: absolute; right: -10px; top: 0; bottom: 0; width: 150px;
+      background: linear-gradient(90deg, transparent, rgba(4, 27, 37, 0.12));
+      z-index: -1; pointer-events: none;
+    }
+    .workflow-card:hover { transform: translateY(-3px); border-color: rgba(25, 211, 197, 0.55); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25); }
+    
+    .workflow-icon {
+      width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, rgba(25, 211, 197, 0.16), rgba(56, 189, 248, 0.11));
+      border: 1px solid rgba(25, 211, 197, 0.3); color: #45e6d9; margin-bottom: 10px;
+      box-shadow: 0 0 18px rgba(25, 211, 197, 0.08);
+    }
+    .workflow-title { font-size: 12px; font-weight: 800; color: #dffcf8; }
+    .workflow-desc { font-size: 10px; line-height: 1.5; color: #7595a1; margin-top: 4px; }
+    .workflow-arrow { position: absolute; right: 13px; top: 14px; color: #47727e; font-size: 10px; }
+    
+    .workflow-visual {
+      position: absolute; right: 12px; top: 10px; width: 126px; height: 72px;
+      opacity: 0.92; pointer-events: none;
+    }
+    .workflow-visual svg { width: 100%; height: 100%; overflow: visible; }
+    .workflow-card:hover .workflow-visual { transform: translateY(-1px) scale(1.02); filter: drop-shadow(0 0 7px rgba(25, 211, 197, 0.22)); }
+
+    /* Empty State */
+    .showcase-empty {
+      min-height: 82px; border: 1px dashed rgba(39, 211, 197, 0.18);
+      background: linear-gradient(135deg, rgba(4, 22, 30, 0.52), rgba(7, 31, 40, 0.32));
+      border-radius: 14px; display: flex; align-items: center; justify-content: center;
+      text-align: center; color: #5f7f89; font-size: 11px; margin-top: 10px;
+    }
+
+    /* Chat Thread */
+    #chat-thread { padding-bottom: 8px; }
+    .vmd-user-bubble {
+      color: #E8FFFC !important;
+      background: linear-gradient(135deg, rgba(8, 57, 69, 0.95), rgba(8, 42, 53, 0.94)) !important;
+      border: 1px solid rgba(25, 211, 197, 0.45) !important;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      border-radius: 16px 16px 4px 16px;
+    }
+    .vmd-assistant-bubble {
+      background: linear-gradient(135deg, rgba(10, 28, 38, 0.97), rgba(8, 22, 31, 0.96)) !important;
+      border: 1px solid rgba(27, 53, 66, 0.95) !important;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.20);
+      border-radius: 16px 16px 16px 4px;
+    }
+
+    /* Markdown Styles */
+    .markdown-body pre { position: relative; background: #020617; border: 1px solid #1e293b; border-radius: 12px; padding: 14px; margin: 10px 0; overflow: auto; }
+    .markdown-body code { color: #67e8f9; background: #0f172a; padding: 2px 5px; border-radius: 5px; }
+    .markdown-body pre code { background: transparent; padding: 0; color: inherit; }
+    .markdown-body p { margin: 0 0 10px; line-height: 1.65; }
+    .markdown-body ul { list-style: disc; padding-left: 22px; margin: 8px 0; }
+    .markdown-body ol { list-style: decimal; padding-left: 22px; margin: 8px 0; }
+    .markdown-body h1, .markdown-body h2, .markdown-body h3 { font-weight: 700; margin: 12px 0 8px; color: #a5f3fc; }
+    .markdown-body table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+    .markdown-body th, .markdown-body td { border: 1px solid #334155; padding: 7px; text-align: left; }
+    .code-actions { position: absolute; top: 8px; right: 8px; display: flex; gap: 4px; }
+
+    /* =========================================
+       CHAT COMPOSER (BOTTOM)
+       ========================================= */
+    .showcase-composer {
+      background: rgba(2, 12, 18, 0.97) !important;
+      border-top: 1px solid #173744;
+      box-shadow: 0 -18px 45px rgba(0, 0, 0, 0.28);
+      padding: 16px 24px;
+      flex-shrink: 0; z-index: 10;
+    }
+    .showcase-composer form { max-width: 1210px; margin: 0 auto; }
+    .showcase-composer #chat-input {
+      min-height: 64px !important; background: #081c26 !important;
+      border: 1px solid #24505f !important; border-radius: 13px !important;
+      font-size: 13px !important; color: var(--text-main) !important;
+      padding: 14px 60px 14px 16px; width: 100%; resize: none; outline: none;
+      transition: 0.2s;
+    }
+    .showcase-composer #chat-input:focus {
+      border-color: var(--accent-teal) !important;
+      box-shadow: 0 0 0 2px rgba(25, 211, 197, 0.10) !important;
+    }
+    .showcase-composer #chat-input::placeholder { color: #607782; }
+    
+    .vmd-send {
+      position: absolute; right: 12px; bottom: 12px;
+      width: 46px !important; height: 46px !important;
+      border-radius: 11px !important;
+      background: linear-gradient(135deg, #19d3c5, #38bdf8) !important;
+      color: #04151A !important;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 22px rgba(25, 211, 197, 0.2);
+      transition: 0.2s; border: none; cursor: pointer;
+    }
+    .vmd-send:hover { transform: translateY(-1px); box-shadow: 0 10px 28px rgba(25, 211, 197, 0.35); }
+
+    .showcase-footer-label { color: #7fa4af; font-size: 10px; }
+    .showcase-footer-label strong { color: #b9fff6; }
+    .showcase-footer-label i { color: var(--accent-teal); }
+
+    /* =========================================
+       MODALS & TOASTS
+       ========================================= */
+    .vmd-modal { background: #0D1923; border: 1px solid #1B3542; }
+    .select-dark { background: #020617; border: 1px solid #334155; color: #e2e8f0; }
+    .select-dark:focus { outline: none; border-color: #06b6d4; box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.12); }
+    .vmd-action { background: rgba(25, 211, 197, 0.1); border: 1px solid rgba(25, 211, 197, 0.35); color: #9AF7ED; transition: 0.2s; }
+    .vmd-action:hover { background: rgba(25, 211, 197, 0.2); border-color: var(--accent-teal); }
+
+    /* =========================================
+       MEDIA QUERIES
+       ========================================= */
+    @media (max-width: 1100px) {
+      .workflow-grid { grid-template-columns: 1fr; }
+      .workflow-card { padding-right: 112px !important; }
+      .workflow-visual { width: 96px; right: 8px; }
+      .molecule-orb { opacity: 0.35; right: -30px; }
+      .header-molecule-wrap { display: none; }
+    }
+    @media (max-width: 700px) {
+      .showcase-brand-title { font-size: 21px; }
+      header.showcase-header { height: 76px; padding: 0 16px; }
+      .hero-title { font-size: 20px; }
+      .workflow-card { padding-right: 13px !important; }
+      .workflow-visual { display: none; }
+      .showcase-composer { padding: 12px 16px; }
+      #chat-messages { padding: 16px; }
+      .showcase-hero { padding: 16px; }
+      .showcase-hero:after { display: none; }
+    }
   </style>
-
-<style id="molecular-teal-theme">
-  :root {
-    --mt-bg: #07111A;
-    --mt-sidebar: #0A151F;
-    --mt-panel: #0D1923;
-    --mt-panel-2: #10232D;
-    --mt-input: #101F2A;
-    --mt-border: #1B3542;
-    --mt-accent: #19D3C5;
-    --mt-accent-2: #38BDF8;
-    --mt-success: #55E878;
-    --mt-text: #E6F4F1;
-    --mt-muted: #8FA5AF;
-  }
-
-  body {
-    background: var(--mt-bg) !important;
-    color: var(--mt-text) !important;
-  }
-
-  header {
-    background: var(--mt-sidebar) !important;
-    border-color: var(--mt-border) !important;
-  }
-
-  aside {
-    background: var(--mt-sidebar) !important;
-    border-color: var(--mt-border) !important;
-  }
-
-  main {
-    background: var(--mt-bg) !important;
-  }
-
-  #chat-messages {
-    background: var(--mt-bg) !important;
-  }
-
-  #chat-form,
-  #chat-form > div {
-    background: var(--mt-panel) !important;
-  }
-
-  #chat-input {
-    background: var(--mt-input) !important;
-    border-color: var(--mt-border) !important;
-    color: var(--mt-text) !important;
-  }
-
-  #chat-input:focus {
-    border-color: var(--mt-accent) !important;
-    box-shadow: 0 0 0 1px rgba(25,211,197,.18) !important;
-  }
-
-  #chat-input::placeholder {
-    color: #607782 !important;
-  }
-
-  button {
-    border-color: var(--mt-border);
-  }
-
-  #model-menu-btn {
-    background: var(--mt-panel) !important;
-    border-color: var(--mt-border) !important;
-  }
-
-  #model-menu {
-    background: var(--mt-panel-2) !important;
-    border-color: var(--mt-border) !important;
-  }
-
-  #model-menu button:hover,
-  #quick-prompts button:hover {
-    background: rgba(25,211,197,.10) !important;
-    border-color: rgba(25,211,197,.35) !important;
-  }
-
-  #quick-prompts button {
-    background: var(--mt-panel) !important;
-    border-color: var(--mt-border) !important;
-  }
-
-  #quick-prompts button .text-cyan-300,
-  #quick-prompts button .text-cyan-400,
-  .text-cyan-300,
-  .text-cyan-400,
-  .text-cyan-500 {
-    color: var(--mt-accent) !important;
-  }
-
-  .bg-cyan-600 {
-    background: var(--mt-accent) !important;
-    color: #06201E !important;
-  }
-
-  .hover\:bg-cyan-500:hover {
-    background: #27E0D1 !important;
-  }
-
-  .border-cyan-500,
-  .focus\:border-cyan-500:focus {
-    border-color: var(--mt-accent) !important;
-  }
-
-  .bg-slate-900 {
-    background: var(--mt-panel) !important;
-  }
-
-  .bg-slate-950,
-  .bg-slate-950\/80 {
-    background: rgba(7,17,26,.94) !important;
-  }
-
-  .border-slate-800,
-  .border-slate-700 {
-    border-color: var(--mt-border) !important;
-  }
-
-  .text-slate-100,
-  .text-slate-200,
-  .text-slate-300 {
-    color: var(--mt-text) !important;
-  }
-
-  .text-slate-400,
-  .text-slate-500,
-  .text-slate-600 {
-    color: var(--mt-muted) !important;
-  }
-
-  .text-emerald-400 {
-    color: var(--mt-success) !important;
-  }
-
-  /* AI/user message bubbles */
-  .bg-cyan-950,
-  .bg-cyan-950\/40 {
-    background: rgba(25,211,197,.10) !important;
-  }
-
-  .border-cyan-800,
-  .border-cyan-700 {
-    border-color: rgba(25,211,197,.38) !important;
-  }
-
-  /* Scrollbars */
-  * {
-    scrollbar-color: #244754 #08141D;
-    scrollbar-width: thin;
-  }
-
-  *::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  *::-webkit-scrollbar-track {
-    background: #08141D;
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background: #244754;
-    border-radius: 8px;
-  }
-
-  *::-webkit-scrollbar-thumb:hover {
-    background: #2F6473;
-  }
-</style>
-
-
-<style id="vmd-final-ui">
-  body{background:#07111A!important;color:#E6F4F1!important}
-  header{background:#07111A!important;border-color:#1B3542!important}
-  aside{background:rgba(7,17,26,.94)!important;border-color:#1B3542!important}
-  main{background:#07111A!important}
-  .vmd-header-glow{background:radial-gradient(circle at 48% 15%,rgba(25,211,197,.13),transparent 30%),radial-gradient(circle at 72% 20%,rgba(56,189,248,.09),transparent 28%)}
-  .vmd-logo{background:linear-gradient(135deg,#19D3C5,#38BDF8);color:#04151A;box-shadow:0 8px 24px rgba(25,211,197,.22)}
-  .vmd-version{color:#9AF7ED;background:rgba(25,211,197,.12);border:1px solid rgba(25,211,197,.4)}
-  .vmd-molecule-art{opacity:.8;background:
-    radial-gradient(circle at 35% 50%,rgba(25,211,197,.25) 0 2px,transparent 3px),
-    radial-gradient(circle at 48% 35%,rgba(56,189,248,.2) 0 3px,transparent 4px),
-    radial-gradient(circle at 62% 60%,rgba(25,211,197,.18) 0 3px,transparent 4px),
-    radial-gradient(circle at 75% 40%,rgba(56,189,248,.18) 0 2px,transparent 3px);
-    background-size:80px 80px,120px 120px,150px 150px,100px 100px}
-  .vmd-molecule-art:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#07111A,transparent 30%,transparent 75%,#07111A)}
-  .panel{background:rgba(13,25,35,.78)!important;border-color:rgba(27,53,66,.9)!important}
-  .active-nav{background:linear-gradient(90deg,#0B8F9A,#19D3C5)!important;color:#031719!important;box-shadow:0 7px 22px rgba(25,211,197,.18)!important}
-  .nav-btn:not(.active-nav):hover{background:rgba(25,211,197,.08)!important}
-  .vmd-chat-bg{background:
-    radial-gradient(circle at 15% 55%,rgba(25,211,197,.07),transparent 22%),
-    radial-gradient(circle at 88% 20%,rgba(56,189,248,.05),transparent 22%),
-    #07111A!important}
-  .vmd-hero-card{background:linear-gradient(110deg,rgba(13,38,49,.94),rgba(13,25,35,.88));border:1px solid rgba(25,211,197,.3);box-shadow:0 15px 45px rgba(0,0,0,.22)}
-  .vmd-hero-molecule{background:radial-gradient(circle at 70% 50%,rgba(25,211,197,.24),transparent 38%),radial-gradient(circle at 82% 35%,rgba(56,189,248,.18),transparent 28%)}
-  .vmd-chip{font-size:11px;padding:6px 11px;border-radius:999px;border:1px solid rgba(25,211,197,.32);background:rgba(25,211,197,.06);color:#D8FFFA}
-  .vmd-composer-wrap{background:rgba(7,17,26,.94)!important;border-color:#1B3542!important}
-  #chat-input{background:#101F2A!important;border:1px solid #2A4C59!important;color:#E6F4F1!important;box-shadow:inset 0 0 25px rgba(25,211,197,.025)}
-  #chat-input:focus{border-color:#19D3C5!important;box-shadow:0 0 0 2px rgba(25,211,197,.10)!important}
-  .vmd-send{background:linear-gradient(135deg,#19D3C5,#38BDF8)!important;color:#04151A!important;box-shadow:0 8px 20px rgba(25,211,197,.2)}
-  .vmd-action{background:rgba(25,211,197,.1);border:1px solid rgba(25,211,197,.35);color:#9AF7ED}
-  .vmd-link-card{background:rgba(13,25,35,.8);border:1px solid #1B3542;transition:.2s}
-  .vmd-link-card:hover{border-color:rgba(25,211,197,.55);background:rgba(25,211,197,.08);transform:translateY(-1px)}
-  .vmd-toast,.vmd-modal{background:#0D1923;border:1px solid #1B3542}
-  #model-menu{background:#10232D!important;border-color:#1B3542!important}
-  .provider-free{color:#9AF7ED!important;background:rgba(25,211,197,.08)!important;border-color:rgba(25,211,197,.35)!important}
-  .markdown-body pre{background:#06121A!important;border-color:#1B3542!important;box-shadow:inset 0 0 35px rgba(25,211,197,.025)}
-  .markdown-body code{color:#8FF5E9;background:#0D222B}
-  .markdown-body h1,.markdown-body h2,.markdown-body h3{color:#9AF7ED}
-  .text-cyan-300,.text-cyan-400,.text-cyan-500{color:#19D3C5!important}
-  .bg-cyan-600{background:#19D3C5!important;color:#04151A!important}
-  .border-cyan-500{border-color:#19D3C5!important}
-  .select-dark{background:#0B1822!important;border-color:#244754!important;color:#E6F4F1!important}
-</style>
-
-
-<style id="vmd-reference-ui">
-  html,body{width:100%;height:100%}
-  body{background:#020B12!important}
-  header{position:relative;z-index:20;box-shadow:0 1px 0 rgba(25,211,197,.08)}
-  aside{width:303px!important;min-width:303px!important}
-  .vmd-header-glow{
-    background:
-      radial-gradient(circle at 43% 45%,rgba(25,211,197,.13),transparent 18%),
-      radial-gradient(circle at 54% 55%,rgba(56,189,248,.12),transparent 19%),
-      linear-gradient(90deg,transparent 0%,rgba(0,204,255,.025) 50%,transparent 100%);
-  }
-  .vmd-header-glow:before,.vmd-header-glow:after{
-    content:"";position:absolute;border:1px solid rgba(25,211,197,.13);border-radius:50%;
-  }
-  .vmd-header-glow:before{width:420px;height:420px;left:39%;top:-185px;transform:rotate(24deg)}
-  .vmd-header-glow:after{width:310px;height:310px;left:51%;top:-125px;transform:rotate(-18deg)}
-  .vmd-molecule-art{
-    opacity:.8;
-    background:
-      radial-gradient(circle at 18% 50%,#19D3C5 0 2px,transparent 3px),
-      radial-gradient(circle at 28% 30%,#38BDF8 0 2px,transparent 3px),
-      radial-gradient(circle at 41% 62%,#19D3C5 0 3px,transparent 4px),
-      radial-gradient(circle at 55% 28%,#38BDF8 0 2px,transparent 3px),
-      radial-gradient(circle at 70% 58%,#19D3C5 0 2px,transparent 3px),
-      radial-gradient(circle at 82% 35%,#38BDF8 0 3px,transparent 4px);
-    filter:blur(.2px)
-  }
-  .vmd-molecule-art:before{
-    content:"";position:absolute;inset:5% 8%;
-    background:
-      linear-gradient(28deg,transparent 48%,rgba(25,211,197,.22) 49%,rgba(25,211,197,.22) 50%,transparent 51%),
-      linear-gradient(-25deg,transparent 48%,rgba(56,189,248,.18) 49%,rgba(56,189,248,.18) 50%,transparent 51%);
-    background-size:130px 85px,170px 110px;
-    opacity:.7
-  }
-  .vmd-hero-card{
-    min-height:155px;
-    background:
-      radial-gradient(circle at 92% 48%,rgba(25,211,197,.25),transparent 18%),
-      radial-gradient(circle at 82% 70%,rgba(56,189,248,.14),transparent 22%),
-      linear-gradient(105deg,rgba(11,37,48,.97),rgba(8,25,34,.92));
-    border:1px solid rgba(25,211,197,.32)!important;
-    box-shadow:0 18px 55px rgba(0,0,0,.22), inset 0 0 35px rgba(25,211,197,.035);
-  }
-  .vmd-hero-molecule{
-    background:
-      radial-gradient(circle at 70% 40%,rgba(25,211,197,.24),transparent 18%),
-      radial-gradient(circle at 82% 62%,rgba(56,189,248,.18),transparent 20%),
-      repeating-radial-gradient(ellipse at 75% 50%,transparent 0 18px,rgba(25,211,197,.07) 19px 20px);
-    opacity:.9
-  }
-  .vmd-user-bubble{
-    color:#E8FFFC!important;
-    background:linear-gradient(135deg,rgba(8,57,69,.95),rgba(8,42,53,.94))!important;
-    border:1px solid rgba(25,211,197,.45)!important;
-    box-shadow:0 10px 25px rgba(0,0,0,.15)
-  }
-  .vmd-assistant-bubble{
-    background:linear-gradient(135deg,rgba(10,28,38,.97),rgba(8,22,31,.96))!important;
-    border:1px solid rgba(27,53,66,.95)!important;
-    box-shadow:0 14px 35px rgba(0,0,0,.20)
-  }
-  .vmd-code-card{
-    margin-top:14px;border:1px solid rgba(27,53,66,.95);border-radius:13px;
-    overflow:hidden;background:#041019;box-shadow:inset 0 0 35px rgba(25,211,197,.025)
-  }
-  .vmd-code-head{
-    display:flex;align-items:center;justify-content:space-between;gap:12px;
-    padding:9px 12px;border-bottom:1px solid #18333E;color:#D9F8F4;font-size:11px;font-weight:600
-  }
-  .vmd-code-card pre{margin:0!important;border:0!important;border-radius:0!important;background:#031018!important;padding:13px!important;font-size:11px!important;line-height:1.7!important}
-  .vmd-code-btn{
-    border:1px solid rgba(25,211,197,.45);border-radius:7px;padding:6px 9px;
-    background:rgba(25,211,197,.045);color:#B8FFF7;font-size:10px
-  }
-  .vmd-code-btn:hover{background:rgba(25,211,197,.12);border-color:#19D3C5}
-  .vmd-composer-wrap{
-    background:rgba(2,11,18,.97)!important;
-    box-shadow:0 -12px 35px rgba(0,0,0,.22)
-  }
-  .vmd-composer-wrap form{width:100%;max-width:1215px!important}
-  #chat-input{min-height:62px!important}
-  .vmd-link-card{border-radius:12px!important}
-  .vmd-toast{backdrop-filter:blur(12px)}
-  #chat-thread{padding-bottom:8px}
-</style>
-
-
-<style id="vmd-showcase-ui">
-  :root{
-    --show-bg:#031018;--show-bg2:#061923;--show-panel:rgba(7,25,35,.86);--show-panel2:rgba(10,34,45,.88);
-    --show-border:rgba(39,211,197,.24);--show-teal:#19d3c5;--show-cyan:#38bdf8;--show-green:#55e878;
-  }
-  body{background:radial-gradient(circle at 50% -10%,rgba(25,211,197,.12),transparent 30%),#031018!important}
-  .showcase-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden;opacity:.9}
-  .showcase-bg:before,.showcase-bg:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(25,211,197,.10);filter:blur(.2px)}
-  .showcase-bg:before{width:560px;height:560px;right:8%;top:-360px;box-shadow:0 0 0 55px rgba(25,211,197,.018),0 0 0 110px rgba(56,189,248,.014)}
-  .showcase-bg:after{width:760px;height:760px;left:-380px;bottom:-480px;box-shadow:0 0 0 70px rgba(56,189,248,.018),0 0 0 145px rgba(25,211,197,.012)}
-  .showcase-dots{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(56,189,248,.30) 1px,transparent 1.5px);background-size:44px 44px;mask-image:linear-gradient(90deg,transparent,black 30%,black 70%,transparent);opacity:.22}
-  .showcase-header{height:96px!important;background:linear-gradient(90deg,#04131c 0%,#06202a 48%,#04131c 100%)!important;border-color:#163744!important}
-  .showcase-header:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 0 34%,rgba(25,211,197,.07) 50%,transparent 72%),repeating-linear-gradient(155deg,transparent 0 26px,rgba(56,189,248,.045) 27px 28px,transparent 29px 54px);pointer-events:none}
-  .showcase-brand-title{font-size:28px;line-height:1;font-weight:800;letter-spacing:-.04em;color:#eaffff}
-  .showcase-brand-title .accent{color:var(--show-teal)}
-  .showcase-subtitle{font-size:11px;color:#8fb6c2;letter-spacing:.02em;margin-top:7px}
-  .showcase-status{background:rgba(3,28,31,.72)!important;border-color:rgba(85,232,120,.38)!important;color:#b8ffd0!important}
-  .showcase-model{background:rgba(5,29,39,.86)!important;border-color:rgba(56,189,248,.38)!important}
-  .showcase-sidebar{background:linear-gradient(180deg,rgba(4,19,28,.98),rgba(3,14,22,.98))!important;border-color:#163744!important}
-  .showcase-nav-grid{grid-template-columns:1fr 1fr!important;gap:5px!important}
-  .showcase-nav-grid .nav-btn{padding:9px 10px!important;font-size:11px!important;border:1px solid transparent;min-height:38px}
-  .showcase-nav-grid .nav-btn i{width:18px;text-align:center;color:#59dfe0}
-  .showcase-section-label{color:#5e8b98!important;letter-spacing:.16em!important}
-  .showcase-task{background:linear-gradient(135deg,rgba(8,31,42,.88),rgba(5,23,32,.92));border:1px solid #183b49;border-radius:12px;padding:11px 12px;transition:.18s;cursor:pointer}
-  .showcase-task:hover{transform:translateY(-1px);border-color:rgba(25,211,197,.48);box-shadow:0 10px 24px rgba(0,0,0,.22);background:linear-gradient(135deg,rgba(10,44,55,.92),rgba(5,25,34,.96))}
-  .showcase-task .task-title{color:#b9fff6;font-weight:700;font-size:12px}.showcase-task .task-desc{color:#7897a2;font-size:10px;line-height:1.45;margin-top:4px}
-  .showcase-main{background:radial-gradient(circle at 60% 10%,rgba(25,211,197,.055),transparent 25%),#031018!important}
-  .showcase-hero{background:linear-gradient(105deg,rgba(8,35,46,.96),rgba(5,23,32,.91));border:1px solid rgba(25,211,197,.32);box-shadow:0 22px 60px rgba(0,0,0,.28),inset 0 0 50px rgba(25,211,197,.025);min-height:178px}
-  .showcase-hero:after{content:"VMD";position:absolute;right:34px;bottom:-22px;font-size:112px;font-weight:900;letter-spacing:-.08em;color:rgba(25,211,197,.035);pointer-events:none}
-  .hero-kicker{color:#61e9df;font-size:10px;text-transform:uppercase;letter-spacing:.18em;font-weight:800}
-  .hero-title{font-size:24px;font-weight:800;letter-spacing:-.025em;color:#e9fffc}.hero-title span{color:var(--show-teal)}
-  .hero-copy{max-width:720px;color:#a8c3cc;font-size:13px;line-height:1.65;margin-top:8px}
-  .hero-pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px}.hero-pill{font-size:10px;padding:6px 10px;border-radius:999px;border:1px solid rgba(25,211,197,.28);background:rgba(25,211,197,.055);color:#baf8f2}
-  .molecule-orb{position:absolute;right:35px;top:20px;width:220px;height:140px;opacity:.8;background:radial-gradient(circle at 70% 50%,rgba(25,211,197,.22),transparent 24%),radial-gradient(circle at 55% 35%,rgba(56,189,248,.18),transparent 20%)}
-  .molecule-orb:before{content:"";position:absolute;inset:12px;background:repeating-radial-gradient(ellipse at 70% 50%,transparent 0 13px,rgba(25,211,197,.09) 14px 15px);border-radius:50%;transform:rotate(-18deg)}
-  .section-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:22px 0 11px}.section-heading h3{font-size:13px;font-weight:800;color:#dffcf8}.section-heading p{font-size:10px;color:#668793;margin-top:3px}
-  .workflow-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-  .workflow-card{position:relative;min-height:92px;background:linear-gradient(145deg,rgba(9,35,46,.94),rgba(4,22,30,.96));border:1px solid #173c4b;border-radius:14px;padding:15px;cursor:pointer;transition:.2s;overflow:hidden}
-  .workflow-card:before{content:"";position:absolute;inset:auto -35px -55px auto;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(25,211,197,.12),transparent 68%)}
-  .workflow-card:hover{transform:translateY(-3px);border-color:rgba(25,211,197,.55);box-shadow:0 15px 35px rgba(0,0,0,.25)}
-  .workflow-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(25,211,197,.16),rgba(56,189,248,.11));border:1px solid rgba(25,211,197,.3);color:#45e6d9;margin-bottom:10px}
-  .workflow-title{font-size:12px;font-weight:800;color:#dffcf8}.workflow-desc{font-size:10px;line-height:1.5;color:#7595a1;margin-top:4px}.workflow-arrow{position:absolute;right:13px;top:14px;color:#47727e;font-size:10px}
-  .showcase-empty{min-height:90px;border:1px dashed rgba(39,211,197,.18);background:rgba(4,20,28,.42);border-radius:14px;display:flex;align-items:center;justify-content:center;text-align:center;color:#5f7f89;font-size:11px}
-  .showcase-composer{background:rgba(2,12,18,.97)!important;border-color:#173744!important;box-shadow:0 -18px 45px rgba(0,0,0,.28)}
-  .showcase-composer form{max-width:1210px!important}.showcase-composer #chat-input{min-height:64px!important;background:#081c26!important;border-color:#24505f!important;border-radius:13px!important;font-size:13px!important}.showcase-composer #chat-input:focus{border-color:#19d3c5!important;box-shadow:0 0 0 2px rgba(25,211,197,.10)!important}
-  .showcase-composer .vmd-send{width:46px!important;height:46px!important;border-radius:11px!important;background:linear-gradient(135deg,#19d3c5,#38bdf8)!important;box-shadow:0 8px 22px rgba(25,211,197,.2)}
-  .showcase-footer-label{color:#7fa4af}.showcase-footer-label strong{color:#b9fff6}
-  .github-card{background:linear-gradient(135deg,rgba(8,31,42,.95),rgba(5,20,29,.95));border:1px solid #173c4b!important}.github-card:hover{border-color:rgba(56,189,248,.5)!important}
-  .feedback-card{background:linear-gradient(135deg,rgba(8,31,42,.95),rgba(5,20,29,.95));border:1px solid #173c4b!important}
-  @media(max-width:1100px){.workflow-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.molecule-orb{opacity:.35;right:-30px}}
-  @media(max-width:700px){.workflow-grid{grid-template-columns:1fr}.showcase-brand-title{font-size:21px}.showcase-header{height:76px!important}.hero-title{font-size:20px}}
-</style>
-
-
-<style id="vmd-exact-reference-finish">
-  .header-molecule-wrap{position:relative;width:min(520px,42vw);height:76px;display:flex;align-items:center;justify-content:center;opacity:.95}
-  .header-molecule{width:100%;height:100%;filter:drop-shadow(0 0 12px rgba(25,211,197,.12))}
-  .showcase-header .showcase-bg{opacity:.5}
-  .showcase-header .showcase-dots{opacity:.10;background-size:34px 34px}
-  .showcase-header>div:first-child{min-width:360px}
-  .showcase-sidebar{box-shadow:inset -1px 0 rgba(25,211,197,.03)}
-  .showcase-nav-grid .nav-btn{border-radius:9px!important}
-  .showcase-nav-grid .nav-btn.active-nav{box-shadow:0 8px 24px rgba(25,211,197,.18)!important}
-  .molecule-orb{width:360px!important;height:210px!important;right:22px!important;top:4px!important;background:none!important;opacity:.95!important}
-  .molecule-orb svg{width:100%;height:100%;filter:drop-shadow(0 0 18px rgba(25,211,197,.10))}
-  .showcase-hero{padding:22px 24px!important;min-height:180px!important}
-  .hero-copy{max-width:760px!important;font-size:13px!important;color:#b7d0d8!important}
-  .hero-pills{max-width:900px!important;margin-top:14px!important}
-  .hero-pill{padding:5px 10px!important}
-  .workflow-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  .workflow-card{min-height:88px!important;padding:13px!important}
-  .workflow-icon{width:32px;height:32px;margin-bottom:7px}
-  .showcase-empty{min-height:82px!important;background:linear-gradient(135deg,rgba(4,22,30,.52),rgba(7,31,40,.32))!important}
-  .sidebar-signature{border-top:1px solid rgba(25,211,197,.07)}
-  .signature-name{font-family:cursive;font-size:18px;color:#7debe0;letter-spacing:.01em}
-  @media(max-width:1100px){.showcase-header>div:first-child{min-width:300px}.header-molecule-wrap{width:38vw}.molecule-orb{opacity:.55!important;right:-20px!important}}
-  @media(max-width:800px){.header-molecule-wrap{display:none}.showcase-header>div:first-child{min-width:0}.showcase-nav-grid{grid-template-columns:1fr 1fr!important}}
-</style>
-
-<style id="vmd-graphic-rich-finish">
-  /* Rich scientific dashboard layer */
-  .showcase-main{position:relative;overflow:hidden}
-  .showcase-main:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.42;background:
-    linear-gradient(30deg,transparent 48%,rgba(25,211,197,.035) 49%,transparent 50%) 0 0/150px 150px,
-    linear-gradient(150deg,transparent 48%,rgba(56,189,248,.028) 49%,transparent 50%) 0 0/180px 180px;}
-  .showcase-bg:after{content:"";position:absolute;inset:0;background:
-    radial-gradient(circle at 15% 35%,rgba(25,211,197,.10),transparent 15%),
-    radial-gradient(circle at 83% 24%,rgba(56,189,248,.09),transparent 17%),
-    radial-gradient(circle at 65% 86%,rgba(25,211,197,.06),transparent 20%);}
-  .showcase-hero{isolation:isolate;box-shadow:0 24px 70px rgba(0,0,0,.34),inset 0 0 80px rgba(25,211,197,.035)!important}
-  .showcase-hero:before{content:"";position:absolute;inset:0;background:
-    linear-gradient(90deg,rgba(25,211,197,.06) 1px,transparent 1px) 0 0/58px 100%,
-    linear-gradient(rgba(25,211,197,.035) 1px,transparent 1px) 0 0/100% 42px;mask-image:linear-gradient(90deg,black,transparent 72%);opacity:.45;pointer-events:none}
-  .molecule-orb{right:20px!important;top:5px!important;width:320px!important;height:175px!important;opacity:1!important;filter:drop-shadow(0 0 18px rgba(25,211,197,.16))}
-  .molecule-orb svg{width:100%;height:100%;overflow:visible}
-  .molecule-orb:after{content:"";position:absolute;inset:25px 5px;background:repeating-radial-gradient(ellipse at 72% 48%,transparent 0 15px,rgba(56,189,248,.055) 16px 17px);border-radius:50%;transform:rotate(-10deg);pointer-events:none}
-  .hero-data-rail{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
-  .hero-data{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:8px;background:rgba(2,15,22,.46);border:1px solid rgba(56,189,248,.13);color:#7da8b3;font-size:9px}
-  .hero-data b{color:#c8fff8;font-weight:700}
-  .dashboard-strip{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(290px,.95fr);gap:10px;margin-top:12px}
-  .science-panel{position:relative;overflow:hidden;border:1px solid #173a48;border-radius:14px;background:linear-gradient(145deg,rgba(7,30,40,.94),rgba(3,18,26,.97));box-shadow:inset 0 0 45px rgba(25,211,197,.018)}
-  .science-panel:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(25,211,197,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(25,211,197,.035) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(90deg,black,transparent 88%);pointer-events:none}
-  .panel-head{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:11px 13px;border-bottom:1px solid rgba(25,211,197,.10)}
-  .panel-title{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#8cefe7}.panel-sub{font-size:9px;color:#557884}
-  .molecular-stage{height:172px;position:relative}
-  .molecular-stage svg{width:100%;height:100%;display:block}
-  .stage-label{position:absolute;padding:4px 7px;border:1px solid rgba(25,211,197,.25);background:rgba(2,15,22,.78);backdrop-filter:blur(6px);border-radius:6px;color:#7eece2;font-size:8px;letter-spacing:.08em}
-  .stage-label.one{left:13px;top:18px}.stage-label.two{right:16px;top:32px}.stage-label.three{left:40%;bottom:13px}
-  .analysis-panel{padding-bottom:10px}
-  .chart-wrap{height:116px;padding:5px 10px 0;position:relative}
-  .chart-wrap svg{width:100%;height:100%}
-  .chart-label{font-size:8px;fill:#5d8290}.chart-line{fill:none;stroke:#19d3c5;stroke-width:2.5;filter:drop-shadow(0 0 4px rgba(25,211,197,.45))}.chart-area{fill:url(#chartFade)}
-  .metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 10px}.metric{padding:8px;border-radius:9px;background:rgba(2,14,21,.58);border:1px solid rgba(56,189,248,.10)}.metric b{display:block;font-size:13px;color:#e1fffb}.metric span{font-size:8px;color:#5e8290}
-  .system-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:10px}
-  .system-card{padding:9px 10px;border-radius:10px;background:rgba(5,25,34,.70);border:1px solid rgba(25,211,197,.10);display:flex;align-items:center;gap:8px}
-  .system-dot{width:7px;height:7px;border-radius:50%;background:#55e878;box-shadow:0 0 10px rgba(85,232,120,.65)}.system-card b{font-size:9px;color:#c4f7f2}.system-card span{display:block;font-size:8px;color:#557884;margin-top:2px}
-  .showcase-empty{border-style:solid!important;background:linear-gradient(135deg,rgba(5,25,34,.65),rgba(3,15,22,.45))!important;box-shadow:inset 0 0 35px rgba(25,211,197,.02)}
-  .showcase-sidebar:after{content:"";position:absolute;right:-1px;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,#19d3c5 35%,#38bdf8 65%,transparent);opacity:.35}
-  .sidebar-signature{position:relative}.sidebar-signature:before{content:"";display:block;height:1px;margin:0 25px 9px;background:linear-gradient(90deg,transparent,rgba(25,211,197,.28),transparent)}
-  @media(max-width:1050px){.dashboard-strip{grid-template-columns:1fr}.molecular-stage{height:145px}.system-strip{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:700px){.molecule-orb{opacity:.28!important;right:-55px!important}.dashboard-strip{display:none}.hero-data-rail{display:none}}
-</style>
-
-
-<style id="vmd-final-infographic">
-  .max-w-\[1235px\]{max-width:1400px!important}
-  .infographic-board{margin-top:14px;position:relative;padding:13px;border:1px solid rgba(25,211,197,.18);border-radius:16px;background:linear-gradient(145deg,rgba(4,25,34,.88),rgba(2,14,21,.94));box-shadow:0 20px 60px rgba(0,0,0,.24),inset 0 0 70px rgba(25,211,197,.025);overflow:hidden}
-  .infographic-board:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 38% 45%,rgba(25,211,197,.08),transparent 25%),radial-gradient(circle at 90% 10%,rgba(56,189,248,.06),transparent 20%);pointer-events:none}
-  .infographic-topline{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:0 3px 10px;border-bottom:1px solid rgba(25,211,197,.10)}
-  .info-kicker{font-size:10px;font-weight:900;letter-spacing:.18em;color:#7debe0}.info-caption{font-size:9px;color:#4f7580;margin-left:12px}.info-live{font-size:8px;letter-spacing:.12em;color:#62dcae;display:flex;gap:6px;align-items:center}.info-live span{width:6px;height:6px;border-radius:50%;background:#55e878;box-shadow:0 0 10px #55e878}
-  .infographic-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(320px,.9fr);gap:10px;margin-top:10px}.science-panel{border:1px solid rgba(25,211,197,.14)!important;background:linear-gradient(145deg,rgba(6,30,40,.9),rgba(2,17,25,.96))!important;border-radius:13px;overflow:hidden;box-shadow:inset 0 0 35px rgba(25,211,197,.02)}
-  .info-molecule{min-height:330px}.big-molecule{height:300px;position:relative}.big-molecule svg{width:100%;height:100%;display:block}.info-code{font-size:8px;color:#5da1af;border:1px solid rgba(56,189,248,.13);padding:3px 6px;border-radius:5px}.molecule-badge{position:absolute;padding:5px 8px;border:1px solid rgba(25,211,197,.2);background:rgba(1,13,19,.82);backdrop-filter:blur(8px);border-radius:7px;display:flex;gap:7px;align-items:center}.molecule-badge b{font-size:8px;color:#8cefe7;letter-spacing:.08em}.molecule-badge span{font-size:8px;color:#597e89}.molecule-badge.left{left:14px;top:17px}.molecule-badge.right{right:14px;top:35px}.molecule-badge.bottom{left:50%;bottom:13px;transform:translateX(-50%)}
-  .info-side{display:grid;grid-template-rows:1.2fr .8fr;gap:10px}.signal-chart{height:150px;padding:4px 9px 0}.signal-chart svg{width:100%;height:100%}.mini-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 10px 10px}.mini-metrics div{border:1px solid rgba(56,189,248,.10);border-radius:8px;background:rgba(1,13,19,.6);padding:7px}.mini-metrics b{display:block;font-size:13px;color:#d7fff9}.mini-metrics span{font-size:8px;color:#587b86}
-  .pipeline{padding:13px 12px 14px;display:flex;align-items:center;justify-content:space-between;gap:4px}.pipe-node{min-width:55px;text-align:center;position:relative}.pipe-node i{width:28px;height:28px;margin:0 auto 5px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(56,189,248,.18);border-radius:8px;background:#071e28;color:#4f98a8;font-size:11px}.pipe-node b{display:block;font-size:7px;letter-spacing:.08em;color:#789ba5}.pipe-node span{display:block;font-size:7px;color:#496d78;margin-top:2px}.pipe-node.active i{color:#19d3c5;border-color:rgba(25,211,197,.5);box-shadow:0 0 15px rgba(25,211,197,.13)}.pipe-node.active b{color:#8cefe7}.pipe-line{height:1px;flex:1;min-width:10px;background:linear-gradient(90deg,rgba(25,211,197,.3),rgba(56,189,248,.08))}
-  .infographic-bottom{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:9px}.info-stat{display:flex;align-items:center;gap:8px;padding:9px;border-radius:10px;border:1px solid rgba(25,211,197,.11);background:rgba(4,23,31,.72)}.stat-icon{width:29px;height:29px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:rgba(25,211,197,.07);border:1px solid rgba(25,211,197,.16);color:#19d3c5;font-size:10px}.info-stat b{display:block;font-size:8px;color:#bcefe9;letter-spacing:.06em}.info-stat span{display:block;font-size:7px;color:#557782;margin-top:2px}.info-stat strong{margin-left:auto;font-size:8px;color:#5be0b2}
-  .workflow-grid{margin-bottom:2px!important}.workflow-card{background:linear-gradient(135deg,rgba(6,29,39,.88),rgba(3,19,27,.9))!important}.showcase-empty{margin-top:10px!important}
-  @media(max-width:1050px){.infographic-grid{grid-template-columns:1fr}.info-side{grid-template-rows:auto auto}.infographic-bottom{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:700px){.infographic-board{display:none}.max-w-\[1235px\]{max-width:100%!important}}
-</style>
-
-<style id="vmd-visual-workflows">
-  .workflow-grid{gap:10px!important}
-  .workflow-card{position:relative!important;min-height:104px!important;padding:13px 145px 13px 13px!important;overflow:hidden!important;isolation:isolate}
-  .workflow-card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 82% 48%,rgba(25,211,197,.11),transparent 22%),linear-gradient(90deg,rgba(25,211,197,.025),transparent 70%);z-index:-2}
-  .workflow-card:after{content:"";position:absolute;right:-10px;top:0;bottom:0;width:150px;background:linear-gradient(90deg,transparent,rgba(4,27,37,.12));z-index:-1;pointer-events:none}
-  .workflow-visual{position:absolute;right:12px;top:10px;width:126px;height:72px;opacity:.92;pointer-events:none}
-  .workflow-visual svg{width:100%;height:100%;overflow:visible}
-  .workflow-title,.workflow-desc,.workflow-icon,.workflow-arrow{position:relative;z-index:2}
-  .workflow-icon{box-shadow:0 0 18px rgba(25,211,197,.08)}
-  .workflow-card:hover .workflow-visual{transform:translateY(-1px) scale(1.02);filter:drop-shadow(0 0 7px rgba(25,211,197,.22))}
-  .task-visual{margin-left:auto;width:48px;height:24px;opacity:.8}
-  .task-visual svg{width:100%;height:100%}
-  .showcase-task{position:relative;overflow:hidden}
-  .showcase-task:after{content:"";position:absolute;right:-18px;bottom:-20px;width:95px;height:60px;background:radial-gradient(ellipse,rgba(25,211,197,.12),transparent 68%);pointer-events:none}
-  .hero-data-rail{position:relative}
-  .hero-data-rail:after{content:"";position:absolute;right:4px;top:-4px;width:120px;height:24px;background:repeating-linear-gradient(90deg,rgba(25,211,197,.16) 0 1px,transparent 1px 14px);opacity:.55;mask-image:linear-gradient(90deg,transparent,black)}
-  @media(max-width:900px){.workflow-card{padding-right:112px!important}.workflow-visual{width:96px;right:8px}}
-  @media(max-width:700px){.workflow-card{padding-right:13px!important}.workflow-visual{display:none}}
-</style>
 </head>
 <body class="min-h-screen h-screen flex flex-col overflow-hidden">
-<header class="showcase-header shrink-0 border-b flex items-center px-4 md:px-6 gap-4 relative overflow-hidden">
+<header class="showcase-header">
   <div class="showcase-bg"><div class="showcase-dots"></div></div>
-  <div class="flex items-center gap-3 min-w-0 relative z-10">
-    <div class="w-12 h-12 rounded-xl flex items-center justify-center vmd-logo"><i class="fa-solid fa-atom text-2xl"></i></div>
-    <div class="min-w-0">
-      <div class="flex items-center gap-2"><h1 class="showcase-brand-title"><span class="accent">VMD</span> Assistant <span class="accent">AI</span></h1><span class="text-[9px] font-bold px-2 py-0.5 rounded-full vmd-version">v2.5</span></div>
-      <p class="showcase-subtitle truncate">Visual Molecular Dynamics • Tcl • selections • trajectories • analysis • graphics</p>
+  
+  <!-- Left: Branding -->
+  <div class="header-brand">
+    <div class="vmd-logo"><i class="fa-solid fa-atom"></i></div>
+    <div>
+      <div class="flex items-center gap-2">
+        <h1 class="showcase-brand-title"><span class="accent">VMD</span> Assistant <span class="accent">AI</span></h1>
+        <span class="vmd-version">v2.5</span>
+      </div>
+      <p class="showcase-subtitle">Visual Molecular Dynamics • Tcl • selections • trajectories • analysis • graphics</p>
     </div>
   </div>
-  <div class="hidden lg:flex flex-1 h-full relative overflow-hidden mx-4 items-center justify-center">
-    <div class="showcase-bg"><div class="showcase-dots"></div></div>
-    <div class="header-molecule-wrap relative z-10" aria-hidden="true">
-      <svg class="header-molecule" viewBox="0 0 520 110" preserveAspectRatio="xMidYMid meet">
-        <defs><filter id="glow"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-        <g stroke="#20d8c9" stroke-opacity=".28" stroke-width="2" fill="none">
-          <path d="M40 57 L92 27 L144 55 L195 24 L250 53 L302 28 L354 59 L408 31 L474 55"/>
-          <path d="M54 82 L108 52 L158 82 L211 51 L266 79 L319 53 L372 84 L425 55" stroke="#38bdf8" stroke-opacity=".18"/>
+
+  <!-- Center: Molecular Graphic -->
+  <div class="header-molecule-wrap hidden lg:flex">
+    <svg class="header-molecule" viewBox="0 0 520 110" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <filter id="glow"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <g stroke="#20d8c9" stroke-opacity=".28" stroke-width="2" fill="none">
+        <path d="M40 57 L92 27 L144 55 L195 24 L250 53 L302 28 L354 59 L408 31 L474 55"/>
+        <path d="M54 82 L108 52 L158 82 L211 51 L266 79 L319 53 L372 84 L425 55" stroke="#38bdf8" stroke-opacity=".18"/>
+      </g>
+      <g filter="url(#glow)">
+        <g fill="#19d3c5">
+          <circle cx="40" cy="57" r="5"/><circle cx="92" cy="27" r="4"/><circle cx="144" cy="55" r="6"/>
+          <circle cx="195" cy="24" r="4"/><circle cx="250" cy="53" r="7"/><circle cx="302" cy="28" r="4"/>
+          <circle cx="354" cy="59" r="6"/><circle cx="408" cy="31" r="4"/><circle cx="474" cy="55" r="6"/>
         </g>
-        <g filter="url(#glow)">
-          <g fill="#19d3c5"><circle cx="40" cy="57" r="5"/><circle cx="92" cy="27" r="4"/><circle cx="144" cy="55" r="6"/><circle cx="195" cy="24" r="4"/><circle cx="250" cy="53" r="7"/><circle cx="302" cy="28" r="4"/><circle cx="354" cy="59" r="6"/><circle cx="408" cy="31" r="4"/><circle cx="474" cy="55" r="6"/></g>
-          <g fill="#38bdf8"><circle cx="54" cy="82" r="3"/><circle cx="108" cy="52" r="5"/><circle cx="158" cy="82" r="4"/><circle cx="211" cy="51" r="5"/><circle cx="266" cy="79" r="4"/><circle cx="319" cy="53" r="5"/><circle cx="372" cy="84" r="4"/><circle cx="425" cy="55" r="5"/></g>
+        <g fill="#38bdf8">
+          <circle cx="54" cy="82" r="3"/><circle cx="108" cy="52" r="5"/><circle cx="158" cy="82" r="4"/>
+          <circle cx="211" cy="51" r="5"/><circle cx="266" cy="79" r="4"/><circle cx="319" cy="53" r="5"/>
+          <circle cx="372" cy="84" r="4"/><circle cx="425" cy="55" r="5"/>
         </g>
-      </svg>
-    </div>
+      </g>
+    </svg>
   </div>
-  <div class="ml-auto flex items-center gap-2 relative z-10">
-    <div id="gateway-status" class="showcase-status hidden sm:flex items-center gap-2 px-3 py-2 rounded-lg border text-[11px] font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span>Free AI · Gateway offline</span></div>
-    <div class="relative"><button id="model-menu-btn" class="showcase-model flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-semibold"><i class="fa-solid fa-microchip text-cyan-300"></i><span id="model-label">Auto · Free</span><i class="fa-solid fa-chevron-down text-[9px] ml-1"></i></button><div id="model-menu" class="hidden absolute right-0 top-11 w-80 rounded-xl border shadow-2xl p-2 z-50"></div></div>
+
+  <!-- Right: Actions -->
+  <div class="header-actions">
+    <div id="gateway-status" class="showcase-status hidden sm:flex">
+      <span class="dot"></span>
+      <span>Free AI · Online</span>
+    </div>
+    <div class="relative">
+      <button id="model-menu-btn" class="showcase-model">
+        <i class="fa-solid fa-microchip text-teal"></i>
+        <span id="model-label">Auto · Free</span>
+        <i class="fa-solid fa-chevron-down text-[9px] ml-1 opacity-70"></i>
+      </button>
+      <div id="model-menu" class="hidden absolute right-0 top-12 w-80 rounded-xl border border-[#1B3542] shadow-2xl p-2 z-50 bg-[#10232D]"></div>
+    </div>
   </div>
 </header>
 
 <div class="flex flex-1 min-h-0">
-  <aside class="showcase-sidebar hidden md:flex w-[303px] shrink-0 flex-col border-r">
-  <div class="p-3 border-b">
-    <div class="showcase-section-label text-[10px] uppercase tracking-widest font-bold mb-2">Workspace</div>
-    <div class="showcase-nav-grid grid">
-      <button class="nav-btn active-nav rounded-lg text-xs font-semibold text-left" data-tab="chat"><i class="fa-solid fa-comments mr-2"></i>AI Chat</button>
-      <button class="nav-btn rounded-lg text-xs font-semibold text-left text-slate-400 hover:text-white" data-tab="cheatsheet"><i class="fa-solid fa-bolt mr-2"></i>Quick Analysis</button>
-      <button class="nav-btn rounded-lg text-xs font-semibold text-left text-slate-400 hover:text-white" data-tab="cheatsheet"><i class="fa-solid fa-terminal mr-2"></i>Command Library</button>
-      <button class="nav-btn rounded-lg text-xs font-semibold text-left text-slate-400 hover:text-white" data-tab="snippets"><i class="fa-solid fa-code mr-2"></i>Snippets</button>
-      <button class="nav-btn rounded-lg text-xs font-semibold text-left text-slate-400 hover:text-white" data-tab="about"><i class="fa-solid fa-circle-info mr-2"></i>About</button>
+  <!-- Sidebar -->
+  <aside class="showcase-sidebar hidden md:flex flex-col">
+    <div class="p-4 border-b border-dark">
+      <div class="showcase-section-label">Workspace</div>
+      <div class="showcase-nav-grid">
+        <button class="nav-btn active-nav" data-tab="chat"><i class="fa-solid fa-comments"></i>AI Chat</button>
+        <button class="nav-btn" data-tab="cheatsheet"><i class="fa-solid fa-bolt"></i>Quick Analysis</button>
+        <button class="nav-btn" data-tab="cheatsheet"><i class="fa-solid fa-terminal"></i>Command Library</button>
+        <button class="nav-btn" data-tab="snippets"><i class="fa-solid fa-code"></i>Snippets</button>
+        <button class="nav-btn" data-tab="about"><i class="fa-solid fa-circle-info"></i>About</button>
+      </div>
     </div>
-  </div>
-  <div class="p-3 overflow-y-auto flex-1">
-    <div class="showcase-section-label text-[10px] uppercase tracking-widest font-bold mb-2">Analysis Tasks</div>
-    <div class="space-y-2">
-      <button class="showcase-task w-full text-left" data-workflow="Load, align, and visualize a molecular structure in VMD."><div class="flex items-center gap-2"><i class="fa-solid fa-cube text-cyan-300"></i><span class="task-title">Structure</span></div><div class="task-desc">Load, align, visualize</div></button>
-      <button class="showcase-task w-full text-left" data-workflow="Explain VMD atom selections and show examples using resid, serial, index, chain, resname, and within."><div class="flex items-center gap-2"><i class="fa-solid fa-atom text-cyan-300"></i><span class="task-title">Atom Selection</span></div><div class="task-desc">Selections & indexing</div></button>
-      <button class="showcase-task w-full text-left" data-workflow="Give me a robust VMD Tcl workflow for trajectory RMSD, RMSF, and distance analysis."><div class="flex items-center gap-2"><i class="fa-solid fa-film text-cyan-300"></i><span class="task-title">Trajectory</span></div><div class="task-desc">RMSD, RMSF, distance</div></button>
-      <button class="showcase-task w-full text-left" data-workflow="Show a practical VMD workflow for hydrogen bonds, contacts, and PBC handling."><div class="flex items-center gap-2"><i class="fa-solid fa-diagram-project text-cyan-300"></i><span class="task-title">Interactions</span></div><div class="task-desc">H-bonds, contacts, PBC</div></button>
-      <button class="showcase-task w-full text-left" data-workflow="Suggest a VMD trajectory analysis workflow for RDF, clustering, PCA, and related structural analysis."><div class="flex items-center gap-2"><i class="fa-solid fa-chart-line text-cyan-300"></i><span class="task-title">Analysis</span></div><div class="task-desc">RDF, clusters, PCA</div></button>
-      <button class="showcase-task w-full text-left" data-workflow="Give publication-quality VMD representation and Tachyon or OSPRay rendering commands."><div class="flex items-center gap-2"><i class="fa-solid fa-image text-cyan-300"></i><span class="task-title">Rendering</span></div><div class="task-desc">VMD graphics & movies</div></button>
+    
+    <div class="p-4 overflow-y-auto flex-1">
+      <div class="showcase-section-label">Quick Analysis</div>
+      <div class="space-y-2">
+        <button class="showcase-task" data-workflow="Load, align, and visualize a molecular structure in VMD.">
+          <div class="flex items-center gap-2"><i class="fa-solid fa-cube text-teal"></i><span class="task-title">Structure</span></div>
+          <div class="task-desc">Load, align, visualize</div>
+        </button>
+        <button class="showcase-task" data-workflow="Explain VMD atom selections and show examples using resid, serial, index, chain, resname, and within.">
+          <div class="flex items-center gap-2"><i class="fa-solid fa-atom text-teal"></i><span class="task-title">Atom Selection</span></div>
+          <div class="task-desc">Selections & indexing</div>
+        </button>
+        <button class="showcase-task" data-workflow="Give me a robust VMD Tcl workflow for trajectory RMSD, RMSF, and distance analysis.">
+          <div class="flex items-center gap-2"><i class="fa-solid fa-film text-teal"></i><span class="task-title">Trajectory</span></div>
+          <div class="task-desc">RMSD, RMSF, distance</div>
+        </button>
+        <button class="showcase-task" data-workflow="Show a practical VMD workflow for hydrogen bonds, contacts, and PBC handling.">
+          <div class="flex items-center gap-2"><i class="fa-solid fa-diagram-project text-teal"></i><span class="task-title">Interactions</span></div>
+          <div class="task-desc">H-bonds, contacts, PBC</div>
+        </button>
+        <button class="showcase-task" data-workflow="Suggest a VMD trajectory analysis workflow for RDF, clustering, PCA, and related structural analysis.">
+          <div class="flex items-center gap-2"><i class="fa-solid fa-chart-line text-teal"></i><span class="task-title">Analysis</span></div>
+          <div class="task-desc">RDF, clusters, PCA</div>
+        </button>
+        <button class="showcase-task" data-workflow="Give publication-quality VMD representation and Tachyon or OSPRay rendering commands.">
+          <div class="flex items-center gap-2"><i class="fa-solid fa-image text-teal"></i><span class="task-title">Rendering</span></div>
+          <div class="task-desc">VMD graphics & movies</div>
+        </button>
+      </div>
     </div>
-  </div>
-  <div class="p-3 border-t space-y-2">
-    <div class="github-card vmd-link-card rounded-xl px-3 py-2.5 flex items-center gap-3"><i class="fa-brands fa-github text-2xl"></i><a href="https://github.com/anweshpandey" target="_blank" rel="noopener" class="min-w-0"><div class="text-xs font-bold text-cyan-300">github.com/anweshpandey</div><div class="text-[9px] text-slate-400 mt-0.5">Open Source • Free AI • Learn • Share</div></a></div>
-    <button id="feedback-btn" class="feedback-card vmd-link-card w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-left"><i class="fa-regular fa-comment-dots text-xl text-cyan-300"></i><div><div class="text-xs font-bold text-cyan-300">Feedback</div><div class="text-[9px] text-slate-400 mt-0.5">Send comments via GitHub / email</div></div></button>
-    <div class="px-3 pt-2 pb-1 text-center sidebar-signature"><div class="signature-name">Anwesh Pandey</div><div class="text-[9px] text-slate-500 mt-1">VMD Assistant AI • for computational molecular science</div></div>
-  </div>
-</aside>
-
-  <main class="flex-1 min-w-0 flex flex-col relative">
-    <section id="view-chat" class="view showcase-main flex-1 min-h-0 flex flex-col relative">
-  <div id="chat-messages" class="flex-1 overflow-y-auto p-4 md:p-7 vmd-chat-bg relative">
-    <div class="showcase-bg"><div class="showcase-dots"></div></div>
-    <div class="max-w-[1235px] mx-auto w-full relative z-10">
-      <div class="showcase-hero rounded-2xl p-5 md:p-6 relative overflow-hidden">
-        <div class="molecule-orb" aria-hidden="true">
-          <svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet">
-            <defs><filter id="pglow"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-            <g fill="none" stroke-linecap="round" filter="url(#pglow)">
-              <path d="M45 120 C78 35 130 38 158 92 S232 155 270 73 S315 50 330 100" stroke="#19d3c5" stroke-opacity=".48" stroke-width="4"/>
-              <path d="M35 88 C85 150 112 151 145 96 S210 25 245 79 S294 164 334 118" stroke="#38bdf8" stroke-opacity=".34" stroke-width="3"/>
-            </g>
-            <g filter="url(#pglow)">
-              <g fill="#18d6c6"><circle cx="45" cy="120" r="7"/><circle cx="92" cy="67" r="6"/><circle cx="158" cy="92" r="8"/><circle cx="205" cy="132" r="6"/><circle cx="270" cy="73" r="8"/><circle cx="330" cy="100" r="6"/></g>
-              <g fill="#3bbdf5"><circle cx="35" cy="88" r="5"/><circle cx="112" cy="142" r="7"/><circle cx="145" cy="96" r="5"/><circle cx="198" cy="46" r="7"/><circle cx="245" cy="79" r="5"/><circle cx="294" cy="164" r="6"/><circle cx="334" cy="118" r="5"/></g>
-            </g>
-          </svg>
+    
+    <div class="p-4 border-t border-dark space-y-3">
+      <div class="vmd-link-card px-3 py-2.5 flex items-center gap-3">
+        <i class="fa-brands fa-github text-2xl text-teal"></i>
+        <a href="https://github.com/anweshpandey" target="_blank" rel="noopener" class="min-w-0">
+          <div class="text-xs font-bold text-teal">github.com/anweshpandey</div>
+          <div class="text-[9px] text-slate-400 mt-0.5">Open Source • Free AI • Learn • Share</div>
+        </a>
+      </div>
+      <button id="feedback-btn" class="vmd-link-card w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-left">
+        <i class="fa-regular fa-comment-dots text-xl text-teal"></i>
+        <div>
+          <div class="text-xs font-bold text-teal">Feedback</div>
+          <div class="text-[9px] text-slate-400 mt-0.5">Send comments via GitHub / email</div>
         </div>
-        <div class="relative z-10">
-          <div class="hero-kicker">Computational Molecular Science</div>
-          <div class="flex items-start gap-3 mt-2">
-            <div class="w-12 h-12 rounded-xl flex items-center justify-center vmd-logo shrink-0"><i class="fa-solid fa-atom text-xl"></i></div>
-            <div><h2 class="hero-title">Your <span>VMD Assistant</span> AI copilot</h2><p class="hero-copy">Ask practical questions about Visual Molecular Dynamics, Tcl scripting, atom selections, trajectories, PBCTools, molecular interactions, analysis, rendering, and debugging. No browser API key required.</p></div>
+      </button>
+      <div class="px-3 pt-2 pb-1 text-center sidebar-signature">
+        <div class="signature-name">Anwesh Pandey</div>
+        <div class="text-[9px] text-slate-500 mt-1">VMD Assistant AI • for computational molecular science</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="showcase-main flex-1 min-w-0 flex flex-col">
+    <section id="view-chat" class="view flex-1 min-h-0 flex flex-col relative">
+      <div id="chat-messages" class="flex-1 overflow-y-auto">
+        <div class="max-w-[1235px] mx-auto w-full relative z-10">
+          
+          <!-- Hero Section -->
+          <div class="showcase-hero">
+            <div class="molecule-orb" aria-hidden="true">
+              <svg viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <filter id="pglow"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                </defs>
+                <g fill="none" stroke-linecap="round" filter="url(#pglow)">
+                  <path d="M45 120 C78 35 130 38 158 92 S232 155 270 73 S315 50 330 100" stroke="#19d3c5" stroke-opacity=".48" stroke-width="4"/>
+                  <path d="M35 88 C85 150 112 151 145 96 S210 25 245 79 S294 164 334 118" stroke="#38bdf8" stroke-opacity=".34" stroke-width="3"/>
+                </g>
+                <g filter="url(#pglow)">
+                  <g fill="#18d6c6">
+                    <circle cx="45" cy="120" r="7"/><circle cx="92" cy="67" r="6"/><circle cx="158" cy="92" r="8"/>
+                    <circle cx="205" cy="132" r="6"/><circle cx="270" cy="73" r="8"/><circle cx="330" cy="100" r="6"/>
+                  </g>
+                  <g fill="#3bbdf5">
+                    <circle cx="35" cy="88" r="5"/><circle cx="112" cy="142" r="7"/><circle cx="145" cy="96" r="5"/>
+                    <circle cx="198" cy="46" r="7"/><circle cx="245" cy="79" r="5"/><circle cx="294" cy="164" r="6"/>
+                    <circle cx="334" cy="118" r="5"/>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            
+            <div class="relative z-10">
+              <div class="hero-kicker">Computational Molecular Science</div>
+              <div class="flex items-start gap-3 mt-2">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center vmd-logo shrink-0">
+                  <i class="fa-solid fa-atom text-xl"></i>
+                </div>
+                <div>
+                  <h2 class="hero-title">Your <span>VMD Assistant</span> AI copilot</h2>
+                  <p class="hero-copy">Ask practical questions about Visual Molecular Dynamics, Tcl scripting, atom selections, trajectories, PBCTools, molecular interactions, analysis, rendering, and debugging. No browser API key required.</p>
+                </div>
+              </div>
+              <div class="hero-pills">
+                <span class="hero-pill">VMD Tcl</span>
+                <span class="hero-pill">Atom selections</span>
+                <span class="hero-pill">Trajectories</span>
+                <span class="hero-pill">RMSD / RMSF</span>
+                <span class="hero-pill">PBC / PBCTools</span>
+                <span class="hero-pill">Interactions</span>
+                <span class="hero-pill">Rendering</span>
+                <span class="hero-pill">Analysis</span>
+              </div>
+              <div class="hero-data-rail">
+                <span class="hero-data"><b>2D / 3D</b> molecular workflows</span>
+                <span class="hero-data"><b>Tcl</b> script generation</span>
+                <span class="hero-data"><b>GPU</b> analysis friendly</span>
+                <span class="hero-data"><b>Free</b> gateway mode</span>
+              </div>
+            </div>
           </div>
-          <div class="hero-pills"><span class="hero-pill">VMD Tcl</span><span class="hero-pill">Atom selections</span><span class="hero-pill">Trajectories</span><span class="hero-pill">RMSD / RMSF</span><span class="hero-pill">PBC / PBCTools</span><span class="hero-pill">Interactions</span><span class="hero-pill">Rendering</span><span class="hero-pill">Analysis</span></div>
-          <div class="hero-data-rail"><span class="hero-data"><b>2D / 3D</b> molecular workflows</span><span class="hero-data"><b>Tcl</b> script generation</span><span class="hero-data"><b>GPU</b> analysis friendly</span><span class="hero-data"><b>Free</b> gateway mode</span></div>
+
+          <!-- Workflow Grid -->
+          <div class="section-heading">
+            <div>
+              <h3>Start with a workflow</h3>
+              <p>Choose a task or type your own question.</p>
+            </div>
+            <span class="text-[10px] text-teal/50">Built for VMD users</span>
+          </div>
+          
+          <div class="workflow-grid">
+            <button class="workflow-card" data-workflow="Help me load, align, and visualize a protein or ligand structure in VMD. Include the exact Tcl commands.">
+              <span class="workflow-icon"><i class="fa-solid fa-cube"></i></span>
+              <span class="workflow-title">Structure setup</span>
+              <span class="workflow-desc block">Load, align, inspect, and visualize molecular structures.</span>
+              <span class="workflow-visual">
+                <svg viewBox="0 0 150 80">
+                  <g fill="none" stroke="#19d3c5" stroke-width="2" opacity=".7">
+                    <path d="M8 56 L30 24 L54 48 L80 16 L106 42 L140 20"/>
+                    <path d="M8 20 L32 42 L58 18 L82 52 L110 28 L140 56"/>
+                  </g>
+                  <g fill="#43c7ff">
+                    <circle cx="30" cy="24" r="3"/><circle cx="80" cy="16" r="3"/><circle cx="106" cy="42" r="3"/>
+                  </g>
+                  <circle cx="80" cy="39" r="12" fill="none" stroke="#fbbf24" stroke-opacity=".65"/>
+                  <circle cx="80" cy="39" r="4" fill="#fbbf24"/>
+                </svg>
+              </span>
+              <i class="fa-solid fa-arrow-right workflow-arrow"></i>
+            </button>
+            
+            <button class="workflow-card" data-workflow="Explain VMD atom selection syntax with practical examples for resid, serial, index, chain, resname, name, within, and same residue as.">
+              <span class="workflow-icon"><i class="fa-solid fa-atom"></i></span>
+              <span class="workflow-title">Atom selections</span>
+              <span class="workflow-desc block">Build precise selections and understand indexing.</span>
+              <span class="workflow-visual">
+                <svg viewBox="0 0 150 80">
+                  <g stroke="#38bdf8" stroke-width="1.5" opacity=".6">
+                    <circle cx="75" cy="40" r="18"/>
+                    <ellipse cx="75" cy="40" rx="55" ry="18"/>
+                    <ellipse cx="75" cy="40" rx="18" ry="55" transform="rotate(55 75 40)"/>
+                  </g>
+                  <g fill="#19d3c5">
+                    <circle cx="75" cy="22" r="4"/><circle cx="34" cy="42" r="3"/><circle cx="111" cy="33" r="4"/><circle cx="77" cy="59" r="3"/>
+                  </g>
+                </svg>
+              </span>
+              <i class="fa-solid fa-arrow-right workflow-arrow"></i>
+            </button>
+            
+            <button class="workflow-card" data-workflow="Write a complete VMD Tcl workflow for trajectory RMSD and RMSF analysis, including alignment and frame-independent output.">
+              <span class="workflow-icon"><i class="fa-solid fa-chart-line"></i></span>
+              <span class="workflow-title">Trajectory analysis</span>
+              <span class="workflow-desc block">RMSD, RMSF, distances, contacts, and frame loops.</span>
+              <span class="workflow-visual">
+                <svg viewBox="0 0 150 80">
+                  <g stroke="#234d5b" stroke-width="1">
+                    <path d="M5 62H145M5 42H145M5 22H145"/>
+                    <path d="M35 10V68M75 10V68M115 10V68"/>
+                  </g>
+                  <path d="M6 58 L20 52 L31 55 L43 35 L55 43 L66 27 L79 34 L91 19 L104 29 L116 23 L130 37 L144 28" fill="none" stroke="#19d3c5" stroke-width="3"/>
+                  <circle cx="91" cy="19" r="4" fill="#fbbf24"/>
+                </svg>
+              </span>
+              <i class="fa-solid fa-arrow-right workflow-arrow"></i>
+            </button>
+            
+            <button class="workflow-card" data-workflow="Show a robust VMD PBCTools workflow to unwrap a trajectory, center the protein, and wrap solvent correctly around it.">
+              <span class="workflow-icon"><i class="fa-solid fa-arrows-rotate"></i></span>
+              <span class="workflow-title">PBC & PBCTools</span>
+              <span class="workflow-desc block">Fix periodic boundaries and prepare trajectories.</span>
+              <span class="workflow-visual">
+                <svg viewBox="0 0 150 80">
+                  <g fill="none" stroke="#19d3c5" stroke-width="1.5" opacity=".7">
+                    <rect x="34" y="14" width="78" height="50" rx="4"/>
+                    <path d="M20 28h18M112 50h18M50 4v14M100 64v14"/>
+                    <path d="M25 24l-5 4 5 4M125 46l5 4-5 4M46 9l4-5 4 5M96 71l4 5 4-5"/>
+                  </g>
+                  <circle cx="75" cy="39" r="11" fill="none" stroke="#38bdf8" stroke-width="2"/>
+                  <circle cx="75" cy="39" r="4" fill="#19d3c5"/>
+                </svg>
+              </span>
+              <i class="fa-solid fa-arrow-right workflow-arrow"></i>
+            </button>
+            
+            <button class="workflow-card" data-workflow="Give a practical VMD workflow for hydrogen bonds, salt bridges, contacts, and ligand-pocket interactions across a trajectory.">
+              <span class="workflow-icon"><i class="fa-solid fa-link"></i></span>
+              <span class="workflow-title">Interactions</span>
+              <span class="workflow-desc block">Hydrogen bonds, contacts, pockets, and interactions.</span>
+              <span class="workflow-visual">
+                <svg viewBox="0 0 150 80">
+                  <g stroke="#38bdf8" stroke-width="2">
+                    <path d="M30 40 L60 22 L91 40 L120 23"/>
+                    <path d="M30 40 L60 58 L91 40 L120 57"/>
+                  </g>
+                  <g fill="#19d3c5">
+                    <circle cx="30" cy="40" r="6"/><circle cx="60" cy="22" r="5"/><circle cx="91" cy="40" r="7"/><circle cx="120" cy="23" r="5"/>
+                  </g>
+                  <g stroke="#fbbf24" stroke-dasharray="3 4">
+                    <path d="M60 22 L91 40"/><path d="M91 40 L120 57"/>
+                  </g>
+                </svg>
+              </span>
+              <i class="fa-solid fa-arrow-right workflow-arrow"></i>
+            </button>
+            
+            <button class="workflow-card" data-workflow="Give publication-quality VMD commands for representations, coloring, Tachyon or OSPRay rendering, and a 1920x1080 molecular figure.">
+              <span class="workflow-icon"><i class="fa-solid fa-camera"></i></span>
+              <span class="workflow-title">Rendering & graphics</span>
+              <span class="workflow-desc block">Create clear, publication-ready molecular visuals.</span>
+              <span class="workflow-visual">
+                <svg viewBox="0 0 150 80">
+                  <rect x="17" y="13" width="116" height="54" rx="6" fill="none" stroke="#19d3c5"/>
+                  <circle cx="75" cy="40" r="13" fill="none" stroke="#38bdf8" stroke-width="2"/>
+                  <circle cx="75" cy="40" r="5" fill="#19d3c5"/>
+                  <path d="M26 58 L55 45 L69 52 L91 31 L104 39 L124 22" fill="none" stroke="#fbbf24" stroke-width="2"/>
+                </svg>
+              </span>
+              <i class="fa-solid fa-arrow-right workflow-arrow"></i>
+            </button>
+          </div>
+          
+          <div id="chat-thread" class="space-y-4 mt-5"></div>
+          
+          <div id="empty-chat-hint" class="showcase-empty mt-5">
+            <div>
+              <div class="text-teal font-semibold text-sm">Ready when you are.</div>
+              <div class="mt-1">Ask a VMD question or choose a workflow above.</div>
+              <div class="mt-2 text-teal/50 text-[10px]">Tcl • atom selections • trajectories • PBCTools • rendering • analysis</div>
+            </div>
+          </div>
+          
         </div>
       </div>
 
-      <div class="section-heading"><div><h3>Start with a workflow</h3><p>Choose a task or type your own question.</p></div><span class="text-[10px] text-cyan-300/50">Built for VMD users</span></div>
-      <div class="workflow-grid">
-        <button class="workflow-card text-left" data-workflow="Help me load, align, and visualize a protein or ligand structure in VMD. Include the exact Tcl commands."><span class="workflow-icon"><i class="fa-solid fa-cube"></i></span><span class="workflow-title">Structure setup</span><span class="workflow-desc block">Load, align, inspect, and visualize molecular structures.</span><span class="workflow-visual"><svg viewBox="0 0 150 80"><g fill="none" stroke="#19d3c5" stroke-width="2" opacity=".7"><path d="M8 56 L30 24 L54 48 L80 16 L106 42 L140 20"/><path d="M8 20 L32 42 L58 18 L82 52 L110 28 L140 56"/></g><g fill="#43c7ff"><circle cx="30" cy="24" r="3"/><circle cx="80" cy="16" r="3"/><circle cx="106" cy="42" r="3"/></g><circle cx="80" cy="39" r="12" fill="none" stroke="#fbbf24" stroke-opacity=".65"/><circle cx="80" cy="39" r="4" fill="#fbbf24"/></svg></span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
-        <button class="workflow-card text-left" data-workflow="Explain VMD atom selection syntax with practical examples for resid, serial, index, chain, resname, name, within, and same residue as."><span class="workflow-icon"><i class="fa-solid fa-atom"></i></span><span class="workflow-title">Atom selections</span><span class="workflow-desc block">Build precise selections and understand indexing.</span><span class="workflow-visual"><svg viewBox="0 0 150 80"><g stroke="#38bdf8" stroke-width="1.5" opacity=".6"><circle cx="75" cy="40" r="18"/><ellipse cx="75" cy="40" rx="55" ry="18"/><ellipse cx="75" cy="40" rx="18" ry="55" transform="rotate(55 75 40)"/></g><g fill="#19d3c5"><circle cx="75" cy="22" r="4"/><circle cx="34" cy="42" r="3"/><circle cx="111" cy="33" r="4"/><circle cx="77" cy="59" r="3"/></g></svg></span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
-        <button class="workflow-card text-left" data-workflow="Write a complete VMD Tcl workflow for trajectory RMSD and RMSF analysis, including alignment and frame-independent output."><span class="workflow-icon"><i class="fa-solid fa-chart-line"></i></span><span class="workflow-title">Trajectory analysis</span><span class="workflow-desc block">RMSD, RMSF, distances, contacts, and frame loops.</span><span class="workflow-visual"><svg viewBox="0 0 150 80"><g stroke="#234d5b" stroke-width="1"><path d="M5 62H145M5 42H145M5 22H145"/><path d="M35 10V68M75 10V68M115 10V68"/></g><path d="M6 58 L20 52 L31 55 L43 35 L55 43 L66 27 L79 34 L91 19 L104 29 L116 23 L130 37 L144 28" fill="none" stroke="#19d3c5" stroke-width="3"/><circle cx="91" cy="19" r="4" fill="#fbbf24"/></svg></span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
-        <button class="workflow-card text-left" data-workflow="Show a robust VMD PBCTools workflow to unwrap a trajectory, center the protein, and wrap solvent correctly around it."><span class="workflow-icon"><i class="fa-solid fa-arrows-rotate"></i></span><span class="workflow-title">PBC & PBCTools</span><span class="workflow-desc block">Fix periodic boundaries and prepare trajectories.</span><span class="workflow-visual"><svg viewBox="0 0 150 80"><g fill="none" stroke="#19d3c5" stroke-width="1.5" opacity=".7"><rect x="34" y="14" width="78" height="50" rx="4"/><path d="M20 28h18M112 50h18M50 4v14M100 64v14"/><path d="M25 24l-5 4 5 4M125 46l5 4-5 4M46 9l4-5 4 5M96 71l4 5 4-5"/></g><circle cx="75" cy="39" r="11" fill="none" stroke="#38bdf8" stroke-width="2"/><circle cx="75" cy="39" r="4" fill="#19d3c5"/></svg></span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
-        <button class="workflow-card text-left" data-workflow="Give a practical VMD workflow for hydrogen bonds, salt bridges, contacts, and ligand-pocket interactions across a trajectory."><span class="workflow-icon"><i class="fa-solid fa-link"></i></span><span class="workflow-title">Interactions</span><span class="workflow-desc block">Hydrogen bonds, contacts, pockets, and interactions.</span><span class="workflow-visual"><svg viewBox="0 0 150 80"><g stroke="#38bdf8" stroke-width="2"><path d="M30 40 L60 22 L91 40 L120 23"/><path d="M30 40 L60 58 L91 40 L120 57"/></g><g fill="#19d3c5"><circle cx="30" cy="40" r="6"/><circle cx="60" cy="22" r="5"/><circle cx="91" cy="40" r="7"/><circle cx="120" cy="23" r="5"/></g><g stroke="#fbbf24" stroke-dasharray="3 4"><path d="M60 22 L91 40"/><path d="M91 40 L120 57"/></g></svg></span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
-        <button class="workflow-card text-left" data-workflow="Give publication-quality VMD commands for representations, coloring, Tachyon or OSPRay rendering, and a 1920x1080 molecular figure."><span class="workflow-icon"><i class="fa-solid fa-camera"></i></span><span class="workflow-title">Rendering & graphics</span><span class="workflow-desc block">Create clear, publication-ready molecular visuals.</span><span class="workflow-visual"><svg viewBox="0 0 150 80"><rect x="17" y="13" width="116" height="54" rx="6" fill="none" stroke="#19d3c5"/><circle cx="75" cy="40" r="13" fill="none" stroke="#38bdf8" stroke-width="2"/><circle cx="75" cy="40" r="5" fill="#19d3c5"/><path d="M26 58 L55 45 L69 52 L91 31 L104 39 L124 22" fill="none" stroke="#fbbf24" stroke-width="2"/></svg></span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
+      <!-- Chat Composer -->
+      <div class="showcase-composer">
+        <form id="chat-form">
+          <div class="relative">
+            <textarea id="chat-input" rows="2" placeholder="Ask a VMD question…  Enter to send · Shift+Enter for a new line" aria-label="VMD question"></textarea>
+            <button class="vmd-send" title="Send"><i class="fa-solid fa-paper-plane"></i></button>
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-2 mt-2 text-[10px]">
+            <div class="flex items-center gap-4 showcase-footer-label">
+              <span><i class="fa-solid fa-circle text-[6px] text-green mr-1"></i><span id="active-model-note">Auto · Free</span></span>
+              <span class="hidden sm:inline"><i class="fa-solid fa-atom mr-1"></i><strong>VMD Tcl Knowledge Engine</strong></span>
+              <span class="hidden md:inline"><i class="fa-regular fa-bookmark mr-1"></i>Examples</span>
+            </div>
+            <span class="showcase-footer-label">Enter ↵ send · Shift+Enter ↵ newline · Ctrl+Enter ↵ send</span>
+          </div>
+        </form>
       </div>
-      <div id="chat-thread" class="space-y-4 mt-5"></div>
-      <div id="empty-chat-hint" class="showcase-empty mt-5">
-        <div><div class="text-cyan-200 font-semibold text-sm">Ready when you are.</div><div class="mt-1">Ask a VMD question or choose a workflow above.</div><div class="mt-2 text-cyan-300/50 text-[10px]">Tcl • atom selections • trajectories • PBCTools • rendering • analysis</div></div>
+    </section>
+
+    <!-- Cheatsheet View -->
+    <section id="view-cheatsheet" class="view hidden flex-1 min-w-0 overflow-y-auto p-4 md:p-7">
+      <div class="max-w-[1235px] mx-auto">
+        <div class="flex items-center justify-between gap-3 mb-4">
+          <div>
+            <h2 class="text-xl font-bold text-teal">VMD Command Library</h2>
+            <p class="text-xs text-slate-500 mt-1">Searchable Tcl, atom selection, trajectory, PBC and rendering commands.</p>
+          </div>
+          <input id="cheatsheet-search" placeholder="Search commands…" class="select-dark rounded-lg px-3 py-2 text-xs w-64">
+        </div>
+        <div id="category-buttons" class="flex flex-wrap gap-2 mb-4"></div>
+        <div id="cheatsheet-grid" class="grid md:grid-cols-2 gap-3"></div>
       </div>
-    </div>
-  </div>
+    </section>
 
-  <div class="shrink-0 border-t p-3 md:p-4 showcase-composer">
-    <form id="chat-form" class="mx-auto">
-      <div class="relative">
-        <textarea id="chat-input" rows="2" placeholder="Ask a VMD question…  Enter to send · Shift+Enter for a new line" aria-label="VMD question" class="w-full resize-none px-4 py-3 pr-16 text-sm outline-none"></textarea>
-        <button class="absolute right-2 bottom-2 flex items-center justify-center vmd-send" title="Send"><i class="fa-solid fa-paper-plane"></i></button>
+    <!-- Snippets View -->
+    <section id="view-snippets" class="view hidden flex-1 min-w-0 overflow-y-auto p-4 md:p-7">
+      <div class="max-w-[1235px] mx-auto">
+        <div class="flex items-center justify-between gap-3 mb-4">
+          <div>
+            <h2 class="text-xl font-bold text-teal">Saved Tcl Snippets</h2>
+            <p class="text-xs text-slate-500 mt-1">Keep useful VMD scripts locally in your browser.</p>
+          </div>
+          <button id="new-snippet" class="vmd-action text-xs px-3 py-2 rounded-lg"><i class="fa-solid fa-plus mr-1"></i> New Snippet</button>
+        </div>
+        <div id="snippets-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-3"></div>
       </div>
-      <div class="flex flex-wrap items-center justify-between gap-2 mt-2 text-[10px]">
-        <div class="flex items-center gap-4 showcase-footer-label"><span><i class="fa-solid fa-circle text-[6px] text-emerald-400 mr-1"></i><span id="active-model-note">Auto · Free</span></span><span class="hidden sm:inline"><i class="fa-solid fa-atom mr-1 text-cyan-400"></i><strong>VMD Tcl Knowledge Engine</strong></span><span class="hidden md:inline"><i class="fa-regular fa-bookmark mr-1 text-cyan-400"></i>Examples</span></div>
-        <span class="showcase-footer-label">Enter ↵ send · Shift+Enter ↵ newline · Ctrl+Enter ↵ send</span>
+    </section>
+
+    <!-- About View -->
+    <section id="view-about" class="view hidden flex-1 min-w-0 overflow-y-auto p-4 md:p-7">
+      <div class="max-w-5xl mx-auto space-y-4">
+        <div class="showcase-hero rounded-2xl p-6">
+          <h2 class="text-xl font-bold text-teal">VMD Assistant AI v2.5</h2>
+          <p class="text-sm text-slate-300 mt-2 leading-relaxed">A focused scientific assistant for Visual Molecular Dynamics. The frontend is static and safe for GitHub Pages; AI credentials belong only in the server-side gateway.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-3">
+          <div class="panel rounded-xl p-4 bg-[#071923] border border-[#163744]">
+            <h3 class="font-semibold text-white text-sm">Free AI routing</h3>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">OpenRouter free models, DeepSeek free variants, Gemini free, and Groq free can be selected or used through automatic fallback. Free endpoints are rate-limited and availability can change.</p>
+          </div>
+          <div class="panel rounded-xl p-4 bg-[#071923] border border-[#163744]">
+            <h3 class="font-semibold text-white text-sm">Premium later</h3>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">OpenAI/GPT, Anthropic/Claude, paid DeepSeek and paid Gemini are intentionally shown as coming later.</p>
+          </div>
+        </div>
+        <div class="panel rounded-xl p-4 bg-[#071923] border border-[#163744]">
+          <h3 class="font-semibold text-white text-sm mb-2">Security model</h3>
+          <ul class="text-xs text-slate-400 list-disc pl-5 space-y-1">
+            <li>No API key is requested from visitors.</li>
+            <li>No API key is stored in localStorage.</li>
+            <li>GitHub Pages contains only public frontend code.</li>
+            <li>Provider keys are Cloudflare Worker secrets.</li>
+            <li>Free mode rejects paid provider/model requests.</li>
+          </ul>
+        </div>
       </div>
-    </form>
-  </div>
-</section>
-
-    <section id="view-cheatsheet" class="view hidden flex-1 min-w-0 overflow-y-auto p-4 md:p-7"><div class="max-w-[1235px] mx-auto"><div class="flex items-center justify-between gap-3 mb-4"><div><h2 class="text-xl font-bold text-cyan-300">VMD Command Library</h2><p class="text-xs text-slate-500 mt-1">Searchable Tcl, atom selection, trajectory, PBC and rendering commands.</p></div><input id="cheatsheet-search" placeholder="Search commands…" class="select-dark rounded-lg px-3 py-2 text-xs w-64"></div><div id="category-buttons" class="flex flex-wrap gap-2 mb-4"></div><div id="cheatsheet-grid" class="grid md:grid-cols-2 gap-3"></div></div></section>
-
-    <section id="view-snippets" class="view hidden flex-1 min-w-0 overflow-y-auto p-4 md:p-7"><div class="max-w-[1235px] mx-auto"><div class="flex items-center justify-between gap-3 mb-4"><div><h2 class="text-xl font-bold text-cyan-300">Saved Tcl Snippets</h2><p class="text-xs text-slate-500 mt-1">Keep useful VMD scripts locally in your browser.</p></div><button id="new-snippet" class="vmd-action text-xs px-3 py-2 rounded-lg"><i class="fa-solid fa-plus mr-1"></i> New Snippet</button></div><div id="snippets-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-3"></div></div></section>
-
-    <section id="view-about" class="view hidden flex-1 min-w-0 overflow-y-auto p-4 md:p-7"><div class="max-w-5xl mx-auto space-y-4"><div class="vmd-hero-card rounded-2xl p-6"><h2 class="text-xl font-bold text-cyan-300">VMD Assistant AI v2.5</h2><p class="text-sm text-slate-300 mt-2 leading-relaxed">A focused scientific assistant for Visual Molecular Dynamics. The frontend is static and safe for GitHub Pages; AI credentials belong only in the server-side gateway.</p></div><div class="grid md:grid-cols-2 gap-3"><div class="panel rounded-xl p-4"><h3 class="font-semibold text-white text-sm">Free AI routing</h3><p class="text-xs text-slate-400 mt-1 leading-relaxed">OpenRouter free models, DeepSeek free variants, Gemini free, and Groq free can be selected or used through automatic fallback. Free endpoints are rate-limited and availability can change.</p></div><div class="panel rounded-xl p-4"><h3 class="font-semibold text-white text-sm">Premium later</h3><p class="text-xs text-slate-400 mt-1 leading-relaxed">OpenAI/GPT, Anthropic/Claude, paid DeepSeek and paid Gemini are intentionally shown as coming later.</p></div></div><div class="panel rounded-xl p-4"><h3 class="font-semibold text-white text-sm mb-2">Security model</h3><ul class="text-xs text-slate-400 list-disc pl-5 space-y-1"><li>No API key is requested from visitors.</li><li>No API key is stored in localStorage.</li><li>GitHub Pages contains only public frontend code.</li><li>Provider keys are Cloudflare Worker secrets.</li><li>Free mode rejects paid provider/model requests.</li></ul></div></div></section>
+    </section>
   </main>
 </div>
 
-<div id="toast" class="fixed right-4 bottom-4 translate-y-20 opacity-0 transition-all duration-300 z-[100] max-w-sm"><div class="vmd-toast rounded-xl shadow-2xl px-4 py-3 text-xs flex items-start gap-2"><i id="toast-icon" class="fa-solid fa-circle-info text-cyan-400 mt-0.5"></i><span id="toast-text"></span></div></div>
+<!-- Toast -->
+<div id="toast" class="fixed right-4 bottom-4 translate-y-20 opacity-0 transition-all duration-300 z-[100] max-w-sm">
+  <div class="vmd-modal rounded-xl shadow-2xl px-4 py-3 text-xs flex items-start gap-2">
+    <i id="toast-icon" class="fa-solid fa-circle-info text-teal mt-0.5"></i>
+    <span id="toast-text"></span>
+  </div>
+</div>
 
-<div id="snippet-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur z-[90] items-center justify-center p-4"><div class="w-full max-w-lg vmd-modal rounded-2xl p-5"><div class="flex justify-between items-center mb-4"><h3 class="font-bold text-cyan-300">New Tcl Snippet</h3><button id="close-snippet" class="text-slate-500 hover:text-white"><i class="fa-solid fa-xmark"></i></button></div><div class="space-y-3"><input id="snippet-title" placeholder="Title" class="w-full select-dark rounded-lg px-3 py-2 text-xs"><input id="snippet-tag" placeholder="Tag (e.g. RMSD, PBC, rendering)" class="w-full select-dark rounded-lg px-3 py-2 text-xs"><textarea id="snippet-code" rows="10" placeholder="Paste Tcl script here…" class="w-full select-dark rounded-lg px-3 py-2 text-xs font-mono"></textarea><button id="save-snippet" class="w-full vmd-send font-bold py-2.5 rounded-lg text-xs">Save Snippet</button></div></div></div>
+<!-- Snippet Modal -->
+<div id="snippet-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur z-[90] items-center justify-center p-4">
+  <div class="w-full max-w-lg vmd-modal rounded-2xl p-5">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="font-bold text-teal">New Tcl Snippet</h3>
+      <button id="close-snippet" class="text-slate-500 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="space-y-3">
+      <input id="snippet-title" placeholder="Title" class="w-full select-dark rounded-lg px-3 py-2 text-xs">
+      <input id="snippet-tag" placeholder="Tag (e.g. RMSD, PBC, rendering)" class="w-full select-dark rounded-lg px-3 py-2 text-xs">
+      <textarea id="snippet-code" rows="10" placeholder="Paste Tcl script here…" class="w-full select-dark rounded-lg px-3 py-2 text-xs font-mono"></textarea>
+      <button id="save-snippet" class="w-full vmd-send font-bold py-2.5 rounded-lg text-xs" style="position:relative; right:auto; bottom:auto; height:auto; display:block;">Save Snippet</button>
+    </div>
+  </div>
+</div>
 
+<!-- Feedback Modal -->
 <div id="feedback-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur z-[95] items-center justify-center p-4">
   <div class="w-full max-w-lg vmd-modal rounded-2xl p-5">
-    <div class="flex items-center justify-between mb-3"><div><h3 class="font-bold text-cyan-300">Feedback</h3><p class="text-[10px] text-slate-500 mt-1">Your comments help improve VMD Assistant AI.</p></div><button id="close-feedback" class="text-slate-500 hover:text-white"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="flex items-center justify-between mb-3">
+      <div>
+        <h3 class="font-bold text-teal">Feedback</h3>
+        <p class="text-[10px] text-slate-500 mt-1">Your comments help improve VMD Assistant AI.</p>
+      </div>
+      <button id="close-feedback" class="text-slate-500 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+    </div>
     <textarea id="feedback-text" rows="7" placeholder="What should be improved? What worked well?" class="w-full select-dark rounded-xl px-3 py-3 text-xs"></textarea>
     <div class="flex flex-wrap justify-end gap-2 mt-3">
       <button id="feedback-github" class="vmd-action px-3 py-2 rounded-lg text-xs"><i class="fa-brands fa-github mr-1"></i>Open GitHub Issue</button>
@@ -641,108 +920,63 @@ const VMD_SYSTEM_PROMPT = `You are VMD Assistant AI, a world-class computational
 Core expertise: VMD atom selections including resid, serial, index, chain, resname, name, within X of, same residue as; trajectory analysis with measure rmsd, measure hbonds, SASA, center of mass, salt bridges; PBCTools including pbc wrap and pbc box; and publication-quality representations and Tachyon/OSPRay rendering.
 Answer scientifically and practically. When asked for Tcl, provide complete runnable Tcl code in a fenced Tcl code block. Explain important selection semantics and frame/PBC assumptions. Never invent VMD commands. If a command depends on a plugin or external package, say so.`;
 
-// VMD command database retained from the original assistant.
-        const VMD_COMMANDS = [
-            {
-                id: 'resid-range',
-                category: 'selections',
-                title: 'Residue Sequence Range',
-                syntax: 'resid <start> to <end>',
-                example: 'set sel [atomselect top "resid 10 to 50"]',
-                description: 'Selects atoms matching PDB sequence numbers 10 through 50.',
-                tags: ['resid', 'range', 'pdb']
-            },
-            {
-                id: 'serial-range',
-                category: 'selections',
-                title: 'Atom Serial Number Range',
-                syntax: 'serial <start> to <end>',
-                example: 'set sel [atomselect top "serial 4683 to 5231"]',
-                description: 'Selects exact atom IDs matching columns 7-11 in the original PDB file.',
-                tags: ['serial', 'atom id', 'pdb']
-            },
-            {
-                id: 'index-range',
-                category: 'selections',
-                title: 'VMD Zero-Based Atom Index',
-                syntax: 'index <start> to <end>',
-                example: 'set sel [atomselect top "index 0 to 500"]',
-                description: 'Selects atoms based on VMD zero-indexed array order (0 to N-1).',
-                tags: ['index', 'zero-indexed']
-            },
-            {
-                id: 'within-distance',
-                category: 'selections',
-                title: 'Distance Neighborhood',
-                syntax: 'within <distance> of <selection>',
-                example: 'set sel [atomselect top "resname LIG and within 5 of protein"]',
-                description: 'Finds atoms within specified Angstrom radius of target molecule.',
-                tags: ['within', 'distance', 'binding site']
-            },
-            {
-                id: 'same-residue',
-                category: 'selections',
-                title: 'Complete Residues in Pocket',
-                syntax: 'same residue as (<selection>)',
-                example: 'set pocket [atomselect top "same residue as (within 5 of resname LIG)"]',
-                description: 'Selects ALL atoms of residues that have at least one atom within 5Å.',
-                tags: ['same residue as', 'pocket', 'binding site']
-            },
-            {
-                id: 'rmsd-calc',
-                category: 'trajectory',
-                title: 'Calculate Structure RMSD',
-                syntax: 'measure rmsd <sel1> <sel2>',
-                example: 'set rmsd [measure rmsd $sel_frame $sel_ref]',
-                description: 'Calculates Root Mean Square Deviation between two atom selections.',
-                tags: ['rmsd', 'trajectory', 'measure']
-            },
-            {
-                id: 'hbonds-calc',
-                category: 'trajectory',
-                title: 'Measure Hydrogen Bonds',
-                syntax: 'measure hbonds <cutoff_dist> <cutoff_angle> <sel1> [<sel2>]',
-                example: 'set hbonds [measure hbonds 3.0 20 $prot $wat]',
-                description: 'Calculates hydrogen bonds with distance (<3.0Å) and angle (<20°) thresholds.',
-                tags: ['hbonds', 'hydrogen bonds', 'measure']
-            },
-            {
-                id: 'pbc-wrap',
-                category: 'pbc',
-                title: 'Periodic Boundary Wrapping',
-                syntax: 'pbc wrap -all -compound fragment -center com -centersel "protein"',
-                example: 'pbc wrap -all -compound fragment -center com -centersel "protein"',
-                description: 'Re-wraps water/ions across periodic simulation box boundaries relative to protein COM.',
-                tags: ['pbc', 'wrap', 'pbctools', 'boundary']
-            },
-            {
-                id: 'pbc-box',
-                category: 'pbc',
-                title: 'Display Simulation Unit Cell Box',
-                syntax: 'pbc box -color white -width 1.5',
-                example: 'pbc box -color cyan -width 2.0',
-                description: 'Draws a 3D bounding box indicating periodic boundary parameters.',
-                tags: ['pbc', 'box', 'dimensions']
-            },
-            {
-                id: 'tcl-frame-loop',
-                category: 'tcl',
-                title: 'Trajectory Frame Iteration Loop',
-                syntax: 'for {set i 0} {$i < $num_frames} {incr i} { ... }',
-                example: 'set num [molinfo top get numframes]\nfor {set i 0} {$i < $num} {incr i} {\n  $sel frame $i\n  $sel update\n}',
-                description: 'Standard Tcl control loop for analyzing trajectory frame-by-frame.',
-                tags: ['tcl', 'loop', 'trajectory', 'frames']
-            },
-            {
-                id: 'tachyon-render',
-                category: 'graphics',
-                title: 'High-Resolution Tachyon Render',
-                syntax: 'render Tachyon <filename> "<path_to_tachyon>" -res <width> <height>',
-                example: 'render Tachyon render.dat "/usr/local/lib/vmd/tachyon_LINUXAMD64" -res 1920 1080 -format TARGA %s -o %s.tga',
-                description: 'Executes high-quality Tachyon ray-tracer render engine with realistic shadows.',
-                tags: ['render', 'tachyon', 'raytracing', 'hd']
-            }
-        ];
+const VMD_COMMANDS = [
+    {
+        id: 'resid-range', category: 'selections', title: 'Residue Sequence Range',
+        syntax: 'resid <start> to <end>', example: 'set sel [atomselect top "resid 10 to 50"]',
+        description: 'Selects atoms matching PDB sequence numbers 10 through 50.', tags: ['resid', 'range', 'pdb']
+    },
+    {
+        id: 'serial-range', category: 'selections', title: 'Atom Serial Number Range',
+        syntax: 'serial <start> to <end>', example: 'set sel [atomselect top "serial 4683 to 5231"]',
+        description: 'Selects exact atom IDs matching columns 7-11 in the original PDB file.', tags: ['serial', 'atom id', 'pdb']
+    },
+    {
+        id: 'index-range', category: 'selections', title: 'VMD Zero-Based Atom Index',
+        syntax: 'index <start> to <end>', example: 'set sel [atomselect top "index 0 to 500"]',
+        description: 'Selects atoms based on VMD zero-indexed array order (0 to N-1).', tags: ['index', 'zero-indexed']
+    },
+    {
+        id: 'within-distance', category: 'selections', title: 'Distance Neighborhood',
+        syntax: 'within <distance> of <selection>', example: 'set sel [atomselect top "resname LIG and within 5 of protein"]',
+        description: 'Finds atoms within specified Angstrom radius of target molecule.', tags: ['within', 'distance', 'binding site']
+    },
+    {
+        id: 'same-residue', category: 'selections', title: 'Complete Residues in Pocket',
+        syntax: 'same residue as (<selection>)', example: 'set pocket [atomselect top "same residue as (within 5 of resname LIG)"]',
+        description: 'Selects ALL atoms of residues that have at least one atom within 5Å.', tags: ['same residue as', 'pocket', 'binding site']
+    },
+    {
+        id: 'rmsd-calc', category: 'trajectory', title: 'Calculate Structure RMSD',
+        syntax: 'measure rmsd <sel1> <sel2>', example: 'set rmsd [measure rmsd $sel_frame $sel_ref]',
+        description: 'Calculates Root Mean Square Deviation between two atom selections.', tags: ['rmsd', 'trajectory', 'measure']
+    },
+    {
+        id: 'hbonds-calc', category: 'trajectory', title: 'Measure Hydrogen Bonds',
+        syntax: 'measure hbonds <cutoff_dist> <cutoff_angle> <sel1> [<sel2>]', example: 'set hbonds [measure hbonds 3.0 20 $prot $wat]',
+        description: 'Calculates hydrogen bonds with distance (<3.0Å) and angle (<20°) thresholds.', tags: ['hbonds', 'hydrogen bonds', 'measure']
+    },
+    {
+        id: 'pbc-wrap', category: 'pbc', title: 'Periodic Boundary Wrapping',
+        syntax: 'pbc wrap -all -compound fragment -center com -centersel "protein"', example: 'pbc wrap -all -compound fragment -center com -centersel "protein"',
+        description: 'Re-wraps water/ions across periodic simulation box boundaries relative to protein COM.', tags: ['pbc', 'wrap', 'pbctools', 'boundary']
+    },
+    {
+        id: 'pbc-box', category: 'pbc', title: 'Display Simulation Unit Cell Box',
+        syntax: 'pbc box -color white -width 1.5', example: 'pbc box -color cyan -width 2.0',
+        description: 'Draws a 3D bounding box indicating periodic boundary parameters.', tags: ['pbc', 'box', 'dimensions']
+    },
+    {
+        id: 'tcl-frame-loop', category: 'tcl', title: 'Trajectory Frame Iteration Loop',
+        syntax: 'for {set i 0} {$i < $num_frames} {incr i} { ... }', example: 'set num [molinfo top get numframes]\nfor {set i 0} {$i < $num} {incr i} {\n  $sel frame $i\n  $sel update\n}',
+        description: 'Standard Tcl control loop for analyzing trajectory frame-by-frame.', tags: ['tcl', 'loop', 'trajectory', 'frames']
+    },
+    {
+        id: 'tachyon-render', category: 'graphics', title: 'High-Resolution Tachyon Render',
+        syntax: 'render Tachyon <filename> "<path_to_tachyon>" -res <width> <height>', example: 'render Tachyon render.dat "/usr/local/lib/vmd/tachyon_LINUXAMD64" -res 1920 1080 -format TARGA %s -o %s.tga',
+        description: 'Executes high-quality Tachyon ray-tracer render engine with realistic shadows.', tags: ['render', 'tachyon', 'raytracing', 'hd']
+    }
+];
 
 const quickPrompts=[
  ['Atom selection','Select residues 10–50 on chain A and explain resid vs serial vs index.'],
@@ -757,18 +991,18 @@ const FREE_MODELS = window.VMD_FREE_MODELS || [];
 let selectedModel='auto'; let selectedProvider='auto';
 
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function showToast(msg,error=false){const t=document.getElementById('toast'),i=document.getElementById('toast-icon');document.getElementById('toast-text').textContent=msg;i.className=error?'fa-solid fa-triangle-exclamation text-rose-400 mt-0.5':'fa-solid fa-circle-info text-cyan-400 mt-0.5';t.classList.remove('translate-y-20','opacity-0');clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.add('translate-y-20','opacity-0'),3500)}
+function showToast(msg,error=false){const t=document.getElementById('toast'),i=document.getElementById('toast-icon');document.getElementById('toast-text').textContent=msg;i.className=error?'fa-solid fa-triangle-exclamation text-rose-400 mt-0.5':'fa-solid fa-circle-info text-teal mt-0.5';t.classList.remove('translate-y-20','opacity-0');clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.add('translate-y-20','opacity-0'),3500)}
 function copyText(s){navigator.clipboard?.writeText(s).then(()=>showToast('Copied to clipboard')).catch(()=>showToast('Clipboard access failed',true));}
 function enhanceCode(container){container.querySelectorAll('pre').forEach(pre=>{
   if(pre.querySelector('.code-actions'))return;
   const code=pre.querySelector('code')?.innerText||pre.innerText;
-  const actions=document.createElement('div'); actions.className='code-actions absolute top-2 right-2 flex gap-1';
-  const copy=document.createElement('button'); copy.className='copy-btn bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] px-2 py-1 rounded border border-slate-700'; copy.textContent='Copy'; copy.onclick=()=>copyText(code);
-  const insert=document.createElement('button'); insert.className='insert-btn bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] px-2 py-1 rounded border border-slate-700'; insert.textContent='Use'; insert.onclick=()=>{chatInput.value=code;chatInput.focus();showToast('Code inserted into the prompt')};
+  const actions=document.createElement('div'); actions.className='code-actions';
+  const copy=document.createElement('button'); copy.className='bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] px-2 py-1 rounded border border-slate-700'; copy.textContent='Copy'; copy.onclick=()=>copyText(code);
+  const insert=document.createElement('button'); insert.className='bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] px-2 py-1 rounded border border-slate-700'; insert.textContent='Use'; insert.onclick=()=>{chatInput.value=code;chatInput.focus();showToast('Code inserted into the prompt')};
   actions.append(copy,insert); pre.appendChild(actions);
 });container.querySelectorAll('pre code').forEach(c=>hljs.highlightElement(c));}
-function appendMessage(role,text){document.getElementById('empty-chat-hint')?.remove();const wrap=document.createElement('div');wrap.className=`max-w-4xl mx-auto flex items-start gap-3 ${role==='user'?'flex-row-reverse':''}`;const av=document.createElement('div');av.className=`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${role==='user'?'bg-slate-800 border border-slate-700 text-cyan-400':'bg-gradient-to-tr from-cyan-600 to-emerald-400 text-slate-950'}`;av.innerHTML=role==='user'?'<i class="fa-solid fa-user"></i>':'<i class="fa-solid fa-atom"></i>';const b=document.createElement('div');b.className=`max-w-[85%] p-4 text-sm rounded-2xl border shadow-lg ${role==='user'?'bg-cyan-950/70 border-cyan-800 text-cyan-100 rounded-tr-none':'bg-slate-900 border-slate-800 text-slate-200 rounded-tl-none markdown-body'}`;if(role==='user')b.textContent=text;else{b.innerHTML=marked.parse(text);enhanceCode(b)}wrap.append(av,b);document.getElementById('chat-thread').appendChild(wrap);document.getElementById('chat-messages').scrollTop=document.getElementById('chat-messages').scrollHeight;return b}
-async function ask(query){if(!query.trim())return;appendMessage('user',query);const loading=appendMessage('assistant','<i class="fa-solid fa-spinner fa-spin text-cyan-400"></i> Thinking…');try{const result=await window.VMDGateway.chat({query,model:selectedModel,provider:selectedProvider,system:VMD_SYSTEM_PROMPT});loading.innerHTML=marked.parse(result.text);enhanceCode(loading);setActiveModel(result.model||selectedModel);if(result.fallback)showToast(`Free AI fallback: ${result.fallback}`)}catch(e){loading.innerHTML=`<span class="text-rose-400"><i class="fa-solid fa-triangle-exclamation mr-1"></i>${escapeHtml(e.message)}</span>`;showToast(e.message,true)}}
+function appendMessage(role,text){document.getElementById('empty-chat-hint')?.remove();const wrap=document.createElement('div');wrap.className=`max-w-4xl mx-auto flex items-start gap-3 ${role==='user'?'flex-row-reverse':''}`;const av=document.createElement('div');av.className=`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${role==='user'?'bg-slate-800 border border-slate-700 text-teal':'bg-gradient-to-tr from-cyan-600 to-emerald-400 text-slate-950'}`;av.innerHTML=role==='user'?'<i class="fa-solid fa-user"></i>':'<i class="fa-solid fa-atom"></i>';const b=document.createElement('div');b.className=`max-w-[85%] p-4 text-sm rounded-2xl border shadow-lg ${role==='user'?'vmd-user-bubble':'vmd-assistant-bubble markdown-body'}`;if(role==='user')b.textContent=text;else{b.innerHTML=marked.parse(text);enhanceCode(b)}wrap.append(av,b);document.getElementById('chat-thread').appendChild(wrap);document.getElementById('chat-messages').scrollTop=document.getElementById('chat-messages').scrollHeight;return b}
+async function ask(query){if(!query.trim())return;appendMessage('user',query);const loading=appendMessage('assistant','<i class="fa-solid fa-spinner fa-spin text-teal"></i> Thinking…');try{const result=await window.VMDGateway.chat({query,model:selectedModel,provider:selectedProvider,system:VMD_SYSTEM_PROMPT});loading.innerHTML=marked.parse(result.text);enhanceCode(loading);setActiveModel(result.model||selectedModel);if(result.fallback)showToast(`Free AI fallback: ${result.fallback}`)}catch(e){loading.innerHTML=`<span class="text-rose-400"><i class="fa-solid fa-triangle-exclamation mr-1"></i>${escapeHtml(e.message)}</span>`;showToast(e.message,true)}}
 const chatInput=document.getElementById('chat-input');
 document.getElementById('chat-form').addEventListener('submit',e=>{e.preventDefault();const i=chatInput;const q=i.value.trim();if(!q)return;i.value='';ask(q)});
 chatInput.addEventListener('keydown',e=>{
@@ -785,7 +1019,7 @@ function sendQuickPrompt(q){switchTab('chat');document.getElementById('chat-inpu
 function switchTab(tab){document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));document.getElementById('view-'+tab).classList.remove('hidden');document.querySelectorAll('.nav-btn').forEach(b=>{const on=b.dataset.tab===tab;b.classList.toggle('active-nav',on);b.classList.toggle('text-slate-400',!on)});if(tab==='cheatsheet')renderCheatSheet()}
 
 document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
-quickPrompts.forEach(([title,q],idx)=>{const icons=['fa-crosshairs','fa-bullseye','fa-chart-line','fa-wave-square','fa-arrows-rotate','fa-link','fa-camera'];const b=document.createElement('button');b.className='w-full text-left rounded-lg border border-slate-800 bg-slate-900/70 hover:border-cyan-700/70 hover:bg-slate-800 px-3 py-2.5 text-xs text-slate-300 transition';b.innerHTML=`<span class="flex items-center gap-2"><i class="fa-solid ${icons[idx]||'fa-flask'} text-cyan-400 w-4"></i><span class="text-cyan-300 font-semibold">${escapeHtml(title)}</span></span><span class="block text-slate-500 mt-1 pl-6 leading-relaxed">${escapeHtml(q)}</span>`;b.onclick=()=>sendQuickPrompt(q);document.getElementById('quick-prompts').appendChild(b)});
+quickPrompts.forEach(([title,q],idx)=>{const icons=['fa-crosshairs','fa-bullseye','fa-chart-line','fa-wave-square','fa-arrows-rotate','fa-link','fa-camera'];const b=document.createElement('button');b.className='w-full text-left rounded-lg border border-slate-800 bg-slate-900/70 hover:border-cyan-700/70 hover:bg-slate-800 px-3 py-2.5 text-xs text-slate-300 transition';b.innerHTML=`<span class="flex items-center gap-2"><i class="fa-solid ${icons[idx]||'fa-flask'} text-teal w-4"></i><span class="text-teal font-semibold">${escapeHtml(title)}</span></span><span class="block text-slate-500 mt-1 pl-6 leading-relaxed">${escapeHtml(q)}</span>`;b.onclick=()=>sendQuickPrompt(q);document.getElementById('quick-prompts').appendChild(b)});
 
 function renderModelMenu(){
   const m=document.getElementById('model-menu'); m.innerHTML='';
@@ -795,7 +1029,7 @@ function renderModelMenu(){
     items.forEach(([id,name,desc,enabled=true])=>{
       const b=document.createElement('button'); const disabled=!enabled; b.disabled=disabled;
       b.className=`w-full text-left rounded-lg px-3 py-2.5 ${disabled?'opacity-40 cursor-not-allowed':'hover:bg-slate-800'}`;
-      b.innerHTML=`<div class="flex items-center justify-between gap-2"><span class="text-xs font-semibold ${disabled?'text-slate-500':'text-slate-200'}">${escapeHtml(name)}</span>${id===selectedModel?'<i class="fa-solid fa-check text-cyan-400 text-[10px]"></i>':''}</div><div class="text-[10px] text-slate-500 mt-0.5 leading-relaxed">${escapeHtml(desc)}</div>`;
+      b.innerHTML=`<div class="flex items-center justify-between gap-2"><span class="text-xs font-semibold ${disabled?'text-slate-500':'text-slate-200'}">${escapeHtml(name)}</span>${id===selectedModel?'<i class="fa-solid fa-check text-teal text-[10px]"></i>':''}</div><div class="text-[10px] text-slate-500 mt-0.5 leading-relaxed">${escapeHtml(desc)}</div>`;
       if(!disabled)b.onclick=()=>{selectedModel=id;selectedProvider=available.find(x=>x.id===id)?.provider||'auto';m.classList.add('hidden');setActiveModel(id);renderModelMenu();showToast(`Selected ${modelDisplay(id)}.`)};
       m.appendChild(b);
     });
@@ -818,13 +1052,12 @@ function setActiveModel(id){document.getElementById('model-label').textContent=m
 document.getElementById('model-menu-btn').onclick=()=>document.getElementById('model-menu').classList.toggle('hidden');document.addEventListener('click',e=>{if(!e.target.closest('#model-menu-btn')&&!e.target.closest('#model-menu'))document.getElementById('model-menu').classList.add('hidden')});
 
 let activeCat='all';
-function renderCategories(){const el=document.getElementById('category-buttons');['all','selections','trajectory','pbc','tcl','graphics'].forEach(c=>{const b=document.createElement('button');b.textContent=c==='all'?'All':c;b.className=`cat-btn px-3 py-1.5 rounded-lg text-xs ${activeCat===c?'bg-cyan-600 text-white':'bg-slate-800 text-slate-400 hover:text-white'}`;b.onclick=()=>{activeCat=c;renderCategories();renderCheatSheet()};el.appendChild(b)})}
-function renderCheatSheet(){const q=document.getElementById('cheatsheet-search').value.toLowerCase();const list=VMD_COMMANDS.filter(x=>(activeCat==='all'||x.category===activeCat)&&[x.title,x.syntax,x.description,...x.tags].join(' ').toLowerCase().includes(q));const g=document.getElementById('cheatsheet-grid');g.innerHTML='';list.forEach(x=>{const c=document.createElement('div');c.className='panel rounded-xl p-4';c.innerHTML=`<div class="flex justify-between gap-2"><span class="text-[9px] uppercase tracking-wider px-2 py-1 rounded-full bg-slate-800 text-cyan-300">${escapeHtml(x.category)}</span><button class="ask-c text-[10px] text-slate-400 hover:text-cyan-300">Ask AI</button></div><h3 class="font-semibold text-sm text-white mt-2">${escapeHtml(x.title)}</h3><p class="text-xs text-slate-400 mt-1 leading-relaxed">${escapeHtml(x.description)}</p><pre class="mt-2 text-xs text-cyan-300"><code>${escapeHtml(x.example)}</code><button class="copy-btn absolute top-2 right-2 bg-slate-800 text-slate-300 text-[10px] px-2 py-1 rounded">Copy</button></pre>`;c.querySelector('.copy-btn').onclick=()=>copyText(x.example);c.querySelector('.ask-c').onclick=()=>sendQuickPrompt(`Explain the VMD command '${x.title}' (syntax: ${x.syntax}) with step-by-step examples and a Tcl script.`);g.appendChild(c)});enhanceCode(g)}
+function renderCategories(){const el=document.getElementById('category-buttons');['all','selections','trajectory','pbc','tcl','graphics'].forEach(c=>{const b=document.createElement('button');b.textContent=c==='all'?'All':c;b.className=`cat-btn px-3 py-1.5 rounded-lg text-xs ${activeCat===c?'bg-teal text-white':'bg-slate-800 text-slate-400 hover:text-white'}`;b.onclick=()=>{activeCat=c;renderCategories();renderCheatSheet()};el.appendChild(b)})}
+function renderCheatSheet(){const q=document.getElementById('cheatsheet-search').value.toLowerCase();const list=VMD_COMMANDS.filter(x=>(activeCat==='all'||x.category===activeCat)&&[x.title,x.syntax,x.description,...x.tags].join(' ').toLowerCase().includes(q));const g=document.getElementById('cheatsheet-grid');g.innerHTML='';list.forEach(x=>{const c=document.createElement('div');c.className='panel rounded-xl p-4 bg-[#071923] border border-[#163744]';c.innerHTML=`<div class="flex justify-between gap-2"><span class="text-[9px] uppercase tracking-wider px-2 py-1 rounded-full bg-slate-800 text-teal">${escapeHtml(x.category)}</span><button class="ask-c text-[10px] text-slate-400 hover:text-teal">Ask AI</button></div><h3 class="font-semibold text-sm text-white mt-2">${escapeHtml(x.title)}</h3><p class="text-xs text-slate-400 mt-1 leading-relaxed">${escapeHtml(x.description)}</p><pre class="mt-2 text-xs text-teal"><code>${escapeHtml(x.example)}</code><button class="copy-btn absolute top-2 right-2 bg-slate-800 text-slate-300 text-[10px] px-2 py-1 rounded">Copy</button></pre>`;c.querySelector('.copy-btn').onclick=()=>copyText(x.example);c.querySelector('.ask-c').onclick=()=>sendQuickPrompt(`Explain the VMD command '${x.title}' (syntax: ${x.syntax}) with step-by-step examples and a Tcl script.`);g.appendChild(c)});enhanceCode(g)}
 document.getElementById('cheatsheet-search').addEventListener('input',renderCheatSheet);renderCategories();renderCheatSheet();
 
-const SNIP_KEY='vmd_assistant_v2_snippets';function getSnips(){try{return JSON.parse(localStorage.getItem(SNIP_KEY)||'[]')}catch{return[]}}function saveSnips(a){localStorage.setItem(SNIP_KEY,JSON.stringify(a));renderSnippets()}function renderSnippets(){const g=document.getElementById('snippets-grid'),a=getSnips();g.innerHTML='';if(!a.length){g.innerHTML='<div class="panel rounded-xl p-8 text-center text-xs text-slate-500 col-span-full">No saved snippets yet. Add your first Tcl script.</div>';return}a.forEach((s,i)=>{const c=document.createElement('div');c.className='panel rounded-xl p-4';c.innerHTML=`<div class="flex justify-between"><div><div class="text-[9px] uppercase text-emerald-400">${escapeHtml(s.tag||'Tcl')}</div><h3 class="font-semibold text-sm mt-1">${escapeHtml(s.title)}</h3></div><button class="del text-slate-500 hover:text-rose-400"><i class="fa-solid fa-trash"></i></button></div><pre class="mt-3 text-xs"><code>${escapeHtml(s.code)}</code></pre><button class="copy-s text-xs text-slate-400 hover:text-white">Copy Script</button>`;c.querySelector('.del').onclick=()=>{a.splice(i,1);saveSnips(a)};c.querySelector('.copy-s').onclick=()=>copyText(s.code);g.appendChild(c)});enhanceCode(g)}renderSnippets();
+const SNIP_KEY='vmd_assistant_v2_snippets';function getSnips(){try{return JSON.parse(localStorage.getItem(SNIP_KEY)||'[]')}catch{return[]}}function saveSnips(a){localStorage.setItem(SNIP_KEY,JSON.stringify(a));renderSnippets()}function renderSnippets(){const g=document.getElementById('snippets-grid'),a=getSnips();g.innerHTML='';if(!a.length){g.innerHTML='<div class="panel rounded-xl p-8 text-center text-xs text-slate-500 col-span-full bg-[#071923] border border-[#163744]">No saved snippets yet. Add your first Tcl script.</div>';return}a.forEach((s,i)=>{const c=document.createElement('div');c.className='panel rounded-xl p-4 bg-[#071923] border border-[#163744]';c.innerHTML=`<div class="flex justify-between"><div><div class="text-[9px] uppercase text-green">${escapeHtml(s.tag||'Tcl')}</div><h3 class="font-semibold text-sm mt-1">${escapeHtml(s.title)}</h3></div><button class="del text-slate-500 hover:text-rose-400"><i class="fa-solid fa-trash"></i></button></div><pre class="mt-3 text-xs"><code>${escapeHtml(s.code)}</code></pre><button class="copy-s text-xs text-slate-400 hover:text-white">Copy Script</button>`;c.querySelector('.del').onclick=()=>{a.splice(i,1);saveSnips(a)};c.querySelector('.copy-s').onclick=()=>copyText(s.code);g.appendChild(c)});enhanceCode(g)}renderSnippets();
 document.getElementById('new-snippet').onclick=()=>document.getElementById('snippet-modal').classList.replace('hidden','flex');document.getElementById('close-snippet').onclick=()=>document.getElementById('snippet-modal').classList.replace('flex','hidden');document.getElementById('save-snippet').onclick=()=>{const title=document.getElementById('snippet-title').value.trim(),tag=document.getElementById('snippet-tag').value.trim(),code=document.getElementById('snippet-code').value.trim();if(!title||!code)return showToast('Title and script are required',true);const a=getSnips();a.unshift({title,tag,code});saveSnips(a);['snippet-title','snippet-tag','snippet-code'].forEach(id=>document.getElementById(id).value='');document.getElementById('snippet-modal').classList.replace('flex','hidden');showToast('Snippet saved locally')};
-
 
 document.getElementById('feedback-btn').onclick=()=>{document.getElementById('feedback-modal').classList.replace('hidden','flex');document.getElementById('feedback-text').focus()};
 document.getElementById('close-feedback').onclick=()=>document.getElementById('feedback-modal').classList.replace('flex','hidden');
@@ -836,8 +1069,6 @@ document.getElementById('feedback-github').onclick=()=>{
   const body=encodeURIComponent(msg+'\n\n---\nSent from VMD Assistant AI');
   window.open(`https://github.com/anweshpandey/vmd-assistant-v2/issues/new?title=${title}&body=${body}`,'_blank','noopener');
 };
-
-
 
 document.querySelectorAll('[data-workflow]').forEach(b=>b.addEventListener('click',()=>sendQuickPrompt(b.dataset.workflow)));
 
@@ -852,6 +1083,6 @@ document.querySelectorAll('[data-use-demo]').forEach(b=>b.onclick=()=>{
   showToast('Script inserted into the prompt.');
 });
 
-(async()=>{renderModelMenu();setActiveModel('auto');try{const s=await window.VMDGateway.health();if(s.ok){const el=document.getElementById('gateway-status');el.className='hidden sm:flex items-center gap-2 px-2.5 py-1.5 rounded-lg border provider-free text-[11px] font-semibold';el.innerHTML='<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span>Free AI · Gateway online</span>'}}catch{}})();
+(async()=>{renderModelMenu();setActiveModel('auto');try{const s=await window.VMDGateway.health();if(s.ok){const el=document.getElementById('gateway-status');el.className='showcase-status hidden sm:flex';el.innerHTML='<span class="dot"></span><span>Free AI · Online</span>'}}catch{}})();
 </script>
 </body></html>
