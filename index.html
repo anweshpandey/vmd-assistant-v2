@@ -469,6 +469,26 @@
   @media(max-width:1050px){.infographic-grid{grid-template-columns:1fr}.info-side{grid-template-rows:auto auto}.infographic-bottom{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:700px){.infographic-board{display:none}.max-w-\[1235px\]{max-width:100%!important}}
 </style>
+
+<style id="vmd-visual-workflows">
+  .workflow-grid{gap:10px!important}
+  .workflow-card{position:relative!important;min-height:104px!important;padding:13px 145px 13px 13px!important;overflow:hidden!important;isolation:isolate}
+  .workflow-card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 82% 48%,rgba(25,211,197,.11),transparent 22%),linear-gradient(90deg,rgba(25,211,197,.025),transparent 70%);z-index:-2}
+  .workflow-card:after{content:"";position:absolute;right:-10px;top:0;bottom:0;width:150px;background:linear-gradient(90deg,transparent,rgba(4,27,37,.12));z-index:-1;pointer-events:none}
+  .workflow-visual{position:absolute;right:12px;top:10px;width:126px;height:72px;opacity:.92;pointer-events:none}
+  .workflow-visual svg{width:100%;height:100%;overflow:visible}
+  .workflow-title,.workflow-desc,.workflow-icon,.workflow-arrow{position:relative;z-index:2}
+  .workflow-icon{box-shadow:0 0 18px rgba(25,211,197,.08)}
+  .workflow-card:hover .workflow-visual{transform:translateY(-1px) scale(1.02);filter:drop-shadow(0 0 7px rgba(25,211,197,.22))}
+  .task-visual{margin-left:auto;width:48px;height:24px;opacity:.8}
+  .task-visual svg{width:100%;height:100%}
+  .showcase-task{position:relative;overflow:hidden}
+  .showcase-task:after{content:"";position:absolute;right:-18px;bottom:-20px;width:95px;height:60px;background:radial-gradient(ellipse,rgba(25,211,197,.12),transparent 68%);pointer-events:none}
+  .hero-data-rail{position:relative}
+  .hero-data-rail:after{content:"";position:absolute;right:4px;top:-4px;width:120px;height:24px;background:repeating-linear-gradient(90deg,rgba(25,211,197,.16) 0 1px,transparent 1px 14px);opacity:.55;mask-image:linear-gradient(90deg,transparent,black)}
+  @media(max-width:900px){.workflow-card{padding-right:112px!important}.workflow-visual{width:96px;right:8px}}
+  @media(max-width:700px){.workflow-card{padding-right:13px!important}.workflow-visual{display:none}}
+</style>
 </head>
 <body class="min-h-screen h-screen flex flex-col overflow-hidden">
 <header class="showcase-header shrink-0 border-b flex items-center px-4 md:px-6 gap-4 relative overflow-hidden">
@@ -564,82 +584,12 @@
 
       <div class="section-heading"><div><h3>Start with a workflow</h3><p>Choose a task or type your own question.</p></div><span class="text-[10px] text-cyan-300/50">Built for VMD users</span></div>
       <div class="workflow-grid">
-        <button class="workflow-card text-left" data-workflow="Help me load, align, and visualize a protein or ligand structure in VMD. Include the exact Tcl commands."><span class="workflow-icon"><i class="fa-solid fa-cube"></i></span><span class="workflow-title">Structure setup</span><span class="workflow-desc block">Load, align, inspect, and visualize molecular structures.</span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
-        <button class="workflow-card text-left" data-workflow="Explain VMD atom selection syntax with practical examples for resid, serial, index, chain, resname, name, within, and same residue as."><span class="workflow-icon"><i class="fa-solid fa-atom"></i></span><span class="workflow-title">Atom selections</span><span class="workflow-desc block">Build precise selections and understand indexing.</span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
-        <button class="workflow-card text-left" data-workflow="Write a complete VMD Tcl workflow for trajectory RMSD and RMSF analysis, including alignment and frame-independent output."><span class="workflow-icon"><i class="fa-solid fa-chart-line"></i></span><span class="workflow-title">Trajectory analysis</span><span class="workflow-desc block">RMSD, RMSF, distances, contacts, and frame loops.</span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
-        <button class="workflow-card text-left" data-workflow="Show a robust VMD PBCTools workflow to unwrap a trajectory, center the protein, and wrap solvent correctly around it."><span class="workflow-icon"><i class="fa-solid fa-arrows-rotate"></i></span><span class="workflow-title">PBC & PBCTools</span><span class="workflow-desc block">Fix periodic boundaries and prepare trajectories.</span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
-        <button class="workflow-card text-left" data-workflow="Give a practical VMD workflow for hydrogen bonds, salt bridges, contacts, and ligand-pocket interactions across a trajectory."><span class="workflow-icon"><i class="fa-solid fa-link"></i></span><span class="workflow-title">Interactions</span><span class="workflow-desc block">Hydrogen bonds, contacts, pockets, and interactions.</span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
-        <button class="workflow-card text-left" data-workflow="Give publication-quality VMD commands for representations, coloring, Tachyon or OSPRay rendering, and a 1920x1080 molecular figure."><span class="workflow-icon"><i class="fa-solid fa-camera"></i></span><span class="workflow-title">Rendering & graphics</span><span class="workflow-desc block">Create clear, publication-ready molecular visuals.</span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
-      </div>
-      <div class="infographic-board" aria-hidden="true">
-        <div class="infographic-topline">
-          <div><span class="info-kicker">VMD ANALYSIS MAP</span><span class="info-caption">structure → selection → trajectory → interactions → graphics</span></div>
-          <div class="info-live"><span></span> LIVE WORKSPACE</div>
-        </div>
-        <div class="infographic-grid">
-          <div class="info-molecule science-panel">
-            <div class="panel-head"><div><div class="panel-title">Molecular structure</div><div class="panel-sub">protein · ligand · active site</div></div><span class="info-code">PDB / DCD</span></div>
-            <div class="big-molecule">
-              <svg viewBox="0 0 760 360" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="helix1" x1="0" x2="1"><stop stop-color="#14d8c5"/><stop offset=".45" stop-color="#43c7ff"/><stop offset="1" stop-color="#14d8c5"/></linearGradient>
-                  <linearGradient id="helix2" x1="0" x2="1"><stop stop-color="#39bdf8"/><stop offset=".5" stop-color="#9af7ee"/><stop offset="1" stop-color="#14d8c5"/></linearGradient>
-                  <radialGradient id="activeGlow"><stop stop-color="#fff0a0" stop-opacity=".95"/><stop offset=".18" stop-color="#fbbf24" stop-opacity=".8"/><stop offset="1" stop-color="#f59e0b" stop-opacity="0"/></radialGradient>
-                  <filter id="mGlow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-                  <pattern id="microGrid" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M34 0H0V34" fill="none" stroke="#1b5965" stroke-opacity=".24"/></pattern>
-                </defs>
-                <rect width="760" height="360" fill="url(#microGrid)" opacity=".45"/>
-                <g fill="none" stroke="#285968" stroke-width="1" opacity=".5">
-                  <ellipse cx="385" cy="180" rx="330" ry="128"/><ellipse cx="385" cy="180" rx="275" ry="104"/><ellipse cx="385" cy="180" rx="215" ry="82"/>
-                </g>
-                <g fill="none" stroke-linecap="round" filter="url(#mGlow)">
-                  <path d="M38 238 C92 55 156 58 207 177 S300 315 365 145 S467 48 520 175 S620 315 722 92" stroke="url(#helix1)" stroke-width="10" opacity=".92"/>
-                  <path d="M35 106 C105 290 158 278 215 130 S319 32 377 157 S482 294 538 129 S636 55 728 245" stroke="url(#helix2)" stroke-width="7" opacity=".78"/>
-                  <path d="M72 186 C120 135 165 140 203 188 S276 239 319 180" stroke="#d9fffb" stroke-width="2" opacity=".5"/>
-                </g>
-                <g fill="#8af8ed" filter="url(#mGlow)"><circle cx="86" cy="132" r="5"/><circle cx="163" cy="274" r="5"/><circle cx="248" cy="113" r="5"/><circle cx="330" cy="226" r="5"/><circle cx="469" cy="89" r="5"/><circle cx="586" cy="245" r="5"/><circle cx="674" cy="122" r="5"/></g>
-                <g filter="url(#mGlow)"><circle cx="388" cy="166" r="65" fill="url(#activeGlow)"/><circle cx="388" cy="166" r="10" fill="#ffe58a"/><circle cx="357" cy="143" r="6" fill="#19d3c5"/><circle cx="423" cy="140" r="6" fill="#38bdf8"/><circle cx="426" cy="194" r="6" fill="#19d3c5"/><circle cx="352" cy="199" r="5" fill="#38bdf8"/></g>
-                <g stroke="#fbbf24" stroke-dasharray="4 5" opacity=".55"><path d="M388 166 L492 76"/><path d="M388 166 L514 216"/></g>
-                <g fill="#9deee7" font-family="sans-serif" font-size="11"><text x="28" y="31">PROTEIN CORE</text><text x="505" y="58">ACTIVE SITE</text><text x="520" y="235">LIGAND CONTACTS</text></g>
-              </svg>
-              <div class="molecule-badge left"><b>CHAIN A</b><span>resid 1–320</span></div>
-              <div class="molecule-badge right"><b>ACTIVE SITE</b><span>12 residues</span></div>
-              <div class="molecule-badge bottom"><b>LIGAND</b><span>8 contacts · 2 H-bonds</span></div>
-            </div>
-          </div>
-          <div class="info-side">
-            <div class="science-panel signal-panel">
-              <div class="panel-head"><div><div class="panel-title">Trajectory profile</div><div class="panel-sub">RMSD · RMSF · stability</div></div><span class="info-code">200 NS</span></div>
-              <div class="signal-chart">
-                <svg viewBox="0 0 420 150" preserveAspectRatio="none">
-                  <defs><linearGradient id="sigFill" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#19d3c5" stop-opacity=".3"/><stop offset="1" stop-color="#19d3c5" stop-opacity="0"/></linearGradient></defs>
-                  <g stroke="#214651" stroke-width="1"><path d="M8 28H412M8 58H412M8 88H412M8 118H412"/><path d="M8 12V132M109 12V132M210 12V132M311 12V132M412 12V132"/></g>
-                  <path d="M8 111 L27 103 L45 108 L63 84 L82 92 L101 70 L119 79 L138 56 L157 67 L176 49 L195 58 L214 42 L233 53 L252 45 L271 64 L290 51 L309 72 L328 59 L347 79 L366 66 L385 88 L403 76 L412 80 L412 132 L8 132Z" fill="url(#sigFill)"/>
-                  <path d="M8 111 L27 103 L45 108 L63 84 L82 92 L101 70 L119 79 L138 56 L157 67 L176 49 L195 58 L214 42 L233 53 L252 45 L271 64 L290 51 L309 72 L328 59 L347 79 L366 66 L385 88 L403 76 L412 80" fill="none" stroke="#19d3c5" stroke-width="3" filter="url(#mGlow)"/>
-                  <circle cx="214" cy="42" r="5" fill="#fbbf24"/><text x="222" y="36" fill="#8aaeb8" font-size="9">stable region</text>
-                  <g fill="#557884" font-size="8"><text x="8" y="146">0 ns</text><text x="194" y="146">100</text><text x="390" y="146">200 ns</text></g>
-                </svg>
-              </div>
-              <div class="mini-metrics"><div><b>1.82 Å</b><span>RMSD</span></div><div><b>0.74 Å</b><span>RMSF</span></div><div><b>98.4%</b><span>stable frames</span></div></div>
-            </div>
-            <div class="science-panel pipeline-panel">
-              <div class="panel-head"><div><div class="panel-title">Analysis pipeline</div><div class="panel-sub">from coordinates to publication</div></div></div>
-              <div class="pipeline">
-                <div class="pipe-node active"><i class="fa-solid fa-cube"></i><b>STRUCTURE</b><span>PDB / PSF</span></div><div class="pipe-line"></div>
-                <div class="pipe-node"><i class="fa-solid fa-filter"></i><b>SELECTION</b><span>atomselect</span></div><div class="pipe-line"></div>
-                <div class="pipe-node"><i class="fa-solid fa-film"></i><b>TRAJECTORY</b><span>DCD / frames</span></div><div class="pipe-line"></div>
-                <div class="pipe-node"><i class="fa-solid fa-chart-line"></i><b>ANALYSIS</b><span>RMSD / PCA</span></div><div class="pipe-line"></div>
-                <div class="pipe-node"><i class="fa-solid fa-camera"></i><b>GRAPHICS</b><span>Tachyon</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="infographic-bottom">
-          <div class="info-stat"><div class="stat-icon"><i class="fa-solid fa-dna"></i></div><div><b>3D STRUCTURE</b><span>protein · ligand · solvent</span></div><strong>READY</strong></div>
-          <div class="info-stat"><div class="stat-icon"><i class="fa-solid fa-code"></i></div><div><b>TCL AUTOMATION</b><span>selection · loops · exports</span></div><strong>ACTIVE</strong></div>
-          <div class="info-stat"><div class="stat-icon"><i class="fa-solid fa-diagram-project"></i></div><div><b>INTERACTIONS</b><span>H-bonds · contacts · PBC</span></div><strong>12</strong></div>
-          <div class="info-stat"><div class="stat-icon"><i class="fa-solid fa-chart-column"></i></div><div><b>ANALYTICS</b><span>RMSD · RMSF · RDF · PCA</span></div><strong>8+</strong></div>
-        </div>
+        <button class="workflow-card text-left" data-workflow="Help me load, align, and visualize a protein or ligand structure in VMD. Include the exact Tcl commands."><span class="workflow-icon"><i class="fa-solid fa-cube"></i></span><span class="workflow-title">Structure setup</span><span class="workflow-desc block">Load, align, inspect, and visualize molecular structures.</span><span class="workflow-visual"><svg viewBox="0 0 150 80"><g fill="none" stroke="#19d3c5" stroke-width="2" opacity=".7"><path d="M8 56 L30 24 L54 48 L80 16 L106 42 L140 20"/><path d="M8 20 L32 42 L58 18 L82 52 L110 28 L140 56"/></g><g fill="#43c7ff"><circle cx="30" cy="24" r="3"/><circle cx="80" cy="16" r="3"/><circle cx="106" cy="42" r="3"/></g><circle cx="80" cy="39" r="12" fill="none" stroke="#fbbf24" stroke-opacity=".65"/><circle cx="80" cy="39" r="4" fill="#fbbf24"/></svg></span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
+        <button class="workflow-card text-left" data-workflow="Explain VMD atom selection syntax with practical examples for resid, serial, index, chain, resname, name, within, and same residue as."><span class="workflow-icon"><i class="fa-solid fa-atom"></i></span><span class="workflow-title">Atom selections</span><span class="workflow-desc block">Build precise selections and understand indexing.</span><span class="workflow-visual"><svg viewBox="0 0 150 80"><g stroke="#38bdf8" stroke-width="1.5" opacity=".6"><circle cx="75" cy="40" r="18"/><ellipse cx="75" cy="40" rx="55" ry="18"/><ellipse cx="75" cy="40" rx="18" ry="55" transform="rotate(55 75 40)"/></g><g fill="#19d3c5"><circle cx="75" cy="22" r="4"/><circle cx="34" cy="42" r="3"/><circle cx="111" cy="33" r="4"/><circle cx="77" cy="59" r="3"/></g></svg></span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
+        <button class="workflow-card text-left" data-workflow="Write a complete VMD Tcl workflow for trajectory RMSD and RMSF analysis, including alignment and frame-independent output."><span class="workflow-icon"><i class="fa-solid fa-chart-line"></i></span><span class="workflow-title">Trajectory analysis</span><span class="workflow-desc block">RMSD, RMSF, distances, contacts, and frame loops.</span><span class="workflow-visual"><svg viewBox="0 0 150 80"><g stroke="#234d5b" stroke-width="1"><path d="M5 62H145M5 42H145M5 22H145"/><path d="M35 10V68M75 10V68M115 10V68"/></g><path d="M6 58 L20 52 L31 55 L43 35 L55 43 L66 27 L79 34 L91 19 L104 29 L116 23 L130 37 L144 28" fill="none" stroke="#19d3c5" stroke-width="3"/><circle cx="91" cy="19" r="4" fill="#fbbf24"/></svg></span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
+        <button class="workflow-card text-left" data-workflow="Show a robust VMD PBCTools workflow to unwrap a trajectory, center the protein, and wrap solvent correctly around it."><span class="workflow-icon"><i class="fa-solid fa-arrows-rotate"></i></span><span class="workflow-title">PBC & PBCTools</span><span class="workflow-desc block">Fix periodic boundaries and prepare trajectories.</span><span class="workflow-visual"><svg viewBox="0 0 150 80"><g fill="none" stroke="#19d3c5" stroke-width="1.5" opacity=".7"><rect x="34" y="14" width="78" height="50" rx="4"/><path d="M20 28h18M112 50h18M50 4v14M100 64v14"/><path d="M25 24l-5 4 5 4M125 46l5 4-5 4M46 9l4-5 4 5M96 71l4 5 4-5"/></g><circle cx="75" cy="39" r="11" fill="none" stroke="#38bdf8" stroke-width="2"/><circle cx="75" cy="39" r="4" fill="#19d3c5"/></svg></span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
+        <button class="workflow-card text-left" data-workflow="Give a practical VMD workflow for hydrogen bonds, salt bridges, contacts, and ligand-pocket interactions across a trajectory."><span class="workflow-icon"><i class="fa-solid fa-link"></i></span><span class="workflow-title">Interactions</span><span class="workflow-desc block">Hydrogen bonds, contacts, pockets, and interactions.</span><span class="workflow-visual"><svg viewBox="0 0 150 80"><g stroke="#38bdf8" stroke-width="2"><path d="M30 40 L60 22 L91 40 L120 23"/><path d="M30 40 L60 58 L91 40 L120 57"/></g><g fill="#19d3c5"><circle cx="30" cy="40" r="6"/><circle cx="60" cy="22" r="5"/><circle cx="91" cy="40" r="7"/><circle cx="120" cy="23" r="5"/></g><g stroke="#fbbf24" stroke-dasharray="3 4"><path d="M60 22 L91 40"/><path d="M91 40 L120 57"/></g></svg></span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
+        <button class="workflow-card text-left" data-workflow="Give publication-quality VMD commands for representations, coloring, Tachyon or OSPRay rendering, and a 1920x1080 molecular figure."><span class="workflow-icon"><i class="fa-solid fa-camera"></i></span><span class="workflow-title">Rendering & graphics</span><span class="workflow-desc block">Create clear, publication-ready molecular visuals.</span><span class="workflow-visual"><svg viewBox="0 0 150 80"><rect x="17" y="13" width="116" height="54" rx="6" fill="none" stroke="#19d3c5"/><circle cx="75" cy="40" r="13" fill="none" stroke="#38bdf8" stroke-width="2"/><circle cx="75" cy="40" r="5" fill="#19d3c5"/><path d="M26 58 L55 45 L69 52 L91 31 L104 39 L124 22" fill="none" stroke="#fbbf24" stroke-width="2"/></svg></span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
       </div>
       <div id="chat-thread" class="space-y-4 mt-5"></div>
       <div id="empty-chat-hint" class="showcase-empty mt-5">
