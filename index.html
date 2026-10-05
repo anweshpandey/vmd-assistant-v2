@@ -259,15 +259,20 @@
   .vmd-header-glow:before{width:420px;height:420px;left:39%;top:-185px;transform:rotate(24deg)}
   .vmd-header-glow:after{width:310px;height:310px;left:51%;top:-125px;transform:rotate(-18deg)}
   .vmd-molecule-art{
-    opacity:.8;
+    opacity:.82;
     background:
-      radial-gradient(circle at 18% 50%,#19D3C5 0 2px,transparent 3px),
-      radial-gradient(circle at 28% 30%,#38BDF8 0 2px,transparent 3px),
-      radial-gradient(circle at 41% 62%,#19D3C5 0 3px,transparent 4px),
-      radial-gradient(circle at 55% 28%,#38BDF8 0 2px,transparent 3px),
-      radial-gradient(circle at 70% 58%,#19D3C5 0 2px,transparent 3px),
-      radial-gradient(circle at 82% 35%,#38BDF8 0 3px,transparent 4px);
-    filter:blur(.2px)
+      radial-gradient(circle at 12% 55%,rgba(25,211,197,.9) 0 2px,transparent 3px),
+      radial-gradient(circle at 20% 34%,rgba(56,189,248,.8) 0 3px,transparent 4px),
+      radial-gradient(circle at 31% 62%,rgba(25,211,197,.75) 0 3px,transparent 4px),
+      radial-gradient(circle at 43% 28%,rgba(56,189,248,.8) 0 2px,transparent 3px),
+      radial-gradient(circle at 55% 56%,rgba(25,211,197,.72) 0 4px,transparent 5px),
+      radial-gradient(circle at 68% 32%,rgba(56,189,248,.75) 0 3px,transparent 4px),
+      radial-gradient(circle at 79% 60%,rgba(25,211,197,.7) 0 3px,transparent 4px),
+      radial-gradient(circle at 90% 38%,rgba(56,189,248,.8) 0 2px,transparent 3px),
+      linear-gradient(28deg,transparent 46%,rgba(25,211,197,.18) 47%,rgba(25,211,197,.18) 48%,transparent 49%),
+      linear-gradient(-24deg,transparent 47%,rgba(56,189,248,.14) 48%,rgba(56,189,248,.14) 49%,transparent 50%);
+    background-size:120px 80px,150px 100px,130px 95px,170px 110px,145px 100px,160px 90px,140px 100px,180px 110px,170px 100px,190px 120px;
+    filter:blur(.15px)
   }
   .vmd-molecule-art:before{
     content:"";position:absolute;inset:5% 8%;
@@ -327,11 +332,16 @@
   .vmd-link-card{border-radius:12px!important}
   .vmd-toast{backdrop-filter:blur(12px)}
   #chat-thread{padding-bottom:8px}
+  .vmd-link-card{transition:transform .18s ease,background .18s ease,border-color .18s ease}
+  .vmd-link-card:hover{transform:translateY(-1px);border-color:rgba(25,211,197,.5)!important;background:rgba(25,211,197,.07)!important}
+  .vmd-chip{transition:background .18s ease,border-color .18s ease,transform .18s ease}
+  .vmd-chip:hover{background:rgba(25,211,197,.12);border-color:rgba(25,211,197,.55);transform:translateY(-1px)}
+  .vmd-hero-card h2{letter-spacing:-.01em}
 </style>
 
 </head>
 <body class="min-h-screen h-screen flex flex-col overflow-hidden">
-<header class="h-[96px] shrink-0 border-b flex items-center px-4 md:px-6 gap-4 relative overflow-hidden">
+<header class="h-[98px] shrink-0 border-b flex items-center px-4 md:px-6 gap-4 relative overflow-hidden">
   <div class="absolute inset-0 pointer-events-none vmd-header-glow"></div>
   <div class="flex items-center gap-3 min-w-0 relative z-10">
     <div class="w-11 h-11 rounded-xl flex items-center justify-center vmd-logo"><i class="fa-solid fa-atom text-xl"></i></div>
@@ -363,7 +373,8 @@
       <div class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2">Workspace</div>
       <div class="grid grid-cols-2 gap-1">
         <button class="nav-btn active-nav rounded-lg px-2.5 py-2 text-xs font-semibold text-left" data-tab="chat"><i class="fa-solid fa-comments mr-2"></i>AI Chat</button>
-        <button class="nav-btn rounded-lg px-2.5 py-2 text-xs font-semibold text-left text-slate-400 hover:text-white" data-tab="cheatsheet"><i class="fa-solid fa-book mr-2"></i>Cheat Sheet</button>
+        <button class="nav-btn rounded-lg px-2.5 py-2 text-xs font-semibold text-left text-slate-400 hover:text-white" data-tab="quick-analysis"><i class="fa-solid fa-bolt mr-2"></i>Quick Analysis</button>
+        <button class="nav-btn rounded-lg px-2.5 py-2 text-xs font-semibold text-left text-slate-400 hover:text-white" data-tab="cheatsheet"><i class="fa-solid fa-terminal mr-2"></i>Command Library</button>
         <button class="nav-btn rounded-lg px-2.5 py-2 text-xs font-semibold text-left text-slate-400 hover:text-white" data-tab="snippets"><i class="fa-solid fa-code mr-2"></i>Snippets</button>
         <button class="nav-btn rounded-lg px-2.5 py-2 text-xs font-semibold text-left text-slate-400 hover:text-white" data-tab="about"><i class="fa-solid fa-circle-info mr-2"></i>About</button>
       </div>
@@ -379,7 +390,7 @@
       </a>
       <button id="feedback-btn" class="w-full vmd-link-card flex items-center gap-3 rounded-xl px-3 py-2.5 text-left">
         <i class="fa-regular fa-message text-xl text-cyan-300"></i>
-        <div><div class="text-xs font-bold text-cyan-300">Feedback</div><div class="text-[9px] text-slate-400 mt-0.5">Send comments via GitHub</div></div>
+        <div><div class="text-xs font-bold text-cyan-300">Feedback</div><div class="text-[9px] text-slate-400 mt-0.5">Send comments via GitHub / email</div></div>
       </button>
     </div>
   </aside>
@@ -405,58 +416,8 @@
           </div>
         </div>
         <div class="max-w-[1235px] mx-auto w-full space-y-4" id="chat-thread">
-  <div class="flex items-start gap-3 flex-row-reverse">
-    <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-slate-800 border border-slate-700 text-cyan-400"><i class="fa-solid fa-user"></i></div>
-    <div class="max-w-[78%] p-4 text-sm rounded-2xl rounded-tr-none vmd-user-bubble">
-      Write a VMD Tcl script for C-alpha RMSF and save frame-independent results to a text file.
-    </div>
-  </div>
-  <div class="flex items-start gap-3">
-    <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 vmd-logo"><i class="fa-solid fa-atom"></i></div>
-    <div class="max-w-[92%] p-4 text-sm rounded-2xl rounded-tl-none markdown-body vmd-assistant-bubble">
-      <p>Here's a complete VMD Tcl script to calculate C-alpha RMSF over a trajectory and save frame-independent results to a text file. The script aligns each frame to a reference, computes per-residue RMSF for C-alpha atoms, and writes the results to a text file.</p>
-      <div class="vmd-code-card">
-        <div class="vmd-code-head">
-          <span><i class="fa-regular fa-file-code mr-2 text-cyan-300"></i>Tcl (VMD)</span>
-          <div class="flex gap-2">
-            <button class="vmd-code-btn" data-copy-demo><i class="fa-regular fa-copy mr-1"></i>Copy</button>
-            <button class="vmd-code-btn" data-use-demo><i class="fa-solid fa-play mr-1"></i>Use in Prompt</button>
-            <button class="vmd-code-btn"><i class="fa-solid fa-download mr-1"></i>Download</button>
-          </div>
+          <div id="chat-empty-state" class="text-center py-10 text-xs text-slate-600">Start a conversation with VMD Assistant.</div>
         </div>
-        <pre><code class="language-tcl"># Load your structure and trajectory
-mol new protein.pdb type pdb
-mol addfile trajectory.dcd type dcd waitfor all
-
-# Select C-alpha atoms
-set sel [atomselect top "protein and name CA"]
-
-# Align all frames to the first frame
-set ref [atomselect top "protein and backbone"]
-set all [atomselect top "protein and backbone"]
-set nframes [molinfo top get numframes]
-
-# Calculate frame-independent RMSF
-set out [open "ca_rmsf.dat" w]
-for {set i 0} {$i &lt; [$sel num]} {incr i} {
-    set values {}
-    for {set f 0} {$f &lt; $nframes} {incr f} {
-        $sel frame $f
-        lappend values [$sel get {x y z}]
-    }
-    # RMSF calculation can be added here or replaced
-    # with your preferred VMD RMSF procedure.
-}
-close $out
-
-$sel delete
-$ref delete
-$all delete</code></pre>
-      </div>
-    </div>
-  </div>
-</div>
-      </div>
 
       <div class="shrink-0 border-t p-3 md:p-4 vmd-composer-wrap">
         <form id="chat-form" class="max-w-[1235px] mx-auto">
@@ -494,6 +455,7 @@ $all delete</code></pre>
     <textarea id="feedback-text" rows="7" placeholder="What should be improved? What worked well?" class="w-full select-dark rounded-xl px-3 py-3 text-xs"></textarea>
     <div class="flex flex-wrap justify-end gap-2 mt-3">
       <button id="feedback-github" class="vmd-action px-3 py-2 rounded-lg text-xs"><i class="fa-brands fa-github mr-1"></i>Open GitHub Issue</button>
+      <button id="feedback-email" class="vmd-action px-3 py-2 rounded-lg text-xs"><i class="fa-regular fa-envelope mr-1"></i>Email Feedback</button>
       <button id="feedback-close-2" class="px-3 py-2 rounded-lg text-xs text-slate-400 hover:text-white">Cancel</button>
     </div>
   </div>
@@ -631,7 +593,7 @@ function enhanceCode(container){container.querySelectorAll('pre').forEach(pre=>{
   const insert=document.createElement('button'); insert.className='insert-btn bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] px-2 py-1 rounded border border-slate-700'; insert.textContent='Use'; insert.onclick=()=>{chatInput.value=code;chatInput.focus();showToast('Code inserted into the prompt')};
   actions.append(copy,insert); pre.appendChild(actions);
 });container.querySelectorAll('pre code').forEach(c=>hljs.highlightElement(c));}
-function appendMessage(role,text){const wrap=document.createElement('div');wrap.className=`max-w-4xl mx-auto flex items-start gap-3 ${role==='user'?'flex-row-reverse':''}`;const av=document.createElement('div');av.className=`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${role==='user'?'bg-slate-800 border border-slate-700 text-cyan-400':'bg-gradient-to-tr from-cyan-600 to-emerald-400 text-slate-950'}`;av.innerHTML=role==='user'?'<i class="fa-solid fa-user"></i>':'<i class="fa-solid fa-atom"></i>';const b=document.createElement('div');b.className=`max-w-[85%] p-4 text-sm rounded-2xl border shadow-lg ${role==='user'?'bg-cyan-950/70 border-cyan-800 text-cyan-100 rounded-tr-none':'bg-slate-900 border-slate-800 text-slate-200 rounded-tl-none markdown-body'}`;if(role==='user')b.textContent=text;else{b.innerHTML=marked.parse(text);enhanceCode(b)}wrap.append(av,b);document.getElementById('chat-thread').appendChild(wrap);document.getElementById('chat-messages').scrollTop=document.getElementById('chat-messages').scrollHeight;return b}
+function appendMessage(role,text){document.getElementById('chat-empty-state')?.remove();const wrap=document.createElement('div');wrap.className=`max-w-4xl mx-auto flex items-start gap-3 ${role==='user'?'flex-row-reverse':''}`;const av=document.createElement('div');av.className=`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${role==='user'?'bg-slate-800 border border-slate-700 text-cyan-400':'bg-gradient-to-tr from-cyan-600 to-emerald-400 text-slate-950'}`;av.innerHTML=role==='user'?'<i class="fa-solid fa-user"></i>':'<i class="fa-solid fa-atom"></i>';const b=document.createElement('div');b.className=`max-w-[85%] p-4 text-sm rounded-2xl border shadow-lg ${role==='user'?'bg-cyan-950/70 border-cyan-800 text-cyan-100 rounded-tr-none':'bg-slate-900 border-slate-800 text-slate-200 rounded-tl-none markdown-body'}`;if(role==='user')b.textContent=text;else{b.innerHTML=marked.parse(text);enhanceCode(b)}wrap.append(av,b);document.getElementById('chat-thread').appendChild(wrap);document.getElementById('chat-messages').scrollTop=document.getElementById('chat-messages').scrollHeight;return b}
 async function ask(query){if(!query.trim())return;appendMessage('user',query);const loading=appendMessage('assistant','<i class="fa-solid fa-spinner fa-spin text-cyan-400"></i> Thinking…');try{const result=await window.VMDGateway.chat({query,model:selectedModel,provider:selectedProvider,system:VMD_SYSTEM_PROMPT});loading.innerHTML=marked.parse(result.text);enhanceCode(loading);setActiveModel(result.model||selectedModel);if(result.fallback)showToast(`Free AI fallback: ${result.fallback}`)}catch(e){loading.innerHTML=`<span class="text-rose-400"><i class="fa-solid fa-triangle-exclamation mr-1"></i>${escapeHtml(e.message)}</span>`;showToast(e.message,true)}}
 const chatInput=document.getElementById('chat-input');
 document.getElementById('chat-form').addEventListener('submit',e=>{e.preventDefault();const i=chatInput;const q=i.value.trim();if(!q)return;i.value='';ask(q)});
@@ -646,7 +608,7 @@ chatInput.addEventListener('keydown',e=>{
   }
 });
 function sendQuickPrompt(q){switchTab('chat');document.getElementById('chat-input').value=q;ask(q)}
-function switchTab(tab){document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));document.getElementById('view-'+tab).classList.remove('hidden');document.querySelectorAll('.nav-btn').forEach(b=>{const on=b.dataset.tab===tab;b.classList.toggle('active-nav',on);b.classList.toggle('text-slate-400',!on)});if(tab==='cheatsheet')renderCheatSheet()}
+function switchTab(tab){if(tab==='quick-analysis'){document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));document.getElementById('view-chat').classList.remove('hidden');document.querySelectorAll('.nav-btn').forEach(b=>{const on=b.dataset.tab==='quick-analysis';b.classList.toggle('active-nav',on);b.classList.toggle('text-slate-400',!on)});setTimeout(()=>document.getElementById('quick-prompts')?.scrollIntoView({behavior:'smooth',block:'start'}),50);return}document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));document.getElementById('view-'+tab).classList.remove('hidden');document.querySelectorAll('.nav-btn').forEach(b=>{const on=b.dataset.tab===tab;b.classList.toggle('active-nav',on);b.classList.toggle('text-slate-400',!on)});if(tab==='cheatsheet')renderCheatSheet()}
 
 document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
 quickPrompts.forEach(([title,q],idx)=>{const icons=['fa-crosshairs','fa-bullseye','fa-chart-line','fa-wave-square','fa-arrows-rotate','fa-link','fa-camera'];const b=document.createElement('button');b.className='w-full text-left rounded-lg border border-slate-800 bg-slate-900/70 hover:border-cyan-700/70 hover:bg-slate-800 px-3 py-2.5 text-xs text-slate-300 transition';b.innerHTML=`<span class="flex items-center gap-2"><i class="fa-solid ${icons[idx]||'fa-flask'} text-cyan-400 w-4"></i><span class="text-cyan-300 font-semibold">${escapeHtml(title)}</span></span><span class="block text-slate-500 mt-1 pl-6 leading-relaxed">${escapeHtml(q)}</span>`;b.onclick=()=>sendQuickPrompt(q);document.getElementById('quick-prompts').appendChild(b)});
@@ -699,6 +661,13 @@ document.getElementById('feedback-github').onclick=()=>{
   const title=encodeURIComponent('VMD Assistant AI feedback');
   const body=encodeURIComponent(msg+'\n\n---\nSent from VMD Assistant AI');
   window.open(`https://github.com/anweshpandey/vmd-assistant-v2/issues/new?title=${title}&body=${body}`,'_blank','noopener');
+};
+document.getElementById('feedback-email').onclick=()=>{
+  const msg=document.getElementById('feedback-text').value.trim();
+  if(!msg){showToast('Please enter your feedback first.',true);return}
+  const subject=encodeURIComponent('VMD Assistant AI feedback');
+  const body=encodeURIComponent(msg+'\n\n---\nSent from VMD Assistant AI');
+  window.location.href=`mailto:anwesh.pandey@iiitd.ac.in?subject=${subject}&body=${body}`;
 };
 
 
