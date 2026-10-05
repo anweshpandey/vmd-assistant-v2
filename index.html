@@ -160,6 +160,7 @@
     color: var(--mt-success) !important;
   }
 
+  /* AI/user message bubbles */
   .bg-cyan-950,
   .bg-cyan-950\/40 {
     background: rgba(25,211,197,.10) !important;
@@ -170,6 +171,7 @@
     border-color: rgba(25,211,197,.38) !important;
   }
 
+  /* Scrollbars */
   * {
     scrollbar-color: #244754 #08141D;
     scrollbar-width: thin;
@@ -193,6 +195,7 @@
     background: #2F6473;
   }
 </style>
+
 
 <style id="vmd-final-ui">
   body{background:#07111A!important;color:#E6F4F1!important}
@@ -237,6 +240,7 @@
   .border-cyan-500{border-color:#19D3C5!important}
   .select-dark{background:#0B1822!important;border-color:#244754!important;color:#E6F4F1!important}
 </style>
+
 
 <style id="vmd-reference-ui">
   html,body{width:100%;height:100%}
@@ -325,6 +329,7 @@
   #chat-thread{padding-bottom:8px}
 </style>
 
+
 <style id="vmd-showcase-ui">
   :root{
     --show-bg:#031018;--show-bg2:#061923;--show-panel:rgba(7,25,35,.86);--show-panel2:rgba(10,34,45,.88);
@@ -378,6 +383,7 @@
   @media(max-width:700px){.workflow-grid{grid-template-columns:1fr}.showcase-brand-title{font-size:21px}.showcase-header{height:76px!important}.hero-title{font-size:20px}}
 </style>
 
+
 <style id="vmd-exact-reference-finish">
   .header-molecule-wrap{position:relative;width:min(520px,42vw);height:76px;display:flex;align-items:center;justify-content:center;opacity:.95}
   .header-molecule{width:100%;height:100%;filter:drop-shadow(0 0 12px rgba(25,211,197,.12))}
@@ -404,6 +410,7 @@
 </style>
 
 <style id="vmd-graphic-rich-finish">
+  /* Rich scientific dashboard layer */
   .showcase-main{position:relative;overflow:hidden}
   .showcase-main:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.42;background:
     linear-gradient(30deg,transparent 48%,rgba(25,211,197,.035) 49%,transparent 50%) 0 0/150px 150px,
@@ -435,7 +442,7 @@
   .chart-wrap{height:116px;padding:5px 10px 0;position:relative}
   .chart-wrap svg{width:100%;height:100%}
   .chart-label{font-size:8px;fill:#5d8290}.chart-line{fill:none;stroke:#19d3c5;stroke-width:2.5;filter:drop-shadow(0 0 4px rgba(25,211,197,.45))}.chart-area{fill:url(#chartFade)}
-  .metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 10px}.metric{padding:8px;border-radius:99px;background:rgba(2,14,21,.58);border:1px solid rgba(56,189,248,.10)}.metric b{display:block;font-size:13px;color:#e1fffb}.metric span{font-size:8px;color:#5e8290}
+  .metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 10px}.metric{padding:8px;border-radius:9px;background:rgba(2,14,21,.58);border:1px solid rgba(56,189,248,.10)}.metric b{display:block;font-size:13px;color:#e1fffb}.metric span{font-size:8px;color:#5e8290}
   .system-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:10px}
   .system-card{padding:9px 10px;border-radius:10px;background:rgba(5,25,34,.70);border:1px solid rgba(25,211,197,.10);display:flex;align-items:center;gap:8px}
   .system-dot{width:7px;height:7px;border-radius:50%;background:#55e878;box-shadow:0 0 10px rgba(85,232,120,.65)}.system-card b{font-size:9px;color:#c4f7f2}.system-card span{display:block;font-size:8px;color:#557884;margin-top:2px}
@@ -445,6 +452,7 @@
   @media(max-width:1050px){.dashboard-strip{grid-template-columns:1fr}.molecular-stage{height:145px}.system-strip{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:700px){.molecule-orb{opacity:.28!important;right:-55px!important}.dashboard-strip{display:none}.hero-data-rail{display:none}}
 </style>
+
 
 <style id="vmd-final-infographic">
   .max-w-\[1235px\]{max-width:1400px!important}
@@ -633,6 +641,7 @@ const VMD_SYSTEM_PROMPT = `You are VMD Assistant AI, a world-class computational
 Core expertise: VMD atom selections including resid, serial, index, chain, resname, name, within X of, same residue as; trajectory analysis with measure rmsd, measure hbonds, SASA, center of mass, salt bridges; PBCTools including pbc wrap and pbc box; and publication-quality representations and Tachyon/OSPRay rendering.
 Answer scientifically and practically. When asked for Tcl, provide complete runnable Tcl code in a fenced Tcl code block. Explain important selection semantics and frame/PBC assumptions. Never invent VMD commands. If a command depends on a plugin or external package, say so.`;
 
+// VMD command database retained from the original assistant.
         const VMD_COMMANDS = [
             {
                 id: 'resid-range',
@@ -684,7 +693,7 @@ Answer scientifically and practically. When asked for Tcl, provide complete runn
                 category: 'trajectory',
                 title: 'Calculate Structure RMSD',
                 syntax: 'measure rmsd <sel1> <sel2>',
-                example: 'set rmsd [measure rmsd $sel_frame$sel_ref]',
+                example: 'set rmsd [measure rmsd $sel_frame $sel_ref]',
                 description: 'Calculates Root Mean Square Deviation between two atom selections.',
                 tags: ['rmsd', 'trajectory', 'measure']
             },
@@ -693,7 +702,7 @@ Answer scientifically and practically. When asked for Tcl, provide complete runn
                 category: 'trajectory',
                 title: 'Measure Hydrogen Bonds',
                 syntax: 'measure hbonds <cutoff_dist> <cutoff_angle> <sel1> [<sel2>]',
-                example: 'set hbonds [measure hbonds 3.0 20 $prot$wat]',
+                example: 'set hbonds [measure hbonds 3.0 20 $prot $wat]',
                 description: 'Calculates hydrogen bonds with distance (<3.0Å) and angle (<20°) thresholds.',
                 tags: ['hbonds', 'hydrogen bonds', 'measure']
             },
@@ -719,7 +728,7 @@ Answer scientifically and practically. When asked for Tcl, provide complete runn
                 id: 'tcl-frame-loop',
                 category: 'tcl',
                 title: 'Trajectory Frame Iteration Loop',
-                syntax: 'for {set i 0} {$i <$num_frames} {incr i} { ... }',
+                syntax: 'for {set i 0} {$i < $num_frames} {incr i} { ... }',
                 example: 'set num [molinfo top get numframes]\nfor {set i 0} {$i < $num} {incr i} {\n  $sel frame $i\n  $sel update\n}',
                 description: 'Standard Tcl control loop for analyzing trajectory frame-by-frame.',
                 tags: ['tcl', 'loop', 'trajectory', 'frames']
@@ -776,7 +785,7 @@ function sendQuickPrompt(q){switchTab('chat');document.getElementById('chat-inpu
 function switchTab(tab){document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));document.getElementById('view-'+tab).classList.remove('hidden');document.querySelectorAll('.nav-btn').forEach(b=>{const on=b.dataset.tab===tab;b.classList.toggle('active-nav',on);b.classList.toggle('text-slate-400',!on)});if(tab==='cheatsheet')renderCheatSheet()}
 
 document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
-quickPrompts.forEach(([title,q],idx)=>{const icons=['fa-crosshairs','fa-bullseye','fa-chart-line','fa-wave-square','fa-arrows-rotate','fa-link','fa-camera'];const b=document.createElement('button');b.className='w-full text-left rounded-lg border border-slate-800 bg-slate-900/70 hover:border-cyan-700/70 hover:bg-slate-800 px-3 py-2.5 text-xs text-slate-300 transition';b.innerHTML=`<span class="flex items-center gap-2"><i class="fa-solid ${icons[idx]||'fa-flask'} text-cyan-400 w-4"></i><span class="text-cyan-300 font-semibold">${escapeHtml(title)}</span></span><span class="block text-slate-500 mt-1 pl-6 leading-relaxed">${escapeHtml(q)}</span>`;b.onclick=()=>sendQuickPrompt(q);document.getElementById('quick-prompts')?.appendChild(b)});
+quickPrompts.forEach(([title,q],idx)=>{const icons=['fa-crosshairs','fa-bullseye','fa-chart-line','fa-wave-square','fa-arrows-rotate','fa-link','fa-camera'];const b=document.createElement('button');b.className='w-full text-left rounded-lg border border-slate-800 bg-slate-900/70 hover:border-cyan-700/70 hover:bg-slate-800 px-3 py-2.5 text-xs text-slate-300 transition';b.innerHTML=`<span class="flex items-center gap-2"><i class="fa-solid ${icons[idx]||'fa-flask'} text-cyan-400 w-4"></i><span class="text-cyan-300 font-semibold">${escapeHtml(title)}</span></span><span class="block text-slate-500 mt-1 pl-6 leading-relaxed">${escapeHtml(q)}</span>`;b.onclick=()=>sendQuickPrompt(q);document.getElementById('quick-prompts').appendChild(b)});
 
 function renderModelMenu(){
   const m=document.getElementById('model-menu'); m.innerHTML='';
@@ -816,6 +825,7 @@ document.getElementById('cheatsheet-search').addEventListener('input',renderChea
 const SNIP_KEY='vmd_assistant_v2_snippets';function getSnips(){try{return JSON.parse(localStorage.getItem(SNIP_KEY)||'[]')}catch{return[]}}function saveSnips(a){localStorage.setItem(SNIP_KEY,JSON.stringify(a));renderSnippets()}function renderSnippets(){const g=document.getElementById('snippets-grid'),a=getSnips();g.innerHTML='';if(!a.length){g.innerHTML='<div class="panel rounded-xl p-8 text-center text-xs text-slate-500 col-span-full">No saved snippets yet. Add your first Tcl script.</div>';return}a.forEach((s,i)=>{const c=document.createElement('div');c.className='panel rounded-xl p-4';c.innerHTML=`<div class="flex justify-between"><div><div class="text-[9px] uppercase text-emerald-400">${escapeHtml(s.tag||'Tcl')}</div><h3 class="font-semibold text-sm mt-1">${escapeHtml(s.title)}</h3></div><button class="del text-slate-500 hover:text-rose-400"><i class="fa-solid fa-trash"></i></button></div><pre class="mt-3 text-xs"><code>${escapeHtml(s.code)}</code></pre><button class="copy-s text-xs text-slate-400 hover:text-white">Copy Script</button>`;c.querySelector('.del').onclick=()=>{a.splice(i,1);saveSnips(a)};c.querySelector('.copy-s').onclick=()=>copyText(s.code);g.appendChild(c)});enhanceCode(g)}renderSnippets();
 document.getElementById('new-snippet').onclick=()=>document.getElementById('snippet-modal').classList.replace('hidden','flex');document.getElementById('close-snippet').onclick=()=>document.getElementById('snippet-modal').classList.replace('flex','hidden');document.getElementById('save-snippet').onclick=()=>{const title=document.getElementById('snippet-title').value.trim(),tag=document.getElementById('snippet-tag').value.trim(),code=document.getElementById('snippet-code').value.trim();if(!title||!code)return showToast('Title and script are required',true);const a=getSnips();a.unshift({title,tag,code});saveSnips(a);['snippet-title','snippet-tag','snippet-code'].forEach(id=>document.getElementById(id).value='');document.getElementById('snippet-modal').classList.replace('flex','hidden');showToast('Snippet saved locally')};
 
+
 document.getElementById('feedback-btn').onclick=()=>{document.getElementById('feedback-modal').classList.replace('hidden','flex');document.getElementById('feedback-text').focus()};
 document.getElementById('close-feedback').onclick=()=>document.getElementById('feedback-modal').classList.replace('flex','hidden');
 document.getElementById('feedback-close-2').onclick=()=>document.getElementById('feedback-modal').classList.replace('flex','hidden');
@@ -826,6 +836,22 @@ document.getElementById('feedback-github').onclick=()=>{
   const body=encodeURIComponent(msg+'\n\n---\nSent from VMD Assistant AI');
   window.open(`https://github.com/anweshpandey/vmd-assistant-v2/issues/new?title=${title}&body=${body}`,'_blank','noopener');
 };
+
+
+
+document.querySelectorAll('[data-workflow]').forEach(b=>b.addEventListener('click',()=>sendQuickPrompt(b.dataset.workflow)));
+
+document.querySelectorAll('[data-copy-demo]').forEach(b=>b.onclick=()=>{
+  const code=b.closest('.vmd-code-card').querySelector('code').innerText;
+  navigator.clipboard?.writeText(code); showToast('Tcl script copied.');
+});
+document.querySelectorAll('[data-use-demo]').forEach(b=>b.onclick=()=>{
+  const code=b.closest('.vmd-code-card').querySelector('code').innerText;
+  document.getElementById('chat-input').value=code;
+  document.getElementById('chat-input').focus();
+  showToast('Script inserted into the prompt.');
+});
+
+(async()=>{renderModelMenu();setActiveModel('auto');try{const s=await window.VMDGateway.health();if(s.ok){const el=document.getElementById('gateway-status');el.className='hidden sm:flex items-center gap-2 px-2.5 py-1.5 rounded-lg border provider-free text-[11px] font-semibold';el.innerHTML='<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span>Free AI · Gateway online</span>'}}catch{}})();
 </script>
-</body>
-</html>
+</body></html>
