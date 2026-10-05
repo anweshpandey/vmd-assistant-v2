@@ -453,6 +453,22 @@
   @media(max-width:700px){.molecule-orb{opacity:.28!important;right:-55px!important}.dashboard-strip{display:none}.hero-data-rail{display:none}}
 </style>
 
+
+<style id="vmd-final-infographic">
+  .max-w-\[1235px\]{max-width:1400px!important}
+  .infographic-board{margin-top:14px;position:relative;padding:13px;border:1px solid rgba(25,211,197,.18);border-radius:16px;background:linear-gradient(145deg,rgba(4,25,34,.88),rgba(2,14,21,.94));box-shadow:0 20px 60px rgba(0,0,0,.24),inset 0 0 70px rgba(25,211,197,.025);overflow:hidden}
+  .infographic-board:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 38% 45%,rgba(25,211,197,.08),transparent 25%),radial-gradient(circle at 90% 10%,rgba(56,189,248,.06),transparent 20%);pointer-events:none}
+  .infographic-topline{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:0 3px 10px;border-bottom:1px solid rgba(25,211,197,.10)}
+  .info-kicker{font-size:10px;font-weight:900;letter-spacing:.18em;color:#7debe0}.info-caption{font-size:9px;color:#4f7580;margin-left:12px}.info-live{font-size:8px;letter-spacing:.12em;color:#62dcae;display:flex;gap:6px;align-items:center}.info-live span{width:6px;height:6px;border-radius:50%;background:#55e878;box-shadow:0 0 10px #55e878}
+  .infographic-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(320px,.9fr);gap:10px;margin-top:10px}.science-panel{border:1px solid rgba(25,211,197,.14)!important;background:linear-gradient(145deg,rgba(6,30,40,.9),rgba(2,17,25,.96))!important;border-radius:13px;overflow:hidden;box-shadow:inset 0 0 35px rgba(25,211,197,.02)}
+  .info-molecule{min-height:330px}.big-molecule{height:300px;position:relative}.big-molecule svg{width:100%;height:100%;display:block}.info-code{font-size:8px;color:#5da1af;border:1px solid rgba(56,189,248,.13);padding:3px 6px;border-radius:5px}.molecule-badge{position:absolute;padding:5px 8px;border:1px solid rgba(25,211,197,.2);background:rgba(1,13,19,.82);backdrop-filter:blur(8px);border-radius:7px;display:flex;gap:7px;align-items:center}.molecule-badge b{font-size:8px;color:#8cefe7;letter-spacing:.08em}.molecule-badge span{font-size:8px;color:#597e89}.molecule-badge.left{left:14px;top:17px}.molecule-badge.right{right:14px;top:35px}.molecule-badge.bottom{left:50%;bottom:13px;transform:translateX(-50%)}
+  .info-side{display:grid;grid-template-rows:1.2fr .8fr;gap:10px}.signal-chart{height:150px;padding:4px 9px 0}.signal-chart svg{width:100%;height:100%}.mini-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 10px 10px}.mini-metrics div{border:1px solid rgba(56,189,248,.10);border-radius:8px;background:rgba(1,13,19,.6);padding:7px}.mini-metrics b{display:block;font-size:13px;color:#d7fff9}.mini-metrics span{font-size:8px;color:#587b86}
+  .pipeline{padding:13px 12px 14px;display:flex;align-items:center;justify-content:space-between;gap:4px}.pipe-node{min-width:55px;text-align:center;position:relative}.pipe-node i{width:28px;height:28px;margin:0 auto 5px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(56,189,248,.18);border-radius:8px;background:#071e28;color:#4f98a8;font-size:11px}.pipe-node b{display:block;font-size:7px;letter-spacing:.08em;color:#789ba5}.pipe-node span{display:block;font-size:7px;color:#496d78;margin-top:2px}.pipe-node.active i{color:#19d3c5;border-color:rgba(25,211,197,.5);box-shadow:0 0 15px rgba(25,211,197,.13)}.pipe-node.active b{color:#8cefe7}.pipe-line{height:1px;flex:1;min-width:10px;background:linear-gradient(90deg,rgba(25,211,197,.3),rgba(56,189,248,.08))}
+  .infographic-bottom{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:9px}.info-stat{display:flex;align-items:center;gap:8px;padding:9px;border-radius:10px;border:1px solid rgba(25,211,197,.11);background:rgba(4,23,31,.72)}.stat-icon{width:29px;height:29px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:rgba(25,211,197,.07);border:1px solid rgba(25,211,197,.16);color:#19d3c5;font-size:10px}.info-stat b{display:block;font-size:8px;color:#bcefe9;letter-spacing:.06em}.info-stat span{display:block;font-size:7px;color:#557782;margin-top:2px}.info-stat strong{margin-left:auto;font-size:8px;color:#5be0b2}
+  .workflow-grid{margin-bottom:2px!important}.workflow-card{background:linear-gradient(135deg,rgba(6,29,39,.88),rgba(3,19,27,.9))!important}.showcase-empty{margin-top:10px!important}
+  @media(max-width:1050px){.infographic-grid{grid-template-columns:1fr}.info-side{grid-template-rows:auto auto}.infographic-bottom{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:700px){.infographic-board{display:none}.max-w-\[1235px\]{max-width:100%!important}}
+</style>
 </head>
 <body class="min-h-screen h-screen flex flex-col overflow-hidden">
 <header class="showcase-header shrink-0 border-b flex items-center px-4 md:px-6 gap-4 relative overflow-hidden">
@@ -555,48 +571,75 @@
         <button class="workflow-card text-left" data-workflow="Give a practical VMD workflow for hydrogen bonds, salt bridges, contacts, and ligand-pocket interactions across a trajectory."><span class="workflow-icon"><i class="fa-solid fa-link"></i></span><span class="workflow-title">Interactions</span><span class="workflow-desc block">Hydrogen bonds, contacts, pockets, and interactions.</span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
         <button class="workflow-card text-left" data-workflow="Give publication-quality VMD commands for representations, coloring, Tachyon or OSPRay rendering, and a 1920x1080 molecular figure."><span class="workflow-icon"><i class="fa-solid fa-camera"></i></span><span class="workflow-title">Rendering & graphics</span><span class="workflow-desc block">Create clear, publication-ready molecular visuals.</span><i class="fa-solid fa-arrow-right workflow-arrow"></i></button>
       </div>
-      <div class="dashboard-strip" aria-hidden="true">
-        <div class="science-panel">
-          <div class="panel-head"><div><div class="panel-title">Molecular workspace</div><div class="panel-sub">interactive structure preview · selection focus</div></div><span class="text-[8px] text-emerald-300/70">● READY</span></div>
-          <div class="molecular-stage">
-            <svg viewBox="0 0 720 230" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="protA" x1="0" x2="1"><stop offset="0" stop-color="#19d3c5"/><stop offset=".55" stop-color="#38bdf8"/><stop offset="1" stop-color="#19d3c5"/></linearGradient>
-                <linearGradient id="protB" x1="0" x2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset=".5" stop-color="#6ee7f7"/><stop offset="1" stop-color="#19d3c5"/></linearGradient>
-                <radialGradient id="lig"><stop offset="0" stop-color="#f7e27b"/><stop offset=".35" stop-color="#f59e0b"/><stop offset="1" stop-color="#f59e0b" stop-opacity="0"/></radialGradient>
-                <filter id="softGlow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-              </defs>
-              <g opacity=".34" stroke="#2f6675" stroke-width="1"><path d="M0 190L130 30L300 200L430 25L590 200L720 60" fill="none"/><path d="M0 70L120 210L260 45L420 215L560 55L720 190" fill="none"/></g>
-              <g fill="none" stroke-linecap="round" filter="url(#softGlow)">
-                <path d="M30 155 C80 55 115 58 150 126 S225 196 270 108 S350 45 392 113 S470 195 520 105 S605 52 690 128" stroke="url(#protA)" stroke-width="8" opacity=".86"/>
-                <path d="M28 93 C95 177 126 175 168 93 S252 38 300 92 S380 172 425 91 S510 34 558 90 S635 175 698 86" stroke="url(#protB)" stroke-width="5" opacity=".68"/>
-                <path d="M70 116 C105 95 132 106 151 136" stroke="#b8fff7" stroke-width="2" opacity=".6"/>
-              </g>
-              <g filter="url(#softGlow)"><circle cx="390" cy="112" r="22" fill="url(#lig)" opacity=".72"/><circle cx="390" cy="112" r="6" fill="#ffe082"/><circle cx="357" cy="92" r="5" fill="#19d3c5"/><circle cx="425" cy="91" r="5" fill="#38bdf8"/><circle cx="412" cy="140" r="5" fill="#19d3c5"/></g>
-              <g fill="#8cefe7"><circle cx="85" cy="74" r="3"/><circle cx="170" cy="163" r="3"/><circle cx="280" cy="78" r="3"/><circle cx="520" cy="150" r="3"/><circle cx="620" cy="85" r="3"/></g>
-            </svg>
-            <span class="stage-label one">PROTEIN</span><span class="stage-label two">ACTIVE SITE</span><span class="stage-label three">LIGAND • FOCUS</span>
+      <div class="infographic-board" aria-hidden="true">
+        <div class="infographic-topline">
+          <div><span class="info-kicker">VMD ANALYSIS MAP</span><span class="info-caption">structure → selection → trajectory → interactions → graphics</span></div>
+          <div class="info-live"><span></span> LIVE WORKSPACE</div>
+        </div>
+        <div class="infographic-grid">
+          <div class="info-molecule science-panel">
+            <div class="panel-head"><div><div class="panel-title">Molecular structure</div><div class="panel-sub">protein · ligand · active site</div></div><span class="info-code">PDB / DCD</span></div>
+            <div class="big-molecule">
+              <svg viewBox="0 0 760 360" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="helix1" x1="0" x2="1"><stop stop-color="#14d8c5"/><stop offset=".45" stop-color="#43c7ff"/><stop offset="1" stop-color="#14d8c5"/></linearGradient>
+                  <linearGradient id="helix2" x1="0" x2="1"><stop stop-color="#39bdf8"/><stop offset=".5" stop-color="#9af7ee"/><stop offset="1" stop-color="#14d8c5"/></linearGradient>
+                  <radialGradient id="activeGlow"><stop stop-color="#fff0a0" stop-opacity=".95"/><stop offset=".18" stop-color="#fbbf24" stop-opacity=".8"/><stop offset="1" stop-color="#f59e0b" stop-opacity="0"/></radialGradient>
+                  <filter id="mGlow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                  <pattern id="microGrid" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M34 0H0V34" fill="none" stroke="#1b5965" stroke-opacity=".24"/></pattern>
+                </defs>
+                <rect width="760" height="360" fill="url(#microGrid)" opacity=".45"/>
+                <g fill="none" stroke="#285968" stroke-width="1" opacity=".5">
+                  <ellipse cx="385" cy="180" rx="330" ry="128"/><ellipse cx="385" cy="180" rx="275" ry="104"/><ellipse cx="385" cy="180" rx="215" ry="82"/>
+                </g>
+                <g fill="none" stroke-linecap="round" filter="url(#mGlow)">
+                  <path d="M38 238 C92 55 156 58 207 177 S300 315 365 145 S467 48 520 175 S620 315 722 92" stroke="url(#helix1)" stroke-width="10" opacity=".92"/>
+                  <path d="M35 106 C105 290 158 278 215 130 S319 32 377 157 S482 294 538 129 S636 55 728 245" stroke="url(#helix2)" stroke-width="7" opacity=".78"/>
+                  <path d="M72 186 C120 135 165 140 203 188 S276 239 319 180" stroke="#d9fffb" stroke-width="2" opacity=".5"/>
+                </g>
+                <g fill="#8af8ed" filter="url(#mGlow)"><circle cx="86" cy="132" r="5"/><circle cx="163" cy="274" r="5"/><circle cx="248" cy="113" r="5"/><circle cx="330" cy="226" r="5"/><circle cx="469" cy="89" r="5"/><circle cx="586" cy="245" r="5"/><circle cx="674" cy="122" r="5"/></g>
+                <g filter="url(#mGlow)"><circle cx="388" cy="166" r="65" fill="url(#activeGlow)"/><circle cx="388" cy="166" r="10" fill="#ffe58a"/><circle cx="357" cy="143" r="6" fill="#19d3c5"/><circle cx="423" cy="140" r="6" fill="#38bdf8"/><circle cx="426" cy="194" r="6" fill="#19d3c5"/><circle cx="352" cy="199" r="5" fill="#38bdf8"/></g>
+                <g stroke="#fbbf24" stroke-dasharray="4 5" opacity=".55"><path d="M388 166 L492 76"/><path d="M388 166 L514 216"/></g>
+                <g fill="#9deee7" font-family="sans-serif" font-size="11"><text x="28" y="31">PROTEIN CORE</text><text x="505" y="58">ACTIVE SITE</text><text x="520" y="235">LIGAND CONTACTS</text></g>
+              </svg>
+              <div class="molecule-badge left"><b>CHAIN A</b><span>resid 1–320</span></div>
+              <div class="molecule-badge right"><b>ACTIVE SITE</b><span>12 residues</span></div>
+              <div class="molecule-badge bottom"><b>LIGAND</b><span>8 contacts · 2 H-bonds</span></div>
+            </div>
+          </div>
+          <div class="info-side">
+            <div class="science-panel signal-panel">
+              <div class="panel-head"><div><div class="panel-title">Trajectory profile</div><div class="panel-sub">RMSD · RMSF · stability</div></div><span class="info-code">200 NS</span></div>
+              <div class="signal-chart">
+                <svg viewBox="0 0 420 150" preserveAspectRatio="none">
+                  <defs><linearGradient id="sigFill" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#19d3c5" stop-opacity=".3"/><stop offset="1" stop-color="#19d3c5" stop-opacity="0"/></linearGradient></defs>
+                  <g stroke="#214651" stroke-width="1"><path d="M8 28H412M8 58H412M8 88H412M8 118H412"/><path d="M8 12V132M109 12V132M210 12V132M311 12V132M412 12V132"/></g>
+                  <path d="M8 111 L27 103 L45 108 L63 84 L82 92 L101 70 L119 79 L138 56 L157 67 L176 49 L195 58 L214 42 L233 53 L252 45 L271 64 L290 51 L309 72 L328 59 L347 79 L366 66 L385 88 L403 76 L412 80 L412 132 L8 132Z" fill="url(#sigFill)"/>
+                  <path d="M8 111 L27 103 L45 108 L63 84 L82 92 L101 70 L119 79 L138 56 L157 67 L176 49 L195 58 L214 42 L233 53 L252 45 L271 64 L290 51 L309 72 L328 59 L347 79 L366 66 L385 88 L403 76 L412 80" fill="none" stroke="#19d3c5" stroke-width="3" filter="url(#mGlow)"/>
+                  <circle cx="214" cy="42" r="5" fill="#fbbf24"/><text x="222" y="36" fill="#8aaeb8" font-size="9">stable region</text>
+                  <g fill="#557884" font-size="8"><text x="8" y="146">0 ns</text><text x="194" y="146">100</text><text x="390" y="146">200 ns</text></g>
+                </svg>
+              </div>
+              <div class="mini-metrics"><div><b>1.82 Å</b><span>RMSD</span></div><div><b>0.74 Å</b><span>RMSF</span></div><div><b>98.4%</b><span>stable frames</span></div></div>
+            </div>
+            <div class="science-panel pipeline-panel">
+              <div class="panel-head"><div><div class="panel-title">Analysis pipeline</div><div class="panel-sub">from coordinates to publication</div></div></div>
+              <div class="pipeline">
+                <div class="pipe-node active"><i class="fa-solid fa-cube"></i><b>STRUCTURE</b><span>PDB / PSF</span></div><div class="pipe-line"></div>
+                <div class="pipe-node"><i class="fa-solid fa-filter"></i><b>SELECTION</b><span>atomselect</span></div><div class="pipe-line"></div>
+                <div class="pipe-node"><i class="fa-solid fa-film"></i><b>TRAJECTORY</b><span>DCD / frames</span></div><div class="pipe-line"></div>
+                <div class="pipe-node"><i class="fa-solid fa-chart-line"></i><b>ANALYSIS</b><span>RMSD / PCA</span></div><div class="pipe-line"></div>
+                <div class="pipe-node"><i class="fa-solid fa-camera"></i><b>GRAPHICS</b><span>Tachyon</span></div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="science-panel analysis-panel">
-          <div class="panel-head"><div><div class="panel-title">Trajectory signal</div><div class="panel-sub">RMSD / RMSF preview</div></div><span class="text-[8px] text-cyan-300/70">200 ns</span></div>
-          <div class="chart-wrap">
-            <svg viewBox="0 0 360 116" preserveAspectRatio="none">
-              <defs><linearGradient id="chartFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#19d3c5" stop-opacity=".28"/><stop offset="1" stop-color="#19d3c5" stop-opacity="0"/></linearGradient></defs>
-              <g stroke="#1b3c47" stroke-width="1"><path d="M8 22H350M8 47H350M8 72H350M8 97H350"/><path d="M8 8V101M92 8V101M177 8V101M262 8V101M350 8V101"/></g>
-              <path class="chart-area" d="M8 92 L24 83 L38 88 L55 68 L72 75 L88 51 L105 62 L122 44 L140 54 L158 38 L176 49 L194 34 L212 47 L230 40 L248 56 L266 43 L284 61 L302 51 L320 69 L338 58 L350 64 L350 101 L8 101Z"/>
-              <path class="chart-line" d="M8 92 L24 83 L38 88 L55 68 L72 75 L88 51 L105 62 L122 44 L140 54 L158 38 L176 49 L194 34 L212 47 L230 40 L248 56 L266 43 L284 61 L302 51 L320 69 L338 58 L350 64"/>
-              <circle cx="194" cy="34" r="4" fill="#19d3c5"/><text x="202" y="28" class="chart-label">stable</text>
-            </svg>
-          </div>
-          <div class="metric-grid"><div class="metric"><b>1.82 Å</b><span>RMSD</span></div><div class="metric"><b>0.74 Å</b><span>RMSF</span></div><div class="metric"><b>98.4%</b><span>frames</span></div></div>
+        <div class="infographic-bottom">
+          <div class="info-stat"><div class="stat-icon"><i class="fa-solid fa-dna"></i></div><div><b>3D STRUCTURE</b><span>protein · ligand · solvent</span></div><strong>READY</strong></div>
+          <div class="info-stat"><div class="stat-icon"><i class="fa-solid fa-code"></i></div><div><b>TCL AUTOMATION</b><span>selection · loops · exports</span></div><strong>ACTIVE</strong></div>
+          <div class="info-stat"><div class="stat-icon"><i class="fa-solid fa-diagram-project"></i></div><div><b>INTERACTIONS</b><span>H-bonds · contacts · PBC</span></div><strong>12</strong></div>
+          <div class="info-stat"><div class="stat-icon"><i class="fa-solid fa-chart-column"></i></div><div><b>ANALYTICS</b><span>RMSD · RMSF · RDF · PCA</span></div><strong>8+</strong></div>
         </div>
-      </div>
-      <div class="system-strip" aria-hidden="true">
-        <div class="system-card"><i class="fa-solid fa-cube text-cyan-300 text-[11px]"></i><div><b>Structure</b><span>PDB / PSF / DCD</span></div></div>
-        <div class="system-card"><i class="fa-solid fa-code text-cyan-300 text-[11px]"></i><div><b>Tcl Engine</b><span>commands ready</span></div></div>
-        <div class="system-card"><i class="fa-solid fa-chart-line text-cyan-300 text-[11px]"></i><div><b>Analysis</b><span>RMSD · contacts</span></div></div>
-        <div class="system-card"><i class="fa-solid fa-film text-cyan-300 text-[11px]"></i><div><b>Graphics</b><span>Tachyon · OSPRay</span></div></div>
       </div>
       <div id="chat-thread" class="space-y-4 mt-5"></div>
       <div id="empty-chat-hint" class="showcase-empty mt-5">
